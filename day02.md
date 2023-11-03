@@ -26,7 +26,7 @@ cat --help
 
 cat -n /etc/passwd
 
-> 将passwd文本信息输出并显示行好
+> 将passwd文本信息输出并显示行号
 
 ls -l /root
 
@@ -274,11 +274,6 @@ grep ^$ /etc/passwd
 
   cd /home（查看系统所有的普通用户）
 
-+ 4
-
-+ 5
-
-+ 6
 
 # 总结
 
