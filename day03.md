@@ -2,7 +2,7 @@
 
 归档及压缩
 
-重定向（重新定向命令的输出）与管道操作
+重定向（重新丁香命令的输出）与管道操作
 
 find精确查找
 
@@ -70,7 +70,7 @@ echo 123
 
 > 作用：输出echo后写的内容，文本复读机
 
-head -3 /etc/passwd `|` tail -1
+head -3 /etc/passwd | tail -1
 
 > |：管道操作，是将|前面的输出作为后面的参数来进行的
 >
@@ -82,25 +82,25 @@ head -3 /etc/passwd `|` tail -1
 >
 > 例：显示8-12行
 >
-> head -12 /etc/passwd `|`  tail -5
+> head -12 /etc/passwd | tail -5
 >
 > 例：将12-25行内容写入opt下2.txt文本中
 >
-> head -25 /etc/passwd `|`  tail -13 > /opt/2.txt
+> head -25 /etc/passwd | tail -13 > /opt/2.txt
 >
 > 例：输出/etc/login.defs中有效信息 
 >
-> grep -v ^# /etc/login.defs `|`  grep -v ^$ 
+> grep -v ^# /etc/login.defs | grep -v ^$ 
 >
 > **过滤命令的输出**
 >
 > 例：输出ifconfig中含有127的文本内容
 >
-> ifconfig `|`  grep 127
+> ifconfig | grep 127
 >
 > 例：输出ifconfig使用上下键进行查阅
 >
-> ifconfig `|`  grep less
+> ifconfig | grep less
 
 find /etc -type d
 
@@ -124,9 +124,9 @@ find /etc -type d
 >
 > 例：配合wc或cat -n进行数量统计
 >
-> find /etc -name ‘*tab’ `|`  wc -l
+> find /etc -name ‘*tab’ | wc -l
 >
-> find /etc -name ‘*tab’ `|`  cat -n
+> find /etc -name ‘*tab’ | cat -n
 >
 > **两个条件联合使用**
 >
@@ -186,7 +186,7 @@ wc -l /etc/passwd
 >
 >例：查找boot目录下共有多少个文件
 >
->find /boot -type f `|`  wc -l
+>find /boot -type f | wc -l
 
 # 课堂笔记（文本）
 
@@ -196,7 +196,7 @@ wc -l /etc/passwd
    
    输入quit进行退出
    
-   配合echo加|使用：echo 25*5 `|`  bc
+   配合echo加|使用：echo 25*5 | bc
    
 2. vim高级操作
 
@@ -271,6 +271,8 @@ wc -l /etc/passwd
    初始没有这个这个，需要手动创建
 
    没一行只能写一个命令
+   
+4. 请简述一条LInux命令行的一般组成格式
 
 # 总结
 
@@ -296,7 +298,7 @@ wc -l /etc/passwd
 
 6. 显示/etc/login.txt文件有效信息，请写出该命令
 
-   grep -v ^# /etc/login.txt `|` grep -v ^$
+   grep -v ^# /etc/login.txt |grep -v ^$
 
 7. vim编辑器，如何实现，复制光标所在的一行？
 
@@ -316,5 +318,5 @@ wc -l /etc/passwd
 
 11. 显示ifconfig命令输出的前两行，如何操作？
 
-    ifconfig`|`  head -2
+    ifconfig | head -2
 
