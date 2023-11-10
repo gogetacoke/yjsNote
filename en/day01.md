@@ -476,6 +476,17 @@ which mkdir
 
 ### 附加权-数字权限
 
+Set UID	4  (x)   
+
+Set GID	2 （x）
+
+StickyBIt	1 （t）
+
+```linux
+mkdir /nsd1
+chmod 3755 /nsd1 # 3：sg权限+t权限 7：rwx 5：rx
+```
+
 
 
 # 快捷键
