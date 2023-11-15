@@ -517,10 +517,64 @@ chmod 3755 /nsd1 # 3：sg权限+t权限 7：rwx 5：rx
 
    setfacl -m u:lisi:r /etc/shadow
 
-# 总结
+
+
+# 今日总结
 
 1. 新建目录默认权限
 
    0755
-   
-2. 
+
+# 昨日复习
+
+1. 创建用户的命令是什么？
+
+   useradd
+
+2. 修改已存在用户的属性命令是什么？
+
+   usermod
+
+3. 非交互式lisi设置密码为123 请写出该命令
+
+   echo 123 | passwd `--`stdin lisi
+
+4. 请写出 存放用户基本信息 的配置文件
+
+   /etc/passwd
+
+5. 请写出 禁止用户登录系统的解释器程序
+
+   /sbin/nologin
+
+6. 将harry用户加入tedu组，请写出该命令
+
+   gpasswd -a  harry tedu
+
+7. 请写出 组账号基本信息 配置文件
+
+   /etc/group
+
+8. 如何判断一个用户是否存在？
+
+   id 用户名
+
+   查询passwd、shadow中是否有用户信息
+
+9. 如何判断一个组是否存在？
+
+   查询/etc/group文件
+
+10. 如何判断一个用户是否在users组中？
+
+    id查看用户的组
+
+    查看/etc/group文件
+
+11.  /etc/passwd文件第六字段与第七字段，分别表示的含义？
+
+    家目录  解释器
+
+12. 请写出您熟悉的Linux命令？（至少10条）
+
+    cd、pwd、ls、du -sh、mkdir、cat、less、vim、useradd、usermod、groupadd、userdel、groupdel、gpasswd、tar、crontab、echo、man、history、find、touch
