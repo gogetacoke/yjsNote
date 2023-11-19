@@ -61,11 +61,12 @@
 >
 > 附加组：一个用户可以有多个附加组，也可以没有附加组
 >
-### 创建组
+### groupadd
+
 >
 > groupadd 组名
 >
-### 用户信息配置文件
+### /etc/passwd
 >
 > /etc/passwd：存放用户基本信息配置文件
 >
@@ -75,7 +76,7 @@
 >
 > 用户名**:**密码占位符**:**UID**:**基本组GID**:**用户描述信息**:**家目录**:**解释器
 >
-### 创建用户
+### useradd
 >**[-u]：指定uid**
 >
 >useradd -u 1314 test1
@@ -103,7 +104,7 @@
 >`passwd test4 `   设置秘密，屏幕没有显示，需要输入两次密码
 
 
-### 修改用户
+### usermod
 >usermod -l stu1 test1 将用户test1的用户名改为stu1
 >
 >usermod -u 1600 stu1 更改用户uid
@@ -140,7 +141,7 @@
 >
 >echo 123 `|` passwd --stdin test1 将用户test1密码修改为123
 
-### 用户密码配置文件
+### /etc/shadow
 
 > etc/shadow  存放用户密码
 >
@@ -170,7 +171,7 @@
 >
 > 字段9：保留字段（未使用）
 
-### 删除用户
+### userdel
 
 > 作用：删除用户信息
 >
@@ -180,11 +181,11 @@
 >
 > userdel -r test2
 
-### 组基本信息文件
+### /etc/group
 
 > /etc/group 存放组的基本信息
 
-### 用户组
+### gpasswd
 
 > 格式：gpasswd -选项 用户名 组名
 >
@@ -216,8 +217,10 @@
 
 
 
-### 组管理员配置文件
+### /etc/gshdow
 
+> 作用：组管理信息配置文件
+>
 > /etc/gshadow
 >
 > tarena**:!:**nb**:** 
@@ -232,7 +235,7 @@
 >
 > gpasswd -A ‘ tarena’
 
-### 删除组
+### grouodel
 
 > groupdel 组名  （不能删除基本组）
 
@@ -352,5 +355,60 @@
 
 
 
-# 总结
+# 今日总结
 
+
+
+# 昨日复习
+
+1. 统计/etc目录大小，请写出命令
+
+   du -sh /etc
+
+2. LInux系统命令执行!vim作用是什么？
+
+   执行历史命令中最近一条执行vim开头的历史命令
+
+3. 如何查看系统时间
+
+   date
+
+4. 针对/opt目录制作一个链接文件，放在/root目录下
+
+   ln -s /opt /root
+
+5. 查询/usr/sbin/ifconfig程序是由那个软件安装产生
+
+   rpm -qf /usr/sbin/ifconfig
+
+6. 利用rpm命令检测firefox是否安装
+
+   rpm -q firefox
+
+7. 查询bash软件的安装清单
+
+   rpm -ql bash
+
+8. 利用yum命令重新安装软件hostname
+
+   yum -y reinstall hostname
+
+9. 利用yum安装httpd软件
+
+   yum -y httpd
+
+10. yum仓库配置文件放在什么路径下，具体的字段有哪些
+
+    /etc/yum.repos.d/*.repo
+
+    []：仓库名
+
+    name：仓库描述信息
+
+    baseurl：软件包地址
+
+    enabled：是否启用
+
+    gpgcheck：是否开启红帽安装认证
+
+    gpgkey：红帽签名认证密钥

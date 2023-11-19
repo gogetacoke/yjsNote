@@ -588,9 +588,6 @@ find /boot -size +10M -type f -exec cp {} /opt \;
 
    /word:向当前光标后查找字符串‘word’，按n/N调至前/后一个结果
    
-   
-   
-   
 
 # 复习问题总结
 

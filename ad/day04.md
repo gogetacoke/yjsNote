@@ -203,5 +203,52 @@ ls -i
 
    服务器程序、管理工具：/user/sbin、/sbin
 
-# 总结
+# 今日总结
 
+
+
+# 昨日复习
+
+1. 将root/backup.tar.gz压缩包，释放到/opt目录下
+
+   tar -xf /root/backup.tar.gz -C /opt
+
+2. 利用find查找/etc目录下，所有以‘.conf’结尾的数据
+
+   find /etc -name ‘*.conf’
+
+3. 利用find查找/etc目录下，chichi目录即可
+
+   find /etc -type d
+
+4. 如何将/boot目录大于10M的数据，快速拷贝到/opt目录下
+
+   find /boot -size +10M -exec cp {} /opt \;
+
+5. 统计/var目录三个月之前数据的个数，如何操作?
+
+   find /var -mtime +90 `| `wc -l
+
+6. 显示/etc/login.defs文件有效信息，请写出该命令
+
+   grep -v ^# /etc/login.defs `|`grep -v ^$
+
+7. vim编辑器，如何实现，复制光标所在的一行？
+
+   yy
+
+8. vim编辑器，将全文的man替换为MAN如何操作？
+
+   %s/man/MAN/g
+
+9. vim编辑器中如何开启行号功能？
+
+   set nu
+
+10. 将"hello world"快速写入到，/opt/cbd.txt文件的最后一行，如何操作？
+
+    echo hello word >> /opt/cdb.txt
+
+11. 显示ifconfig命令输出的前两行，如何操作？
+
+    ifconfig `|` head -2 

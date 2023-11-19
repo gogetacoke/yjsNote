@@ -12,6 +12,12 @@
   - [day01](#day01)
   - [day02](#day02)
   - [day03](#day03)
+  - [day04](#day04)
+  - [day05](#day05)
+- [Server](#server)
+  - [day01](#day01-1)
+  - [day02](#day02-1)
+  - [day03](#day03-1)
 
 
 # admin
@@ -102,3 +108,58 @@ RAID磁盘阵列
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/en/day03)
 
+## day04
+
+配置Linux网络
+
+日志管理
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/en/day04)
+
+## day05
+
+SELinux
+
+系统故障修复
+
+防火墙策略
+
+服务管理
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/en/day05)
+
+# Server
+
+## day01
+
+Web基础应用
+
+NFS服务基础
+
+触发挂载
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/se/day01)
+
+## day02
+
+自定义YUM仓库
+
+网络YUM仓库
+
+DNS服务基础
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/se/day02)
+
+## day03
+
+源码编译安装
+
+rsync本地同步
+
+rsync远程同步
+
+inotify实时同步
+
+数据库服务基础
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/se/day03)
