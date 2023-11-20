@@ -322,7 +322,7 @@ curl: (1) Protocol "frp" not supported or disabled in libcurl
 Test html
 ```
 
-常见重点配置
+**常见重点配置**
 
 主配置文件：/etc/httpd/comf/httpd.conf
 
@@ -356,6 +356,88 @@ DirectoryIndx：起始页/首页文件名
 
 针对此目录有单独配置，则不继承上一级目录
 
+配置文件：/etc/httpd/conf/httpd.conf
+
+```
+<Directory />
+Require all denied #拒绝所有人访问
+</Directory>
+
+<Directory "/var/www">
+Require all granted #允许所有人访问
+</Directory>
+```
+
+**网络路径与实际路径**
+
+客户端-浏览器：http://192.168.88.240 # 网络路径
+
+服务端：/webroot/index.html # 实际路径
+
+http://192.168.88.240  == /webroot
+
+举例：
+
+实际路径：192.168.88.240/webroot/webroot/abc/index.html
+
+网络路径：http://192.168.88.240/webroot/abc/index.html
+
+**调用配置文件**
+
+/etc/httpd/conf/httpd.conf   主配置文件
+
+/etc/httpd/conf.d/*.conf	调用配置文件
+
+作用：避免在主配置文件中修改容易出错
+
+例：以下创建一个test.conf配置文件进行测试，/myweb设置为根站点
+
+```
+]# vim /etc/httpd/conf.d/test.conf # 编写文件主目录，设置为允许访问
+DocumentRoot /myweb
+<Directory /myweb>
+ Require all granted
+</Directory>
+
+]#mkdir /myweb
+]#echo test > /myweb/index.html
+]#systemctl restart httpd
+]# curl 192.168.88.89
+test
+```
+
+代码解释：编写test.conf配置文件，用于避免在主配置文件中编写出错，写入新站点/myweb，目录未进行访问控制，需要设置一个访问控制权限
+
+**监听端口**
+
+http默认端口：80
+
+自定义端口时的范围：1024～65535
+
+```
+]# vim /etc/httpd/conf.d/test.conf # 添加一个端口8080
+DocumentRoot /myweb
+Listen 8080 # 端口
+<Directory /myweb>
+ Require all granted
+</Directory>
+]#systemctl restart httpd
+]# curl 192.168.88.89:8080
+test
+```
+
+## 虚拟Web主机
+
+作用：由同一台服务器，提供多个不同的Web站点
+
+**区分方式：**
+
+1. 基于域名
+2. 基于端口
+3. 基于IP地址
+
+**虚拟站点配置**
+
 ```
 
 ```
@@ -364,7 +446,11 @@ DirectoryIndx：起始页/首页文件名
 
 # 复习问题总结
 
-
+1. 访问出现测试页面
+   + 没有网页文件
+   + 网页名称不是index.html
+   + httpd的访问控制规则拒绝
+   + SELinux没有关闭
 
 # 预习下周内容
 
