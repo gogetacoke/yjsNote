@@ -439,8 +439,47 @@ test
 **虚拟站点配置**
 
 ```
+]#vim /etc/httpd/conf.d/test.conf
+<VirtualHost *:80> # 监听所有IP地址的80端口
+ServerName www.qq.com # 网站的域名
+DocumentRoot /var/www/qq # 网页文件路径
+</VirtualHost>
+
+]#mkidr /var/www/qq
+]#echo wo shi qq > /var/www/qq/index.html
+]#systemctl restart httpd
+]#vim /etc/hosts # 解析本机域名
+192.168.88.240 www.qq.com
+
+]#curl www.qq.com
+wo shi qq
+```
+
+[注]：一但使用虚拟web主机功能，所有网站都必须使用虚拟Web方式进行呈现
+
+**基于端口虚拟Web主机**
 
 ```
+[root@server ~]# vim  /etc/httpd/conf.d/xixi.conf
+<VirtualHost   *:80>
+   ServerName  www.qq.com
+   DocumentRoot   /var/www/qq
+</VirtualHost>
+Listen  8080                   
+<VirtualHost   *:8080>
+   ServerName   www.qq.com
+   DocumentRoot    /var/www/lol
+</VirtualHost>
+[root@server ~]# systemctl restart httpd
+[root@server ~]# curl  www.qq.com:8080
+wo shi lol
+[root@server ~]# curl  www.qq.com
+wo shi qq
+```
+
+[注]：端口优先级最高匹配
+
+## NFS服务基础
 
 
 

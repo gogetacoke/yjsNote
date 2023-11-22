@@ -18,6 +18,10 @@
   - [day01](#day01-1)
   - [day02](#day02-1)
   - [day03](#day03-1)
+  - [day04](#day04-1)
+  - [day5](#day5-1)
+- [network](#network)
+
 
 
 # admin
@@ -163,3 +167,30 @@ inotify实时同步
 数据库服务基础
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/se/day03)
+
+## day04
+
+podman容器
+
+镜像导入制作
+
+容器安装删除
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/se/day04)
+
+## day5
+
+构建LAMP
+
+Ubuntu基础
+
+邮件服务器
+
+时间服务器
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/se/day05)
+
+# network
+
+day1
+
