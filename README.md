@@ -19,9 +19,10 @@
   - [day02](#day02-1)
   - [day03](#day03-1)
   - [day04](#day04-1)
-  - [day5](#day5-1)
+  - [day05](#day05-1)
 - [network](#network)
-
+  - [day01](#day01-2)
+  - [day02](#day02-2)
 
 
 # admin
@@ -178,7 +179,7 @@ podman容器
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/se/day04)
 
-## day5
+## day05
 
 构建LAMP
 
@@ -192,5 +193,26 @@ Ubuntu基础
 
 # network
 
-day1
+## day01
 
+了解网络功能
+
+学习网络参考模型
+
+交换机基本命令操作
+
+交换机基本工作原理
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/ne/day01)
+
+## day02
+
+VLAN技术及应用
+
+Trunk
+
+链路集合
+
+网络层
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/ne/day02)
