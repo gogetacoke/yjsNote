@@ -53,19 +53,35 @@
 
 + 60年代
 
-  交换机
+  分组交换
+
+  > 将数据分成一组一组，再进行一组一组传输，每传一组都进行标记，断网后，联网后还能继续再传
 
 + 70-80年代
 
   TCP/IP
 
+  > 出现局限，不兼容不同品牌
+  >
+  > 出现ISO统一技术，解决兼容性问题
+
 + 90年代后
 
   Web技术
 
+## 路由交换设备
+
+路由器：远距离传输数据，跨网络传输
+
+交换机：让设备互联，组件局域网
+
 ## 网络拓扑结构
 
+连接网络的方式
+
 ### 星型拓扑图
+
+![](../pic/ne/d3-6.png)
 
 优点：
 
@@ -78,6 +94,8 @@
 + 可靠性低
 
 ### 网状拓扑图
+
+![](../pic/ne/d3-7.png)
 
 优点：
 
@@ -94,20 +112,20 @@ TCP/IP模型：
 
 应用层========计算机
 
-传输层========防火墙
+传输层========防火墙====tcp、udp
 
-网路层========路由器
+网路层========路由器====ip
 
-数据链路层========交换机
+数据链路层========交换机=====vlan、trunk
 
 物理层 =======网卡
 
 ## eNSP与交换机命令行
 
-### 改变命令行试图
+### 改变命令行视图
 
 ```
-<Huawei>  # 用户试图
+<Huawei>  # 用户视图
 <Huawei>system-view # 切换系统视图
 [Huawei]  # 系统视图
 [Huawei]interface Ethernet 0/0/1 #切换接口视图
@@ -153,7 +171,7 @@ system-view
 <sw1>system-view #进入系统视图
 [sw1]aaa # 进入帐号管理视图
 [sw1-aaa]local-user test01 password cipher 123 # 创建用户test01,(cipher)使密码加密
-[sw1-aaa]display current-configuation # 查看密码
+[sw1-aaa]display current-configuation # 查看详细配置信息
 [sw1-aaa] quit  #退出到系统视图
 [sw1]user-interface console 0 #进入用户控制台接口
 [sw1-ui-console0]authentication-mode aaa # 激活配置
