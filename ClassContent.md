@@ -15,3 +15,7 @@ ss -ntulp | grep 80
 bash-completion
 
 > 代码拓哉包，方便tab键联想代码
+
+wingftp
+
+> windows上安装ftp

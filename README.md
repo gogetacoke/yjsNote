@@ -23,6 +23,8 @@
 - [network](#network)
   - [day01](#day01-2)
   - [day02](#day02-2)
+  - [day03](#day03-2)
+  - [day04](#day04-2)
 
 
 # admin
@@ -228,3 +230,11 @@ Trunk
 ACL原理与应用
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/ne/day03)
+
+## day04
+高级ACL
+
+NAT工作原理
+
+VRRP解析与配置
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/ne/day04)
