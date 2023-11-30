@@ -1,5 +1,8 @@
 # yjsNote
-把行动交给现在，把结果交给时间 --致小航 要认真，不要贪玩。
+<p style="background-color: pink">把行动交给现在，把结果交给时间 --致小航
+    要认真，不要贪玩。</p>
+
+<p style="background-color: yellow">不要因为没有掌声，而放弃梦想，我们需要的是坚持，而不是观众</p>
 
 - [yjsNote](#yjsnote)
 - [admin](#admin)
@@ -25,6 +28,11 @@
   - [day02](#day02-2)
   - [day03](#day03-2)
   - [day04](#day04-2)
+  - [day05](#day05-2)
+- [shell](#shell)
+  - [day01](#day01-3)
+  - [day02](#day02-3)
+
 
 
 # admin
@@ -237,4 +245,39 @@ ACL原理与应用
 NAT工作原理
 
 VRRP解析与配置
+
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/ne/day04)
+
+## day05
+
+数制
+
+ipv4地址扩展应用
+
+了解ipv6地址
+
+Linux虚拟网络
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/ne/day05)
+
+# shell
+
+## day01
+
+编写及执行脚本
+
+Shell变量
+
+数值运算
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/sh/day01)
+
+## day02
+
+条件测试
+
+If选择结构
+
+循环结构
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/sh/day02)

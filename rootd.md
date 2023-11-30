@@ -2,6 +2,10 @@
 
  >存储设备文件数据
 
+/dev/null
+
+> 简称黑洞，存放在里面的消息，将消失，一般使用脚本输出信息重定向到黑洞
+
 /mnt
 
 >用于用户设置的挂载的访问点
@@ -68,6 +72,14 @@
 
 > nfs设置共享的配置文件
 
+/etc/shells
+
+> 记录当期机器上有哪些解释器可以使用
+
+/etc/profile
+
+> 永久修改变量命名
+
 /root/.ssh/know_hosts
 
 > 记录当前主机ssh过那些机器
@@ -75,3 +87,9 @@
 /rec/resolv.conf
 
 > 指定dns的配置文件
+
+~/.vimrc
+
+> autocmd filetype sh set ai ts=4
+>
+> 编写shell脚本时会自动执行上方指令，设置自动缩进4
