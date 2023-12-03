@@ -289,11 +289,24 @@ autofs服务提供“按需访问”
 # For details of the format look at auto.master(5).
 #
 /misc   /etc/auto.misc
-/myauto /opt/xixi.txt
+/myauto /opt/xixi.txt # 需要访问myauto内容，请访问配置文件xixi.txt
 ]#vim /opt/xixi.txt
-nsd -fstype=iso9660 :/dev/cdrom
-xxx -fstype=nfs 192.168.88.88:/abc  # 基于nfs触发挂载时编写
+nsd -fstype=iso9660 :/dev/cdrom # 编写配置，用户只要在文件夹中输入nsd将完成瓜子
+xxx -fstype=nfs 192.168.88.88:/abc  # 基于nfs触发挂载时编写，nsd为触发挂载的命令
 ]# systemctl restart autofs
+```
+
+**案例：**用户进入/nfss目录输入nf，自动触发挂载88.2上的NFS文件夹里内容
+
+```
+#修改master文件
+/nfss /mnt/nfs.txt
+# 编写自定义挂载内容配置文件
+vim /mnt/nfs.txt
+nf -fstype=nfs 192.168.88.2:/abc
+
+]#ls /nfss/nf
+xx xx xx
 ```
 
 

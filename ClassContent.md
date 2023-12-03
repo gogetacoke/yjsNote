@@ -23,3 +23,9 @@ wingftp
 --nodeps 
 
 > rpm包跳过当前包的依赖
+
+安装nginx所需要的依赖
+
+> pcre-devel
+>
+> openssl-devel

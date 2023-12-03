@@ -281,3 +281,15 @@ If选择结构
 循环结构
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/sh/day02)
+
+## day03
+
+while循环
+
+中断控制
+
+函数
+
+字符串处理
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/sh/day03)
