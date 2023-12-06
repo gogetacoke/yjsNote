@@ -171,7 +171,7 @@ rtt min/avg/max/mdev = 0.272/0.854/1.437/0.583 ms
 ```
 ]# vim /etc/default/grub 
 GRUB_CMDLINE_LINUX="crashkernel=auto resume=/dev/mapper/rl-swap rd.lvm.lv=rl/root rd.lvm.lv=rl/swap rhgb quiet net.ifnames=0 biosdevname=0 "
-]# grub2-mkconfig  -o  /boot/grub2/grub.cfg  #重新生成网卡命名的规则
+]# grub2-mkconfig  -o  /boot/grub2/grub.cfg  #生效网卡规则
 ]# reboot     
 ]# ifconfig | gead -2 
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
