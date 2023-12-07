@@ -16,9 +16,9 @@ HISTSIZE=2000
 HISTTIMEFORMAT="%F %T" # 添加一条
 ```
 
-# 修改ssh会话时长
+# ssh
 
-## 针对root用户
+## 修改针对root用户ssh会话时长
 
 ```
 ~/.bash_profile
@@ -34,7 +34,21 @@ export TMOUT=100  # 添加一条，以秒为单位
 server 192.168.88.240  iburst # 修改poor
 ```
 
+# FTP
 
+## 匿名访问
 
+```
+/etc/vsftpd/vsftpd.conf
+anonymous_enable=NO
+anonymous_enable=YES
+```
 
+## 修改上传权限
+
+```
+/etc/vsftpd/vsftpd.conf
+#anon_upload_enable=YES
+anon_upload_enable=YES
+```
 

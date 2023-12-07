@@ -17,7 +17,7 @@
 >
 > ne	NETWORK(第一阶段network笔记)
 >
-> sh	SHELL(第一阶段shell笔记)
+> sh	SHELL(第二阶段shell笔记)
 >
 > cg	Configuration(配置，记录实用命令配置文件操作，以及命令行操作)
 >
@@ -30,6 +30,10 @@
 > qb	Question Bank(题库，收集觉得实用的题目)
 >
 > st	  Stage mind map(阶段思维导图，记录每一阶段总结的思维导图)
+>
+> as	Application Software(应用软件，记录日常软件的基本使用及配配置)
+>
+> op	OPERATION(第二阶段OPERATION笔记)
 >
 > test	(打草稿，晨讲)
 >

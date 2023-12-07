@@ -138,34 +138,117 @@ column -t user.txt
 ### 可视化安装软件脚本
 
 ```
+#vim menu                #创建菜单函数文件
+x=1                    #高亮行号，默认为1即可
+y=0                    #第几行
+menu (){                #循环显示菜单的函数
+    clear
+    for i in 1,安装ftp服务 2,开关ftp服务 3,退出
+    do
+        echo "----------------"
+        let y++
+        [ $x -eq $y ] && echo -e "\033[43;93m$i\033[0m" && continue
+    done
+    y=0
+    echo "----------------"
+}
+```
+
+```
+ftp安装函数
+ftp_install(){
+    if rpm -q vsftpd &> /dev/null ;then        #ftp如果已经安装则条件算成功
+        msg="vsftpd已安装"                    #定义信息变量msg
+    else
+        yum -y install vsftpd &> /dev/null
+        [ $? -eq 0 ] && msg="vsftpd安装成功" || msg="vsftpd安装失败"
+    fi
+}
+```
+
+```
+#vim ser_manager            #创建服务管理函数文件
+ser_manager(){
+    if ! rpm -q vsftpd &>/dev/null ;then    #ftp如果未安装则条件算成功,！是取反
+        msg="未安装vsftpd软件包"
+        return                                #结束函数任务，跳出函数
+    fi
+    case $1 in
+    start)                                #调用本函数后追加start就是把服务开启
+        systemctl start vsftpd
+        msg="ftp服务已经启动"
+        ser_manager=start;;
+    stop)                                    #调用本函数后追加stop就是把服务关闭
+        systemctl stop vsftpd
+        msg="ftp服务已经关闭"
+        ser_manager=stop;;
+    esac
+}
+```
+
+```
 #!/bin/bash
-. menu
-. ftp_install
-. ser_manager
+. menu            #读入菜单函数
+. ftp_install        #读入安装函数
+. ser_manager        #读入服务管理函数
 while :
 do
-        menu
+    menu
+    echo "$msg"
+    read -n 3 c    #-n 3是输入足够3个字符就自动进行下一步，c是存储字符的变量
+    if [ "$c" == $'\033[A' ];then        #如果按了 "上" 键
+        [ $x -eq 1 ] && continue        #根据变量x定义高亮行，在第1行就没变化
+        let x--                        #如果不在第1行，就把x-1
+    elif [ "$c" == $'\033[B' ];then    #如果按了 "下" 键
+        [ $x -eq 3 ] && continue        #如果在第3行，没变化
+        let x++                        #如果不在第3行，就把x+1
+    elif [ -z $c ] && [ $x -eq 1 ];then        #如果在第1行回车就执行下列任务
+        msg="ftp服务安装中。。。"
         echo "$msg"
-        read -n 3 c
-        if [ "$c" == $'\033[A' ];then
-                [ $x -eq 1 ] && continue
-                let x--
-        elif [ "$c" == $'\033[B' ];then
-                [ $x -eq 3 ] && continue
-                let x++
-        elif [ $x -eq 1 ] && [ -z "$c" ];then
-                msg="ftp正在安装中..."
-                echo "$msg"
-                ftp_install
-        elif [ $x -eq 2 ] && [ -z "$c" ];then
-                [ "$ser_manager" != "start" ] && ser_manager start || ser_manager stop
-        elif [ $x -eq 3 ] && [ -z "$c" ];then
-                exit
-        fi
+        ftp_install                        #执行ftp_install函数的任务
+    elif [ -z $c ] && [ $x -eq 2 ];then        #如果在第2行回车就执行下列任务
+        [ "$ser_manager" != "start" ] && ser_manager start || ser_manager stop
+    elif [ -z $c ] && [ $x -eq 3 ];then        #如果在第3行回车就执行下列任务
+        exit
+    fi
 done
 ```
 
+### 编写每天备份文件脚本
 
+```
+# 根据需求打包文件夹以外的内容，打包除.tmp结尾的所有内容
+]#touch a b
+]#touch c.tmp
+]#ls
+a b b.tmp
+]#tar -zcf test.tar.gz --exclude=*.tmp .
+```
+
+```
+#!/bin/bash
+sou_path=/var/www/html
+tar_path=/opt/backup_date
+# date=$(date +%Y-%m-%d) # 年月日
+date=$(date +%T) # 时分秒
+ex_file=*.tmp
+tar -zcf ${tar_path}/web_file_${date}.tar.gz --exclude=$ex_file ${sou_path} &> /dev/null
+file_total=$(ls ${tar_path}|wc -l)
+echo "${date}的文件打包放入${tar_path}当前文件总数是${file_total}个"
+if [ $file_total -ge 5 ];then
+    lftp 192.168.88.2 << EOF
+    cd pub
+    mput -q ${tar_path}/*
+    quit
+EOF
+    if [ $? -ne 0 ];then
+        echo "上传失败！"
+    else
+        echo "上传成功！"
+        rm -rf ${tar_path}/web_file*
+    fi
+fi  
+```
 
 ## 输入重定向
 
@@ -204,8 +287,6 @@ while read a b;do echo $a $b;done < abc.txt
 a b
 c d
 ```
-
-
 
 ## 脚本内部调用外部文件
 
