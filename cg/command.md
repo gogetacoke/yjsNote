@@ -29,3 +29,19 @@ unzip xx.zip xx xx # 压缩
 -j：跳过压缩文件中的目录结构，直接将文件解压到当前目录。
 ```
 
+# 查询文件是否被篡改
+
+```
+md5sum pass 
+a805b3a06ecb1136339695ea840e830e  pass
+vim pass # 添加一个a
+md5sum pass
+a805b3a06ecb1136339695ea840e830e  pass
+
+# 使用md5生成hash值，可以有效保证文件数据的安全性
+md5sum /etc/*.conf | md5sum # 给etc下所有.conf结尾的文件生成hash值，在管道给md5sum生成一个hash，etc下.conf内容发生改变后，可以进行对比
+3d6e2c8ab635014f1a5c2fb7841a6abd  -
+
+# 生成hash值其余命令：sha256sum、sha512sum
+```
+

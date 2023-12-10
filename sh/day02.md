@@ -271,7 +271,7 @@ c
 0
 ```
 
-#### -f 是否存在
+#### -f 文件
 
 判断文件是否存在，需关心是否是普通文件
 
@@ -301,7 +301,7 @@ c
 
 #### -r、-w、-x权限判断
 
-判断当前用户是否拥有此权限，对root用户无效
+判断**当前操作用户**对当前目录或文件是否拥有此权限，对root用户无效
 
 ```
 ]# [ -r a  ] 
@@ -437,9 +437,7 @@ do
 done
 ```
 
-
-
-**案例**
+## **案例**
 
 1. 批量创建用户
 
@@ -461,17 +459,23 @@ done
 
    ```
    #!/bin/bash
+   all_up=0
+   all_fail=0
    for i in {1..10}
    do
        ping -c 3 -i 0.2 -W 1 192.168.88.$i &> /dev/null
        if [ $? -eq 0 ];then
            echo 88.$i successful
+           let all_up++
        else
            echo 88.$i failed
+        let all_fail++
        fi
    done    
+   echo "总共存活："$all_up"个主机"
+   echo "总共宕机："$all_fail"个主机"
    ```
-
+   
    
 
 # 快捷键
@@ -512,9 +516,15 @@ done
 
 # 今日总结
 
+1. 字符串：==、!=、-z、-n
+2. 逻辑组合：&&、`||`
+3. 数值：-eq、-ne、-gt、-ge、-lt、-le
+4. 文件：-e、-f、-d、-r、-w、-x
+5. 条件：if 条件测试;then xx fi
+6. 循环：for i in 条件测试;do xx done
+
 # 昨日复习
 
-uaddfor.sh:行9: 请选择你要操作的项目：: 未找到命令
-uaddfor.sh:行26: 未预期的符号 `elif' 附近有语法错误
-uaddfor.sh:行26: `elif [ $option -eq 3 ];then'
-
+1. 环境变量、位置变量、预定以变量
+2. 三种引号
+3. 数值计算，expr、$[]、let

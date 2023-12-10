@@ -29,3 +29,14 @@ wingftp
 > pcre-devel
 >
 > openssl-devel
+
+centos7输入法
+
+```
+yum -y install ibus ibus-pinyin
+# 配置环境变量 root用户；.bashrc
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+```
+
