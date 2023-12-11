@@ -1,11 +1,10 @@
-# 			Directory-yjsNote
+
 
 <p style="background-color: pink">把行动交给现在，把结果交给时间</p>
 
 
 <p style="background-color: yellow">不要因为没有掌声，而放弃梦想，我们需要的是坚持，而不是观众</p>
-- [Directory-yjsNote](#directory-yjsnote)
-- [说明](#说明)
+  - [说明](#说明)
 - [第一阶段](#第一阶段)
   - [ADMIN](#admin)
     - [day1](#day1)
@@ -42,12 +41,14 @@
   - [OPERATION](#operation)
     - [day01](#day01-4)
     - [day02](#day02-4)
+    - [day03](#day03-4)
 - [相关文件](#相关文件)
   - [配置](#配置)
     - [命令相关配置](#命令相关配置)
     - [文件相关配置](#文件相关配置)
   - [排错](#排错)
     - [网络](#网络)
+    - [远程连接](#远程连接)
   - [命令拓展](#命令拓展)
     - [nfs命令拓展](#nfs命令拓展)
   - [题库收集](#题库收集)
@@ -63,6 +64,7 @@
     - [课堂内容补充](#课堂内容补充)
     - [颜色(echo输出)](#颜色echo输出)
     - [根目录各文件含义](#根目录各文件含义)
+    - [常用服务默认端口](#常用服务默认端口)
 
 # 说明
 
@@ -418,6 +420,18 @@ Nginx高级技术
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day02)
 
+### day03
+
+Nginx方向代理
+
+Nginx调度器
+
+Nginx优化
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day03)
+
+
+
 # 相关文件
 
 ## 配置
@@ -434,7 +448,11 @@ Nginx高级技术
 
 ### 网络
 
-[点击进行跳转](https://gogetacoke.github.io/yjsNote/dr/network/1)
+[点击进行跳转](./dr/network/1)
+
+### 远程连接
+
+[点击进行跳转](./dr/ssh/1)
 
 ## 命令拓展
 
@@ -483,3 +501,7 @@ Nginx高级技术
 ### 根目录各文件含义
 
 [点击进行跳转](./other/rootd)
+
+### 常用服务默认端口
+
+[点击进行跳转](./other/port)

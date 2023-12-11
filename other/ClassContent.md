@@ -1,6 +1,6 @@
-scp /etc/passwd  192.168.66.11
+scp /etc/passwd  root@192.168.66.11:/x
 
-> scp /目录/迁移文件 目的ip
+> scp /目录/迁移文件 目的ip:存放的路径（不指定则使用和被发送文件所在的位置）
 
 vm clone 虚拟机名称
 
@@ -38,5 +38,21 @@ yum -y install ibus ibus-pinyin
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
+```
+
+linux不支持ntfs
+
+```
+yum -y install ntfs-3g
+```
+
+查询系统最大打开文件次数
+
+```
+ulimt -n # 查看
+ulimit -n  10000 # 临时修改
+vim /etc/security/limits.conf 
+*               soft    nofile            100000 # 限制值，每次使用
+*               hard    nofile             100000 # 软件限制值，最大
 ```
 

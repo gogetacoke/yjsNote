@@ -388,7 +388,7 @@ server {
 server {
         listen       80;
         server_name  localhost;
-        rewrite  /a.html  /b.html last;   # 当用户输入的网页包含a.html就跳转b.html         rewrite /b.html /c.html;
+        rewrite  /a.html  /b.html last;   # 当用户输入的网页包含a.html就跳转b.html         	rewrite /b.html /c.html;
     location / {
         root   html;
         index  index.html index.htm;
