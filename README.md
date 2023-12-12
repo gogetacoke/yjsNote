@@ -1,10 +1,8 @@
-
-
 <p style="background-color: pink">把行动交给现在，把结果交给时间</p>
 
 
 <p style="background-color: yellow">不要因为没有掌声，而放弃梦想，我们需要的是坚持，而不是观众</p>
-  - [说明](#说明)
+- [说明](#说明)
 - [第一阶段](#第一阶段)
   - [ADMIN](#admin)
     - [day1](#day1)
@@ -42,6 +40,7 @@
     - [day01](#day01-4)
     - [day02](#day02-4)
     - [day03](#day03-4)
+    - [day04](#day04-4)
 - [相关文件](#相关文件)
   - [配置](#配置)
     - [命令相关配置](#命令相关配置)
@@ -65,6 +64,8 @@
     - [颜色(echo输出)](#颜色echo输出)
     - [根目录各文件含义](#根目录各文件含义)
     - [常用服务默认端口](#常用服务默认端口)
+    - [网站状态码](#网站状态码)
+
 
 # 说明
 
@@ -430,7 +431,17 @@ Nginx优化
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day03)
 
+### day04
 
+Session与Cookie
+
+部署Redis
+
+Session共享
+
+Nignx实现跨域
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day04)
 
 # 相关文件
 
@@ -505,3 +516,7 @@ Nginx优化
 ### 常用服务默认端口
 
 [点击进行跳转](./other/port)
+
+### 网站状态码
+
+[点击进行跳转](./other/htmlStatusCode)

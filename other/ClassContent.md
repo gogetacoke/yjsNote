@@ -56,3 +56,15 @@ vim /etc/security/limits.conf
 *               hard    nofile             100000 # 软件限制值，最大
 ```
 
+查询文件所在
+
+```
+whereis  文件名
+```
+
+yum也可以装RPM包
+
+```
+yum -y install phpredis-5.1.0-1.x86_64.rpm
+```
+
