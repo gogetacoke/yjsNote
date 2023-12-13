@@ -60,8 +60,6 @@ var
 >
 > 不指定源码包编译位置，默认将编译存放在local下哦啊
 
-# `root`
-
 # `opt`
 
 /opt
@@ -117,5 +115,3 @@ var
 /etc/resolv.conf
 
 > 指定dns的配置文件
-
-> 

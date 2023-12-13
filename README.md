@@ -41,6 +41,7 @@
     - [day02](#day02-4)
     - [day03](#day03-4)
     - [day04](#day04-4)
+    - [day05](#day05-4)
 - [相关文件](#相关文件)
   - [配置](#配置)
     - [命令相关配置](#命令相关配置)
@@ -48,6 +49,8 @@
   - [排错](#排错)
     - [网络](#网络)
     - [远程连接](#远程连接)
+    - [nginx](#nginx)
+    - [tomcat](#tomcat)
   - [命令拓展](#命令拓展)
     - [nfs命令拓展](#nfs命令拓展)
   - [题库收集](#题库收集)
@@ -56,7 +59,7 @@
     - [第一阶段](#第一阶段-1)
   - [Linux上应用软件](#linux上应用软件)
     - [FTP](#ftp)
-    - [Nginx](#nginx)
+    - [Nginx](#nginx-1)
   - [周考错题记录](#周考错题记录)
     - [admin](#admin-1)
   - [没想好](#没想好)
@@ -442,6 +445,15 @@ Session共享
 Nignx实现跨域
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day04)
+### day05
+tomcat服务器
+
+tomcat应用案例
+
+maven应用
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day05)
+
+
 
 # 相关文件
 
@@ -464,6 +476,14 @@ Nignx实现跨域
 ### 远程连接
 
 [点击进行跳转](./dr/ssh/1)
+
+### nginx
+
+[点击进行跳转](./dr/nginx/1)
+
+### tomcat
+
+[点击进行跳转](./dr/tomcat/1)
 
 ## 命令拓展
 

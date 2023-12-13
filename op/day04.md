@@ -262,7 +262,7 @@ yum -y install redis
 ### 启用
 
 ```
-systemctl start redis phpredis
+systemctl start redis
 ss -ntulp|grep redis # 查询redis端口
 tcp   LISTEN 0      128        127.0.0.1:6379      0.0.0.0:*    users:(("redis-server",pid=2218,fd=6)) 
 ```
