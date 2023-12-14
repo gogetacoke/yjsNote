@@ -42,32 +42,38 @@
     - [day03](#day03-4)
     - [day04](#day04-4)
     - [day05](#day05-4)
+    - [day06](#day06-1)
 - [相关文件](#相关文件)
-  - [配置](#配置)
+  - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
     - [文件相关配置](#文件相关配置)
-  - [排错](#排错)
+  - [dr-排错](#dr-排错)
     - [网络](#网络)
     - [远程连接](#远程连接)
     - [nginx](#nginx)
     - [tomcat](#tomcat)
-  - [命令拓展](#命令拓展)
+    - [rpmbuild](#rpmbuild)
+    - [ssh](#ssh)
+    - [maven](#maven)
+  - [ot-命令拓展](#ot-命令拓展)
     - [nfs命令拓展](#nfs命令拓展)
   - [题库收集](#题库收集)
     - [题目](#题目)
-  - [阶段思维导图](#阶段思维导图)
+  - [st-阶段思维导图](#st-阶段思维导图)
     - [第一阶段](#第一阶段-1)
-  - [Linux上应用软件](#linux上应用软件)
+  - [as-Linux上应用软件](#as-linux上应用软件)
     - [FTP](#ftp)
     - [Nginx](#nginx-1)
-  - [周考错题记录](#周考错题记录)
+  - [we-周考错题记录](#we-周考错题记录)
     - [admin](#admin-1)
-  - [没想好](#没想好)
+  - [other-没想好](#other-没想好)
     - [课堂内容补充](#课堂内容补充)
     - [颜色(echo输出)](#颜色echo输出)
     - [根目录各文件含义](#根目录各文件含义)
     - [常用服务默认端口](#常用服务默认端口)
     - [网站状态码](#网站状态码)
+    - [文档所有工具](#文档所有工具)
+
 
 
 # 说明
@@ -451,13 +457,22 @@ tomcat服务器
 tomcat应用案例
 
 maven应用
+
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day05)
 
+### day06
 
+RPM 打包
+
+VPN服务
+
+systemd服务管理
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day06)
 
 # 相关文件
 
-## 配置
+## cg-配置
 
 ### 命令相关配置
 
@@ -467,7 +482,7 @@ maven应用
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/cg/file)
 
-## 排错
+## dr-排错
 
 ### 网络
 
@@ -485,7 +500,19 @@ maven应用
 
 [点击进行跳转](./dr/tomcat/1)
 
-## 命令拓展
+### rpmbuild
+
+[点击进行跳转](./dr/rpmbuild/1)
+
+### ssh
+
+[点击进行跳转](./dr/ssh/1)
+
+### maven
+
+[点击进行跳转](./dr/maven/1)
+
+## ot-命令拓展
 
 ### nfs命令拓展
 
@@ -497,13 +524,13 @@ maven应用
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/qb/sc-q)
 
-## 阶段思维导图
+## st-阶段思维导图
 
 ### 第一阶段
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/st/one.xmind)
 
-## Linux上应用软件
+## as-Linux上应用软件
 
 ### FTP
 
@@ -513,13 +540,13 @@ maven应用
 
 [点击进行跳转](./as/nginx/1)
 
-## 周考错题记录
+## we-周考错题记录
 
 ### admin
 
 [点击进行跳转](./we/admin)
 
-## 没想好
+## other-没想好
 
 ### 课堂内容补充
 
@@ -540,3 +567,7 @@ maven应用
 ### 网站状态码
 
 [点击进行跳转](./other/htmlStatusCode)
+
+### 文档所有工具
+
+[点击进行跳转](./other/down)

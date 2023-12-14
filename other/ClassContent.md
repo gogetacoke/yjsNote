@@ -1,4 +1,4 @@
-scp /etc/passwd  root@192.168.66.11:/x
+ scp /etc/passwd  root@192.168.66.11:/x
 
 > scp /目录/迁移文件 目的ip:存放的路径（不指定则使用和被发送文件所在的位置）
 
@@ -66,5 +66,12 @@ yum也可以装RPM包
 
 ```
 yum -y install phpredis-5.1.0-1.x86_64.rpm
+```
+
+开启Linux内核
+
+```
+modprobe ip_gre
+lsmod | grep gre #查询开启情况
 ```
 
