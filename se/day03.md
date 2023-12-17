@@ -45,7 +45,7 @@ inotify实时同步
 
 ## rsync
 
-格式：async [选项] 源目录	目标目录
+格式：rsync [选项] 源目录	目标目录
 
 -n：测试同步过程，不做实际修改
 
@@ -57,12 +57,18 @@ inotify实时同步
 
 -X：保持acl策略不变
 
+### 装包
+
+```
+yum -y install rsync
+```
+
 ### 本地同步
 
 ```
 ]#mkdir /mydir /todir
 ]#echo 123 > /mydir/1.txt
-]#touch 321 > mydir/2.txt
+]#echo 321 > mydir/2.txt
 ]#ls -l /mydir
 1.txt 2.txt
 ]#ls -l /todir
@@ -87,11 +93,17 @@ total size is 12  speedup is 0.04
 
 ### 远程同步
 
+> 下行：rsync [...] user@host:远程目录 本地目录
+>
+> 上行：rsync [...] 本地目录 user@host:远程目录
+
 **虚拟机A**
 
-1. ~]# rsync  **-**avX  --delete* /mydir/    root@192.168.88.2:/nsd10
-2. ……**..**connecting **(**yes**/**no)? yes
-3. root@192.168.88.2's password:         #输入密码
+```
+~]# rsync -avX  --delete /mydir/   root@192.168.88.2:/nsd10
+ ……**..**connecting **(**yes**/**no)? yes
+root@192.168.88.2's password:         #输入密码
+```
 
 **虚拟机B**
 
@@ -129,7 +141,7 @@ inotifywait [选项] 目标文件夹
 ```
 ]#/opt/myrpms/bin/inotifywait -rq /mydir：
 /mydir/ CREATE 5.txt
-]#ls /mydir
+]#ls /mydir菜单
   1.txt  2.txt  5.txt  hh  test
 ```
 

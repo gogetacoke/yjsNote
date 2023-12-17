@@ -89,7 +89,7 @@ Deleted: 608968fe7738f5d640bc6c38d28a6d3955f3d1e2c9e28dbd39958847d24253f9
 ]#podman run --name abc01 -it /localhost/rockylinux:8.6 /bin/bash # 创建一个abc01容器
 [root@321a3a81a2ee /]# ls # 进入容器
 bin  etc   lib    lost+found  mnt  proc  run   srv  tmp  var
-dev  home  lib64  media       opt  root  sbin  sys  usr
+dev  home  lib64  media       opt  root  sbi润n  sys  usr
 
 [root@321a3a81a2ee /]# exit # 退出容器
 exit
@@ -150,7 +150,7 @@ dcf2855af244f2ea1800de2d9b96ded7ee343766c08e80ab7433388575c9fe65
 
 ### 容器配置
 
-前提：本机已搭建FTP服务，并已挂载cdrom到ftp
+前提：本机已搭建FTP服务，已经配置网络YUM
 
 ```
 ]#podman run --name abc -itd localhost/rockylinux:8.6 # 后台创建一个abc容器

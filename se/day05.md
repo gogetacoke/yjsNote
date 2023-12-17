@@ -164,7 +164,7 @@ $sudo dpkg -L make # 列出软件的安装清单
 ]#vim /etc/chrony.conf
 末行模式：set nu #开启行号
 3 #pool 2.pool.ntp.org iburst #注释
-23 allow all # 将注释去掉，删除后妈内容加上all
+23 allow all # 将注释去掉，删除IP内容内容加上all
 26 local stratum 10 # 注释去掉，用于设置本机第10层时间服务器
 ```
 
@@ -183,9 +183,10 @@ B机器也需安装chronyd软件包
 ```
 ]#vim /etc/chrony.conf
 # pool 2.pool.ntp.org iburst # 将内容改为 server 192.168.88.240  iburst # ip为时间服务器
+
 ]#date -s ‘2008-1-1‘ # 修改错误时间
 ]#systemctl restart chronyd # 重启服务
-]#date # 查看时间 各几秒钟再查看
+]#date # 查看时间 隔几秒钟再查看
 ```
 
 ## 邮件收发

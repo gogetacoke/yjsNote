@@ -22,7 +22,7 @@ which firefox
 
 cat --help
 
-> 任何一个命令加上 --help课堂查看当前命令的所有帮助及选项信息
+> 任何一个命令加上 --help查看当前命令的所有帮助及选项信息
 
 cat -n /etc/passwd
 
@@ -64,7 +64,7 @@ umount /dvd
 
 > 卸载类似windos弹出U盘
 
-*（可以一个或多个）
+*（匹配内容可以一个或多个）
 
 >  通配符，针对不确定文档名词，以特殊字符表示
 >
@@ -76,7 +76,7 @@ umount /dvd
 >
 > 针对所匹配的是目录使用通配符时：ls -d /opt/a*
 
-？（必须要有一个）
+？（匹配内容必须要有一个）
 
 > 单个字符匹配
 >
@@ -127,15 +127,15 @@ mkdri -p /opt/work/apps
 >
 > 在opt中创建work目录再在work目录中创建apps目录
 
-rm /opt/hh
+rm /opt/hh.txt
 
-rm -r /opt/hh
+rm -r /opt/1/hh.txt
 
-rm -rf /opt/hh
+rm -rf /opt/1/2/hh.txt
 
-> rm 删除文件或目录，且有提示是否删除
+> rm 只能删除文件，且有提示是否删除
 >
-> [-r] 递归删除目录
+> [-r] 递归删除目录和文件,且有提示但前删除的内容
 >
 > [-rf] 强制删除，不提示
 
@@ -147,7 +147,7 @@ mv /opt/1.txt /opt/nsd
 >
 > mv：进行重命名，在目标目录中修改源数据名称
 >
-> 例如：mv /opt/1.txt /opt/nsd/2.txt
+> 例如：mv /opt/1.txt /opt/nsd/2.txt # 将1.txt移动到nsd目录且改名为2.txt	
 
 cp /etc/passwd /opt
 
@@ -161,6 +161,8 @@ cp -r /root /etc/passwd /opt/cab
 
 cp /etc/hosts .
 
+cp -p /etc/passwd /opt/
+
 > cp：复制
 >
 > [-r]：递归，复制目录
@@ -169,9 +171,11 @@ cp /etc/hosts .
 >
 > cp：还能在复制中进行重命名
 >
-> cp：复制可以支持两个以上的参数，永远把最后一个参数作为目标，其他的所有的参数都作为源数据
+> cp：复制可以支持两个以上的参数，永远把最后一个参数作为目标，其他的所有的参数都作为源数据，以上将root下的内容与etc/passwd文件一同复制到opt/cab目录下
 >
 > .：复制与一个点进行连用，将数据复制到当前路径下，点表示当前目录
+>
+> `-p`：保留原有文件所有权限及用户信息进行复制
 
 grep -i Root /etc/passwd
 

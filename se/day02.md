@@ -45,7 +45,7 @@ DNS服务基础
 
 ## 本地Yum仓库
 
-前提：需用有众多rpm包
+前提：需用有众多软件包
 
 ### 安装createrepo
 
@@ -53,6 +53,8 @@ DNS服务基础
 ]# createrepo
 bash: createrepo: 未找到命令...
 安装软件包“createrepo_c”以提供命令“createrepo”？ [N/y] y
+# 或
+yum -y install createrepo
 ```
 
 ### 生成仓库数据文件
@@ -101,7 +103,8 @@ Repo-expire        : 172,800 秒 （最近 2023年11月16日 星期四 09时51�
 
 ```
 ]#mv /tools/other/sl-5.02-1.el7.x86_64.rpm /root #移动仓库中的一个rpm包
-]#createrepo --update /tools/other # 更新仓库数据文件
+
+]#createrepo_c --update /tools/other # 更新仓库软件包
 Directory walk started
 Directory walk done - 4 packages
 Loaded information about 4 packages
@@ -110,7 +113,7 @@ Preparing sqlite DBs
 Pool started (with 5 workers)
 Pool finished
 
-]#yum repoinfo # 查看仓库信息
+]#yum repoinfo # 查看仓库信息,此使还是5个包，因为仓库缓存还没有更新
 仓库ID            : myrepm
 仓库名称          : myrepm
 Repo-revision      : 1700098908
@@ -123,7 +126,7 @@ Repo-expire        : 172,800 秒 （最近 2023年11月16日 星期四 09时51�
 仓库文件名      : /etc/yum.repos.d/mydvd.repo
 ```
 
-### 刷新Yum缓存
+### 刷新Yum仓库缓存
 
 ```
 ]#yum makecache # 刷新yum缓存
@@ -251,14 +254,14 @@ DNS服务器分类：根域名服务器、一级DNS服务器、二级DNS服务�
 
 ```
 ]#cp -p /etc/named.conf /root # 备份数据    cp -p ：保留数据原有者
-]#vim /etc/name.conf
+]#vim /etc/named.conf
 options{
-	directory “/var/named” # 定义地址库文件存放路径
+	directory ""/var/named"; # 定义地址库文件存放路径
 };
-zone “tedu.cn” IN{ 	# 定义复制的解析tedu.cn域名
+zone “tedu.cn” IN{ 	# 定义负责解析tedu.cn域名
 	type master;	# 主DNS服务器
-	file “tedu.cn.zone” # 地址库文件名称
-}
+	file "tedu.cn.zone"; # 地址库文件名称
+};
 ```
 
 ### 建立地址库文件
@@ -275,13 +278,24 @@ ftp			A		2.2.2.2
 
 ### 测试DNS服务器
 
+**本机测试**
+
+```
+]#nslookup www.tedu.cn
+Server:         192.168.88.240
+Address:        192.168.88.240#53
+
+Name:   www.tedu.cn
+Address: 1.1.1.1
+```
+
 **B机器**
 
 ```
-]#echo 192.168.88.240 > /etc/resolv.conf # 指定DNS服务器地址
+]#echo nameserver 192.168.88.240 > /etc/resolv.conf # 指定DNS服务器地址
 ]#nslookup www.tedu.cn # 命令测试域名解析
-Server:         192.168.88.240
-Address:        192.168.88.240#53
+Server:         127.0.0.1
+Address:        127.0.0.1#53
 
 Name:   www.tedu.cn
 Address: 1.1.1.1

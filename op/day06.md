@@ -468,7 +468,7 @@ systemctl stop nginx
 ## 长地址更改文件名
 
 ```
-
+cp /usr/lib/systemd/system/{httpd.service,xx.service}
 ```
 
 

@@ -75,3 +75,13 @@ modprobe ip_gre
 lsmod | grep gre #查询开启情况
 ```
 
+服务与语言
+
+```
+静态页面：httpd、nginx(性能最好)、tomcat
+动态：
+php：nginx+php-fpm
+python：nginx+uwsgi
+java：tomcat
+```
+

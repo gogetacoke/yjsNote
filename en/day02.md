@@ -68,7 +68,7 @@ vdc         252:32   0   20G  0 disk
 - q 放弃更改并退出
 - w 保存更改并退出
 
-默认是MBR分区创建模式
+默认是MBR分区创建模式(最多四个主分区或3个主分区1个扩展分区N个逻辑分区)
 
 例：以下将80G硬盘分成3个分区分别为10G1个扩展分区2个10G的逻辑分区
 
@@ -204,8 +204,6 @@ mkfs.xfs /dev/vdc1
 
 将vdb1分区格式成ext4文件系统
 
-
-
 ## blkid
 
 查询分区类型
@@ -222,7 +220,7 @@ blkid /dev/vdb1 # 查看文件系统类型
 
 ### 临时挂载-mbr/gpt
 
-挂载上诉创建的磁盘
+挂载上述创建的磁盘
 
 ```linux
 mkdir /mypart1
@@ -280,7 +278,7 @@ Disk Flags:
 
 Number  Start   End     Size    Type      File system     标志
  1      1049kB  2149MB  2147MB  primary   linux-swap(v1)
- 2      2149MB  4296MB  2147MB  primary
+ 2      2149M格式化B  4296MB  2147MB  primary
  3      4296MB  6443MB  2147MB  primary
  4      6443MB  8591MB  2147MB  extended
  5      6445MB  8591MB  2146MB  logical   xfs
@@ -418,46 +416,48 @@ lsblk-fdisk-mkfs-mount /etc/fstab
 
 3. 分区模式：MBR分区方案 GPT分区方案
 
-4. 格式化 ：mkfs.ext4 mkfs.xfs blkid
+4. 格式化 ：mkfs.ext4 mkfs.xfs 
 
-5. 挂在使用：mount 手动挂载 与/etc/fstab开机自动挂载
+5. blkid 查询文件系统类型
 
-6. 利用mount -a检测开机自动挂载
+6. 挂在使用：mount 手动挂载 与/etc/fstab开机自动挂载
 
-7. Linux中新硬盘经历那些步骤才能存档
+7. 利用mount -a检测开机自动挂载
+
+8. Linux中新硬盘经历那些步骤才能存档
 
    识别硬盘-》划分分区-》格式化-》挂载使用
 
-8. 分区模式分为那两种
+9. 分区模式分为那两种
 
    MBR
 
    GPT
 
-9. MBR常见的分区类型有那三种
+10. MBR常见的分区类型有那三种
 
    主分区、扩展分区、逻辑分区
 
-10. 刷新分区表命令是
+11. 刷新分区表命令是
 
     partprobe
-    
-11. 格式化交换分区的命令是什么？启用交换分区的命令是什么？如何查看交换区成员？
-    
+
+12. 格式化交换分区的命令是什么？启用交换分区的命令是什么？如何查看交换区成员？
+
+
 mkswap
     
 swapon
     
 swapon
     
-12. 查看文件戏台类型的命令
+12. 查看文件系统类型的命令
 
     blkid
 
-13. 
-
     
 
     
 
     
+

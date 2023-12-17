@@ -46,7 +46,7 @@
 >
 > 管理员root的UID：0
 >
-> 普通用户的UID：默认从1000凯撒
+> 普通用户的UID：默认从1000开始
 >
 > 系统用户的UID：1-999
 >
@@ -100,9 +100,9 @@
 >
 >`/sbin/nologin：禁止用户登陆`
 >
->useradd -s /sbin/nologin test4    指定用户未不登陆解释器
+>useradd -s /sbin/nologin test4    指定用户未不能登陆解释器
 >
->`passwd test4 `   设置秘密，屏幕没有显示，需要输入两次密码
+>`passwd test4 `   设置密码，屏幕没有显示，需要输入两次密码
 
 
 ### usermod
@@ -122,7 +122,7 @@
 >
 >groupadd xiaohang 创建一个xiaohang组
 >
->usermod -G xiaohang test5 将xiaohang组加入用户test5的附加组中
+>usermod -G xiaohang test5 为test5用户添加一个附加组xiaohang
 >
 >[注]：test5本没有xiaohang附加组，执行上诉命令将直接加入附加组，默认附加组不变
 >
@@ -186,6 +186,10 @@
 
 > /etc/group 存放组的基本信息
 
+### groupadd
+
+> 格式：groupadd -选项 组名
+
 ### gpasswd
 
 > 格式：gpasswd -选项 用户名 组名
@@ -210,13 +214,11 @@
 >
 > 例：删除组中所有成员
 >
-> gpasswd -M '' group1
+> gpasswd -M  group1
 >
 > 例：将用户test1设置为组管理员（除了root只有管理员才能修改添加成员）
 >
 > gpasswd -A test1 tarena
-
-
 
 ### /etc/gshdow
 
@@ -236,7 +238,7 @@
 >
 > gpasswd -A ‘ tarena’
 
-### grouodel
+### groupdel
 
 > groupdel 组名  （不能删除基本组）
 
@@ -288,7 +290,7 @@
 >
 > 例如：将etc下hosts和passwd压缩到opt下
 >
-> zip -r /opt/test.zip /opt
+> zip -r /opt/test.zip /etc hosts passwd
 >
 > **解压缩**
 >

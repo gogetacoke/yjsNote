@@ -39,7 +39,7 @@ NFS服务基础
 
 # 课堂笔记（文本）
 
-## Httpd常见错误
+## Httpd排错
 
 ```
 ]#systemctl restart httpd
@@ -74,7 +74,7 @@ myweb
 
 /   拒绝所有客户端访问
 
-[注]：主配置文件中内容
+[注]：主配置文件中的默认规则内容
 
 ### 访问控制规则
 
@@ -168,13 +168,13 @@ wo shi CBD
 ### 为虚拟站点添加配置
 
 ```
-]#vim /etc/httpd/conf.d/xixi.conf
+]#vim /etc/httpd/conf.d/xixi.conf # 使用调用配置文件的方式编写配置
 编写内容：
-<VirtualHost *：80>
+<VirtualHost *:80>
  Servername www.qq.com
  DocumentRoot /var/www/qq
 </VirtualHost>
-<VirtualHost *：80>
+<VirtualHost *:80>
  Servername www.lol.com
  DocumentRoot /var/www/lol
 </VirtualHost>
@@ -291,7 +291,7 @@ autofs服务提供“按需访问”
 /misc   /etc/auto.misc
 /myauto /opt/xixi.txt # 需要访问myauto内容，请访问配置文件xixi.txt
 ]#vim /opt/xixi.txt
-nsd -fstype=iso9660 :/dev/cdrom # 编写配置，用户只要在文件夹中输入nsd将完成瓜子
+nsd -fstype=iso9660 :/dev/cdrom # 编写配置，用户只要在文件夹中输入nsd将完成挂载
 xxx -fstype=nfs 192.168.88.88:/abc  # 基于nfs触发挂载时编写，nsd为触发挂载的命令
 ]# systemctl restart autofs
 ```

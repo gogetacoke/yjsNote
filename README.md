@@ -43,6 +43,7 @@
     - [day04](#day04-4)
     - [day05](#day05-4)
     - [day06](#day06-1)
+    - [day07](#day07)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -64,6 +65,11 @@
   - [as-Linux上应用软件](#as-linux上应用软件)
     - [FTP](#ftp)
     - [Nginx](#nginx-1)
+    - [nfs](#nfs)
+    - [rsync](#rsync)
+    - [dns](#dns)
+    - [autofs](#autofs)
+    - [ntp](#ntp)
   - [we-周考错题记录](#we-周考错题记录)
     - [admin](#admin-1)
   - [other-没想好](#other-没想好)
@@ -73,6 +79,9 @@
     - [常用服务默认端口](#常用服务默认端口)
     - [网站状态码](#网站状态码)
     - [文档所有工具](#文档所有工具)
+  - [命令补充](#命令补充)
+    - [基础命令补充](#基础命令补充)
+    - [基础服务补充](#基础服务补充)
 
 
 
@@ -111,6 +120,8 @@
 > we	（周考错题收集）
 >
 > ws	（复习一周的内容及整理）
+>
+> command-sup （命令补充）
 
 # 第一阶段
 
@@ -470,6 +481,16 @@ systemd服务管理
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day06)
 
+### day07
+
+Nginx+uWSGI
+
+灰度发布
+
+访问限制
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day07)
+
 # 相关文件
 
 ## cg-配置
@@ -540,6 +561,26 @@ systemd服务管理
 
 [点击进行跳转](./as/nginx/1)
 
+### nfs
+
+[点击进行跳转](./as/nfs/1)
+
+### rsync
+
+[点击进行跳转](./as/rsync/1)
+
+### dns
+
+[点击进行跳转](./as/dns/1)
+
+### autofs
+
+[点击进行跳转](./as/autofs/1)
+
+### ntp
+
+[点击进行跳转](./as/ntp/1)
+
 ## we-周考错题记录
 
 ### admin
@@ -571,3 +612,13 @@ systemd服务管理
 ### 文档所有工具
 
 [点击进行跳转](./other/down)
+
+## 命令补充
+
+### 基础命令补充
+
+[点击进行跳转](./command-sup/basic-command)
+
+### 基础服务补充
+
+[点击进行跳转](./command-sup/basic-service)

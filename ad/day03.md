@@ -62,9 +62,9 @@ tar -zcf /root/san.tar.gz -C /etc/ passwd
 
 head -2 /etc/passwd > /opt/2.txt
 
-hostname ->> /opt/2.txt
+hostname >> /opt/2.txt
 
-`>` /opt/1.txt
+`>` /opt/2.txt
 
 > 作用：重新定向命令的输出操作，屏幕将不会显示输出内容
 >
@@ -75,6 +75,8 @@ hostname ->> /opt/2.txt
 > `>`前不加任何命令则是清空文件内容
 
 echo 123
+
+echo 123 > /opt/1.txt
 
 > 作用：输出echo后写的内容，文本复读机
 
@@ -96,7 +98,7 @@ head -3 /etc/passwd `|` tail -1
 >
 > head -25 /etc/passwd `|` tail -13 > /opt/2.txt
 >
-> 例：输出/etc/login.defs中有效信息 
+> 例：输出/etc/login.defs中有效信息 ,去除#开头，去除空行
 >
 > grep -v ^# /etc/login.defs `|` grep -v ^$ 
 >
@@ -108,7 +110,7 @@ head -3 /etc/passwd `|` tail -1
 >
 > 例：输出ifconfig使用上下键进行查阅
 >
-> ifconfig `|` grep less
+> ifconfig `|` less
 
 find /etc -type d
 
@@ -182,7 +184,7 @@ find /etc -type d
 >
 > \;  额外操作的结束
 >
-> 例：在boot下找到大于10M的数据复制到opt下且大于文件
+> 例：在boot下找到大于10M的数据复制到opt下
 >
 > find /boot -size +10M -size +10M -exec cp {} /opt \;
 
@@ -235,12 +237,12 @@ wc -l /etc/passwd
    |                | :s /old/new/g    | 替换当前行所有old为new     |
    | 区域内替换     | :n,m s/old/new/g | 替换n-m行所有的old         |
    |                | :% /old/new/g    | 替换全文old为new           |
-   | 编辑器设置     | :set nu\`\|`nonu | 显示\`\|`不显示行号        |
-   |                | :set ai\`\|`noai | 启用\`\|`不启用自动缩进    |
+   | 编辑器设置     | :set nu`|`nonu \| 显示\`\|`不显示行号        ||
+   |                | :set ai|`noai | 启用\`\|`不启用自动缩进    ||
 
    自动缩进：光标自动与上一行对齐 
 
-   vimdiff
+   vimdiff：
 
    > 作用：文件内容对比
    >

@@ -49,7 +49,7 @@ enforcing（强制）、permissive（宽松，80%）、disabled（彻底禁用�
 
 ### 临时切换
 
-[注]：只是强制：0与轻松：1之间切换
+[注]：宽松(0)与强制(1)之间切换
 
 ```
 ]#getenforce #查看当前运行模式
@@ -69,14 +69,14 @@ SELINUX=Permissive
 
 ## 破解root用户密码
 
-### 运行模式为紧急
+### 运行模式为强制
 
 ```
 ]#getenforce # 查看当前运行模式
 Enforcing
 ]#reboot
 按键盘上下键进入选择系统界面，按E键进入救援模式
-将Linux该行中的ro修改为rw空格输入rd.break                                         按ctrl+x启动，显示switch_root:/# 
+将Linux该行中的ro修改为rw空格输入rd.break 按ctrl+x启动，显示switch_root:/# 
 ]#chroot /sysroot 切换环境
 ]#touch /.autorelable #使linux失忆
 ]#echo 1 | passwd --stdin root # 使用无交互式修改密码
@@ -90,11 +90,13 @@ Enforcing
 Permissive
 ]#reboot
 按键盘上下键进入选择系统界面，按E键进入救援模式
-将Linux该行中的ro修改为rw空格输入rd.break                                         按ctrl+x启动，显示switch_root:/# 
+将Linux该行中的ro修改为rw空格输入rd.break 按ctrl+x启动，显示switch_root:/# 
 ]#chroot /sysroot 切换环境
 ]#echo 1 | passwd --stdin root # 使用无交互式修改密码
-]#reboot -f /#强制重启主机                                                                                                                                                                                                         
+]#reboot -f /#强制重启主机  
 ```
+
+​                                                                                                                                                                            
 
 ## 密码防护
 
@@ -118,11 +120,11 @@ Confirm password: #重新输入密码，密码不显示
 **开启服务**
 
 ```
-]#rpm -ql vsftpd|grep sbin
-/usr/sbin/vsftpd
-]#/usr/sbin/vsftpd
-]# pgrep -l vsftpd
-5854 vsftpd
+]#rpm -ql httpd|grep sbin
+/usr/sbin/httpd
+]#/usr/sbin/httpd
+]# pgrep -l httpd
+11834 httpd
 ```
 
 **测试**
@@ -162,7 +164,7 @@ anonymous_enable=YES
 
 ```
 ]#touch /var/ftp/dc.txt
-]#curl file://192.168.88.240
+]#curl ftp://192.168.88.240/
 -rw-r--r--    1 0        0               0 Nov 14 07:19 dc.txt
 drwxr-xr-x    2 0        0               6 Apr 23  2022 pub
 ```
@@ -180,7 +182,7 @@ drwxr-xr-x    2 0        0               6 Apr 23  2022 pub
 
 防火墙判定规则：
 
-1. 查看客户端请求中来源的ip地址，查看字节所有区域中规则，玛格区域有该源ip地址规则，则进入该区域
+1. 查看客户端请求中来源的ip地址，查看自己所有区域中规则，那个区域有该源ip地址规则，则进入该区域
 2. 进入默认区域（默认情况为public）
 
 ### 默认区域修改
