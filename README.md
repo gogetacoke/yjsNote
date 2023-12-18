@@ -44,6 +44,8 @@
     - [day05](#day05-4)
     - [day06](#day06-1)
     - [day07](#day07)
+  - [ANSIBLE](#ansible)
+    - [day01](#day01-5)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -82,6 +84,8 @@
   - [命令补充](#命令补充)
     - [基础命令补充](#基础命令补充)
     - [基础服务补充](#基础服务补充)
+  - [面试题](#面试题)
+
 
 
 
@@ -491,6 +495,22 @@ Nginx+uWSGI
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/op/day07)
 
+## ANSIBLE
+
+### day01
+
+Ansible基础
+
+掌握Ansible ad-hoc命令
+
+Ansible模块应用
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/at/day01)
+
+
+
+
+
 # 相关文件
 
 ## cg-配置
@@ -622,3 +642,11 @@ Nginx+uWSGI
 ### 基础服务补充
 
 [点击进行跳转](./command-sup/basic-service)
+
+## 面试题
+
+[NSD王者荣耀](https://docs.qq.com/pdf/DWG5aT1l3U3RYZ3hw)
+
+[面试题-全覆盖](https://docs.qq.com/doc/DWGFLSm1yV0R3TUFm)
+
+[面试题-百问](https://docs.qq.com/doc/DWFl1QlZUdkxpcENi)
