@@ -5,6 +5,8 @@
 > autocmd filetype sh set ai ts=4
 >
 > 编写shell脚本时会自动执行上方指令，设置自动缩进4
+>
+> 
 
 ~/.ssh
 

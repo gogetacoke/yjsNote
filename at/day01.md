@@ -33,7 +33,7 @@
     - [lineinfile模块](#lineinfile模块)
     - [replace模块](#replace模块)
   - [user模块](#user模块)
-    - [group模块](#group模块)
+  - [group模块](#group模块)
 - [快捷键](#快捷键)
   - [vim中如何快速补齐同字母内容](#vim中如何快速补齐同字母内容)
   - [快速复制](#快速复制)
@@ -390,7 +390,7 @@ he le ma
 [root@pubserver ansible]# ansible webservers -m user -a "name=lisi state=absent remove=yes"
 ```
 
-### group模块
+## group模块
 
 > - 创建、删除组
 > - 常用选项：

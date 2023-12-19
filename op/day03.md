@@ -46,7 +46,7 @@
 
 # 学习目标
 
-Nginx方向代理
+Nginx反向代理
 
 Nginx调度器
 

@@ -46,6 +46,7 @@
     - [day07](#day07)
   - [ANSIBLE](#ansible)
     - [day01](#day01-5)
+    - [day02](#day02-5)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -447,7 +448,7 @@ Nginx高级技术
 
 ### day03
 
-Nginx方向代理
+Nginx反向代理
 
 Nginx调度器
 
@@ -507,9 +508,15 @@ Ansible模块应用
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/at/day01)
 
+### day02
 
+常用模块
 
+Playbook
 
+YAML语言
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/at/day02)
 
 # 相关文件
 
