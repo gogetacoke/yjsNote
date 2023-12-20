@@ -341,6 +341,8 @@ hello world ni hao shijie
       password: "{{'123'|password_hash('sha512')}}"
 ```
 
+password:`"{{'123'|password_hash('sha512')}}"`
+
 ### parted模块
 
 > 用于硬盘分区管理
@@ -365,7 +367,7 @@ hello world ni hao shijie
 - name: disk manage
   hosts: web1
   tasks: 
-    - name: create a partition
+    - name: create a partition  #划分一个1GB分区
       parted:
         device: /dev/vdc
         number: 1
@@ -373,7 +375,7 @@ hello world ni hao shijie
         part_end: 1GiB
     - name: add a new partition
       parted:
-        device: /dev/vdc
+        device: /dev/vdc # 划分第二个分区
         number: 2
         state: present
         part_start: 1GiB
@@ -402,10 +404,6 @@ hello world ni hao shijie
 Filesystem              Type  Size  Used Avail Use% Mounted on
 /dev/mapper/my_vg-my_lv ext4  976M  2.6M  907M   1% /data              	
 ```
-
-
-
-
 
 # 快捷键
 

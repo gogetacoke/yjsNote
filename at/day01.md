@@ -313,6 +313,7 @@ done
 > - 常用选项：
 >   - src：源。被控制端的文件路径
 >   - dest：目标。控制端的文件路径
+>   - flat：扁平。bool；下载文件，且没有文件层级
 > - 不能应用于目录
 
 ```shell
@@ -364,7 +365,7 @@ Kernel \r on an \m
 he le ma
 ```
 
-## user模块
+### user模块
 
 > - 实现linux用户管理
 > - 常用选项：
@@ -390,7 +391,9 @@ he le ma
 [root@pubserver ansible]# ansible webservers -m user -a "name=lisi state=absent remove=yes"
 ```
 
-## group模块
+password:`"{{'123'|password_hash('sha512')}}"`
+
+### group模块
 
 > - 创建、删除组
 > - 常用选项：

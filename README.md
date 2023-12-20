@@ -47,6 +47,7 @@
   - [ANSIBLE](#ansible)
     - [day01](#day01-5)
     - [day02](#day02-5)
+    - [day03](#day03-5)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -86,6 +87,7 @@
     - [基础命令补充](#基础命令补充)
     - [基础服务补充](#基础服务补充)
   - [面试题](#面试题)
+
 
 
 
@@ -517,6 +519,14 @@ Playbook
 YAML语言
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/at/day02)
+
+### day03
+
+Ansible模块进阶及变量
+
+Ansible进阶
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/at/day03)
 
 # 相关文件
 

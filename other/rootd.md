@@ -117,3 +117,11 @@ var
 /etc/resolv.conf
 
 > 指定dns的配置文件
+
+/etc/services
+
+> 服务与端口的对应关系 
+
+/etc/motd
+
+> 用于定义ssh链接后的提示信息
