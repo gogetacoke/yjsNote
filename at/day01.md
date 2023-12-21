@@ -62,6 +62,10 @@ Ansible模块应用
 
 # 课堂笔记（文本）
 
+## 读文前提
+
+> 文中有\{\{\}\}的都加上了斜线进行转移，为了在github上显示，实际代码操作不用添加
+
 ## Ansible管理-环境准备
 
 ### 前提准备
@@ -381,8 +385,8 @@ he le ma
 ```linux
 [root@pubserver ansible]# ansible webservers -m user -a "name=lisi uid=1010 groups=daemon,root home=/home/lisi" # 创建用户，指定所属组，附加组，家目录，uid
 
-[root@pubserver ansible]# ansible webservers -m user -a "name=lisi password={{'123456'|password_hash('sha512')}}" # 为用户创建密码
-# {{}}是固定格式，表示执行命令。password_hash是函数，sha512是加密算法，则password_hash函数将会把123456通过sha512加密变成zhangsan的密码
+[root@pubserver ansible]# ansible webservers -m user -a "name=lisi password=\{\{'123456'|password_hash('sha512')\}\}" # 为用户创建密码
+# \{\{\}\}是固定格式，表示执行命令。password_hash是函数，sha512是加密算法，则password_hash函数将会把123456通过sha512加密变成zhangsan的密码
 
 # 删除zhangsan用户，不删除家目录
 [root@pubserver ansible]# ansible webservers -m user -a "name=zhangsan state=absent"
@@ -390,8 +394,6 @@ he le ma
 # 删除lisi用户，同时删除家目录
 [root@pubserver ansible]# ansible webservers -m user -a "name=lisi state=absent remove=yes"
 ```
-
-password:`"{{'123'|password_hash('sha512')}}"`
 
 ### group模块
 

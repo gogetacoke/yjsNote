@@ -25,6 +25,14 @@ HISTTIMEFORMAT="%F %T" # 添加一条
 export TMOUT=100  # 添加一条，以秒为单位
 ```
 
+## 修改默认端口
+
+```shell
+/etc/ssh/sshd_config
+Port=220 # 修改端口为220
+systemctl restart sshd
+```
+
 # ntp
 
 ## 添加本地时间服务器

@@ -61,6 +61,10 @@ Ansible进阶
 
 # 课堂笔记（文本）
 
+## 读文前提
+
+> 文中有\{\{\}\}的都加上了斜线进行转移，为了在github上显示，实际代码操作不用添加
+
 ## 模块
 
 ### 模块多参数写法
@@ -153,7 +157,7 @@ Ansible进阶
 
 ## 预定义变量
 
-### facts变量-setup模块
+### facts变量-setup模块1
 
 ```shell
 # 查看系统所有fscts变量:预定义变量
@@ -219,7 +223,7 @@ Ansible进阶
   tasks:
     - name: display hostname and memory
       debug:
-        msg: "hostname:{{ansible_hostname}}, mem:{{ansible_memtotal_mb}}MB，eth0 ip:{{ansible_eth0.ipv4.address}},vda1 size: {{ansible_devices.vda.partitions.vda1.size}}"	
+        msg: "hostname:\{\{ansible_hostname\}\}, mem:\{\{ansible_memtotal_mb\}\}MB，eth0 ip:\{\{ansible_eth0.ipv4.address\}\},vda1 size: \{\{ansible_devices.vda.partitions.vda1.size\}\}"	
 ```
 
 ## 自定义变量
@@ -293,7 +297,7 @@ dbs
   tasks:
     - name: create user
       user:
-        name: "{{username}}"
+        name: "\{\{username\}\}"
         state: present
 
 # 通过调用清单中设置的变量
@@ -314,12 +318,10 @@ dbs
   tasks:
     - name: create some users
       user:
-        name: "{{username}}"   # {}出现在开头，必须有引号
+        name: "\{\{username\}\}"   # {}出现在开头，必须有引号
         state: present
-        password: "{{mima|password_hash('sha512')}}"
+        password: "\{\{mima|password_hash('sha512')\}\}"
 ```
-
- password: "{{mima|password_hash('sha512')}}"
 
 ### 变量定义在文件
 
@@ -338,12 +340,10 @@ mima: abcd
   tasks:
     - name: create some users
       user:
-        name: "{{yonghu}}"   # 这里的变量来自于vars.yml
+        name: "\{\{yonghu\}\}"   # 这里的变量来自于vars.yml
         state: present
-        password: "{{mima|password_hash('sha512')}}"
+        password: "\{\{mima|password_hash('sha512')\}\}"
 ```
-
-password: "{{mima|password_hash('sha512')}}"
 
 ## firewalld模块
 
@@ -458,7 +458,7 @@ password: "{{mima|password_hash('sha512')}}"
 
 ```shell
 [root@pubserver ansible]# vim index.html
-Welcome to {{ansible_hostname}} on {{ansible_eth0.ipv4.address}}
+Welcome to \{\{ansible_hostname}} on \{\{ansible_eth0.ipv4.address\}\}
 
 [root@pubserver ansible]# vim templ.yml
 ---
@@ -583,8 +583,8 @@ changed: [web1]
 [root@pubserver ansible]# vim +39 nginx.conf # 光标移动到39行
 ... ...
     server {
-        listen       {{http_port}} default_server;
-        listen       [::]:{{http_port}} default_server;
+        listen       \{\{http_port\}\} default_server;
+        listen       [::]:\{\{http_port\}\} default_server;
         server_name  _;
 ... ...
 
@@ -749,7 +749,7 @@ ok: [web1] => {
       register: result
     - name: display content
       debug:
-        msg: "{{result['diff']['after']}}"
+        msg: "\{\{result['diff']['after']\}\}"
 
 -------------------输出信息---------------------------
 TASK [display content] *********************************************************

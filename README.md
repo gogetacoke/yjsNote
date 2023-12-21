@@ -48,6 +48,8 @@
     - [day01](#day01-5)
     - [day02](#day02-5)
     - [day03](#day03-5)
+    - [知识流程图](#知识流程图)
+  - [CLUSTER](#cluster)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -92,6 +94,7 @@
 
 
 
+
 # 说明
 
 **各文件夹内容摘要**
@@ -129,6 +132,8 @@
 > ws	（复习一周的内容及整理）
 >
 > command-sup （命令补充）
+>
+> cl	CLUSTER(第二阶段集群笔记)
 
 # 第一阶段
 
@@ -527,6 +532,14 @@ Ansible模块进阶及变量
 Ansible进阶
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/at/day03)
+
+### 知识流程图
+
+[点击进行跳转](https://flowus.cn/share/34aedbeb-808c-4c57-836f-9be014c1952a)
+
+## CLUSTER
+
+
 
 # 相关文件
 

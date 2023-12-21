@@ -45,3 +45,9 @@ md5sum /etc/*.conf | md5sum # 给etc下所有.conf结尾的文件生成hash值�
 # 生成hash值其余命令：sha256sum、sha512sum
 ```
 
+# 查询剧本格式是否正确
+
+```shell
+ansible-playbook xx.yml --syntax-check
+```
+

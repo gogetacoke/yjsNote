@@ -42,6 +42,10 @@ YAML语言
 
 # 课堂笔记（文本）
 
+## 读文前提
+
+> 文中有\{\{\}\}的都加上了斜线进行转移，为了在github上显示，实际代码操作不用添加
+
 ## 常用模块
 
 ### yum_repository模块
@@ -204,6 +208,17 @@ Filesystem             Size  Used Avail Use% Mounted on
 > playbook也是通过模块和它的参数，在特定主机上执行任务
 > playbook是一个文件，该文件中需要通过yaml格式进行书写
 
+### playbook-常用参数
+
+> 1. `ansible-playbook playbook.yml`: 执行指定的 Playbook 文件。
+> 2. `-i, --inventory <host file>`: 指定主机清单文件。
+> 3. `-e, --extra-vars "key=value"`: 传递额外的变量给 Playbook。
+> 4. `--limit <pattern>`: 限制仅对匹配模式的主机执行任务。
+> 5. `--tags <tag name>`: 仅运行带有特定标签的任务。
+> 6. `--skip-tags <tag name>`: 跳过带有特定标签的任务。
+> 7. `--check`: 仅检查 Playbook 是否正确，不执行任务。
+> 8. `--syntax-check` 检查yml格式是否正确
+
 ### YAML-语法
 
 > yaml文件的文件名，一般以yml或yaml作为扩展名
@@ -338,10 +353,8 @@ hello world ni hao shijie
       name: john
       uid: 1040
       group: daemon
-      password: "{{'123'|password_hash('sha512')}}"
+      password: "\{\{'123'|password_hash('sha512')\}\}"
 ```
-
-password:`"{{'123'|password_hash('sha512')}}"`
 
 ### parted模块
 
