@@ -1,4 +1,4 @@
- scp /etc/passwd  root@192.168.66.11:/x
+e scp /etc/passwd  root@192.168.66.11:/x
 
 > scp /目录/迁移文件 目的ip:存放的路径（不指定则使用和被发送文件所在的位置）
 
@@ -85,3 +85,6 @@ python：nginx+uwsgi
 java：tomcat
 ```
 
+arp -n
+
+> 查看IP与mac对照表

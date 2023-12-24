@@ -1,0 +1,12 @@
+# ifcfg-eth0
+
+```shell
+TYPE=Ethernet
+BOOTPROTO=none
+NAME=eth0
+DEVICE=eth0
+IPADDR=192.168.88.100
+PREFIX=24
+GATEWAY=192.168.88.254
+```
+

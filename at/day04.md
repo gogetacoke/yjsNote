@@ -236,7 +236,7 @@ ok: [web2] => {
   tasks:
     - name: create directory
       file:
-        path: /tmp/{{item}}
+        path: /tmp/\{\{item}}
         state: directory
       loop: [aaa,bbb,ccc,ddd,eee]
 
@@ -247,7 +247,7 @@ ok: [web2] => {
   tasks:
     - name: create directory
       file:
-        path: /tmp/{{item}}
+        path: /tmp/\{\{item}}
         state: directory
       loop: 
         - aaa
@@ -277,8 +277,8 @@ aaa  bbb  ccc  ddd  eee
   tasks:          
     - name: create user set passwd
       user:       
-        name: "{{item.username}}"
-        password: "{{item.passwd|password_hash('sha512')}}"
+        name: "\{\{item.username}}"
+        password: "\{\{item.passwd|password_hash('sha512')}}"
       loop:       
         - {'username':'yyh','passwd':'123456'}
         - {'username':'yh','passwd':'123456'}
@@ -343,9 +343,9 @@ roles/motd/
 # 将不同的内容分别写到对应目录的main.yml中
 # 创建motd模板文件
 [root@pubserver ansible]# vim roles/motd/templates/motd
-Hostname: {{ansible_hostname}}
-Date: {{ansible_date_time.date}}
-Contact to: {{admin}}
+Hostname: \{\{ansible_hostname}}
+Date: \{\{ansible_date_time.date}}
+Contact to: \{\{admin}}
 
 # 创建变量
 [root@pubserver ansible]# vim roles/motd/vars/main.yml  # 追加一行
@@ -384,7 +384,7 @@ changed: [web1]
 ---  
 - name: yum install
   yum:
-    name: "{{pkg}}"
+    name: "\{\{pkg}}"
     state: present
 [root@pubserver ansible]# vim roles/pkgs/defaults/main.yml # 配置角色参数
 ---
@@ -414,7 +414,7 @@ pkg: nginx
 ---  
 - name: start task
   service:
-    name: "{{svc}}"
+    name: "\{\{svc}}"
     state: started
     enabled: yes
 [root@pubserver ansible]# vim roles/start_svc/defaults/main.yml # 配置角色参数

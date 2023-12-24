@@ -2,6 +2,7 @@
 
 
 <p style="background-color: yellow">不要因为没有掌声，而放弃梦想，我们需要的是坚持，而不是观众</p>
+
 - [说明](#说明)
 - [第一阶段](#第一阶段)
   - [ADMIN](#admin)
@@ -48,8 +49,10 @@
     - [day01](#day01-5)
     - [day02](#day02-5)
     - [day03](#day03-5)
+    - [day04](#day04-5)
     - [知识流程图](#知识流程图)
   - [CLUSTER](#cluster)
+    - [da01](#da01)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -89,9 +92,8 @@
     - [基础命令补充](#基础命令补充)
     - [基础服务补充](#基础服务补充)
   - [面试题](#面试题)
-
-
-
+  - [know-sup知识补充](#know-sup知识补充)
+    - [network](#network-1)
 
 
 
@@ -123,6 +125,8 @@
 >
 > as	Application Software(应用软件，记录日常软件的基本使用及配配置)
 >
+> spcs software package corresponding service（软件包对应服务）
+>
 > op	OPERATION(第二阶段OPERATION笔记)
 >
 > test	(打草稿，晨讲)
@@ -134,6 +138,8 @@
 > command-sup （命令补充）
 >
 > cl	CLUSTER(第二阶段集群笔记)
+>
+> know-sup 知识补充
 
 # 第一阶段
 
@@ -533,13 +539,25 @@ Ansible进阶
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/at/day03)
 
+### day04
+
+任务块及循环
+
+角色
+
+普通用户使用Ansible
+
+特殊主机清单变量
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/at/day04)
+
 ### 知识流程图
 
 [点击进行跳转](https://flowus.cn/share/34aedbeb-808c-4c57-836f-9be014c1952a)
 
 ## CLUSTER
 
-
+### da01
 
 # 相关文件
 
@@ -680,3 +698,10 @@ Ansible进阶
 [面试题-全覆盖](https://docs.qq.com/doc/DWGFLSm1yV0R3TUFm)
 
 [面试题-百问](https://docs.qq.com/doc/DWFl1QlZUdkxpcENi)
+
+## know-sup知识补充
+
+### network
+
+[点击进行跳转](./know-sup/网络)
+
