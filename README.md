@@ -52,7 +52,8 @@
     - [day04](#day04-5)
     - [知识流程图](#知识流程图)
   - [CLUSTER](#cluster)
-    - [da01](#da01)
+    - [day01](#day01-6)
+    - [day02](#day02-6)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -557,7 +558,24 @@ Ansible进阶
 
 ## CLUSTER
 
-### da01
+### day01
+
+集群及LVS简介
+
+LVS-NAT集群
+
+LVS-DR集群
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cl/day01)
+
+### day02
+Keeplived热备
+
+Keeplived+LVS
+
+HAProxy服务器
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cl/day02)
 
 # 相关文件
 

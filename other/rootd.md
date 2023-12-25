@@ -124,3 +124,7 @@ var
 /etc/motd
 
 > 用于定义ssh链接后的提示信息
+
+/etc/rc.d/rc/local
+
+> 用于设置开机后自动运行的命令
