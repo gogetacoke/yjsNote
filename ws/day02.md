@@ -395,7 +395,8 @@ zip-3.0-23.el8.x86_64 : A file compression and packaging utility compatible with
 ]# !2 # 执行历史命令中的第2条命令
 ]# !hi # 执行最近一次以hi开头的历史命令
 ]# history -c # 清空开机到现在的历史命令
-]# history -w # 情况所有历史命令
+]# history -c && history -w# 清空所有历史命令
+
 ```
 
 ## 系统时间

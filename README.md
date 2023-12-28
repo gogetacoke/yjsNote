@@ -3,7 +3,7 @@
 
 <p style="background-color: yellow">不要因为没有掌声，而放弃梦想，我们需要的是坚持，而不是观众</p>
 
-- [说明](#说明)
+- - [说明](#说明)
 - [第一阶段](#第一阶段)
   - [ADMIN](#admin)
     - [day1](#day1)
@@ -54,6 +54,12 @@
   - [CLUSTER](#cluster)
     - [day01](#day01-6)
     - [day02](#day02-6)
+    - [day03](#day03-6)
+    - [day04](#day04-6)
+    - [知识流程图](#知识流程图-1)
+  - [SECURITY](#security)
+    - [day01](#day01-7)
+    - [知识流程图](#知识流程图-2)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -95,6 +101,7 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
+
 
 
 
@@ -141,6 +148,8 @@
 > cl	CLUSTER(第二阶段集群笔记)
 >
 > know-sup 知识补充
+>
+> security 第二阶段security笔记
 
 # 第一阶段
 
@@ -576,6 +585,46 @@ Keeplived+LVS
 HAProxy服务器
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/cl/day02)
+
+### day03
+
+Ceph
+
+部署Ceph集群
+
+Ceph块存储
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cl/day03)
+
+### day04
+
+块存储应用案例
+
+分布式文件系统
+
+对象存储
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cl/day04)
+
+### 知识流程图
+
+[点击进行跳转](https://flowus.cn/share/d3992279-33f2-4548-aedf-59b719c26526)
+
+## SECURITY
+
+### day01
+
+Zabbix基础
+
+Zabbix监控服务
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/security/day01)
+
+
+
+### 知识流程图
+
+[点击进行跳转](https://flowus.cn/share/277280ce-2729-4964-ae9c-a4eddbc552e0)
 
 # 相关文件
 

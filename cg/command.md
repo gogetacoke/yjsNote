@@ -51,3 +51,29 @@ md5sum /etc/*.conf | md5sum # 给etc下所有.conf结尾的文件生成hash值�
 ansible-playbook xx.yml --syntax-check
 ```
 
+# 跳过剧本已经执行过的任务
+
+```shell
+# 执行剧本后发现有错误，但前几个任务已经执行，但避免前几个已经执行过的任务，用tag标记即可跳过
+# 1.添加tag
+---
+- name: xx
+  hosts: web1
+  tasks:
+    - name: install
+      yum:
+        name: nginx
+        state: present
+      tags:
+        - tab1
+    - name: install
+      yum:
+        name: nginx
+        state: present
+      tags:
+        - tab2
+        
+# 2.跳过tab1
+ansible-playbook xx.yml --skip-tags tab1
+```
+

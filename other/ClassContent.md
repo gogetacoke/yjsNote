@@ -33,11 +33,13 @@ wingftp
 centos7输入法
 
 ```
-yum -y install ibus ibus-pinyin
+yum -y install ibus ibus-libpinyin
 # 配置环境变量 root用户；.bashrc
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
+
+# reboot
 ```
 
 linux不支持ntfs
@@ -103,3 +105,6 @@ arp -n
 >
 > 520超出了8位将保留0001000，丢弃10，所以最终为8
 
+设置时区
+
+> timedatectl set-timezone Asia/Shanghai
