@@ -1,4 +1,3 @@
--- [学习目标](#学习目标)
 - [学习目标](#学习目标)
 - [课堂笔记（命令）](#课堂笔记命令)
 - [课堂笔记（文本）](#课堂笔记文本)
@@ -13,6 +12,7 @@
     - [常见调度算法](#常见调度算法)
   - [LVS-模式配置-NAT](#lvs-模式配置-nat)
     - [环境准备](#环境准备)
+    - [配置步骤](#配置步骤)
     - [编写ansiblle配置](#编写ansiblle配置)
     - [配置网络yum](#配置网络yum)
     - [编写剧本上传](#编写剧本上传)
@@ -23,6 +23,7 @@
     - [配置LVS](#配置lvs)
   - [LVS-模式配置-DR](#lvs-模式配置-dr)
     - [环境准备](#环境准备-1)
+    - [配置步骤](#配置步骤-1)
     - [初始化环境](#初始化环境)
       - [还原LVS](#还原lvs)
       - [修改web网络](#修改web网络)
@@ -40,6 +41,7 @@
 - [补充](#补充)
 - [今日总结](#今日总结)
 - [昨日复习](#昨日复习)
+
 
 
 # 学习目标
@@ -121,6 +123,32 @@ LVS-DR集群
 ### 环境准备
 
 ![](../pic/cl/cl-d1-1.png)
+
+### 配置步骤
+
+> 1. 配置网络参数
+>
+> 2. 配置yum
+>
+> 3. 配置web服务
+>
+> 4. 修改内核参数
+>
+>    ```sh
+>    sysctl -w net.ipv4.ip_forward=1 #开启数据转发
+>    ```
+>
+> 5. lvs1上安装ipvsadm
+>
+> 6. 添加规则+VIP
+>
+>    ```sh
+>    ipvsadm -A -t 192.168.88.5:80 -s wrr
+>    ipvsadm -a -t 192.168.88.5:80 -r 192.168.88.100 -w 2 -m
+>    ipvsadm -a -t 192.168.88.5:80 -r 192.168.88.200 -w 1 -m
+>    ```
+>
+> 7. 测试访问
 
 ### 编写ansiblle配置
 
@@ -411,6 +439,55 @@ Welcome from web1
 ### 环境准备
 
 ![](../pic/cl/cl-d1-2.png)
+
+### 配置步骤
+
+> 1. 配置网络参数
+>
+> 2. 配置yum
+>
+> 3. 配置web服务
+>
+> 4. 在webservice的lo上配置VIP
+>
+>    + 安装network-scripts软件
+>
+>    + 修改网卡文件，添加一个lo:0 
+>
+>      ```sh
+>      vim /etc/sysconfig/network-scripts/ifcfg-lo:0 
+>      DEVICE=lo:0
+>      NAME=lo:0
+>      IPADDR=192.168.88.15 # 这是虚拟接口分配的 IP 地址。
+>      NETMASK=255.255.255.255
+>      NETWORK=192.168.88.15 # 网络地址
+>      BROADCAST=192.168.88.15 # 广播地址
+>      ONBOOT=yes
+>      ```
+>
+> 5. 修改webservice的内核参数
+>
+>    + 修改内核参数
+>
+>      ```sh
+>      vim /etc/sysctl.conf
+>      net.ipv4.conf.all.arp_ignore = 1
+>      net.ipv4.conf.lo.arp_ignore = 1
+>      net.ipv4.conf.all.arp_announce = 2
+>      net.ipv4.conf.lo.arp_announce = 2
+>      ```
+>
+> 6. 在lvs上安装ipvsadm
+>
+> 7. 添加规则+VIP
+>
+>    ```sh
+>    ipvsadm -A -t 192.168.88.5:80 -s wrr
+>    ipvsadm -a -t 192.168.88.5:80 -r 192.168.88.100 -w 2 -g
+>    ipvsadm -a -t 192.168.88.5:80 -r 192.168.88.200 -w 1 -g
+>    ```
+>
+> 8. 测试访问
 
 ### 初始化环境
 

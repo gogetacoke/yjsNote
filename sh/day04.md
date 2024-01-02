@@ -20,6 +20,8 @@
     - [`|`](#-9)
     - [`\b`](#b)
   - [案例](#案例)
+  - [grep补充](#grep补充)
+    - [参数](#参数)
   - [sed流式编辑器](#sed流式编辑器)
     - [使用方式](#使用方式)
     - [条件](#条件)
@@ -42,6 +44,7 @@
 - [补充](#补充)
 - [今日总结](#今日总结)
 - [昨日复习](#昨日复习)
+
 
 
 
@@ -208,7 +211,7 @@ root:x:0:0:root:/root:/bin/bash
 
 **最少匹配一次**  匹配前一个字符次数(1次或n次)
 
-```
+```sh
 ]# egrep 'ro+' test.txt 
 root:x:0:0:root:/root:/bin/bash
 
@@ -222,7 +225,7 @@ lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
 
 **最多匹配一次** 匹配前一个字符次数（1次或0次）
 
-```
+```sh
 ]# egrep 'r?' test.txt 
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -235,7 +238,7 @@ lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
 
 **匹配前一个字符n到m次**
 
-```
+```sh
 ]# egrep 'r{1,2}' test.txt # 匹配r出现1次或2次的行
 root:x:0:0:root:/root:/bin/bash
 adm:x:3:4:adm:/var/adm:/sbin/nologin
@@ -249,7 +252,7 @@ root:x:0:0:root:/root:/bin/bas
 
 **组合为整体-保留**
 
-```
+```sh
 ]# egrep '(ro){1,2}' test.txt # 匹配ro出现1,2次的行
 root:x:0:0:root:/root:/bin/bash
 ```
@@ -258,7 +261,7 @@ root:x:0:0:root:/root:/bin/bash
 
 **或者**
 
-```
+```sh
 ]# egrep 'ro|sb' test.txt  #匹配包含ro或sb的行
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -271,7 +274,7 @@ lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
 
 **单词边界** 不允许出现字母数字下划线
 
-```
+```sh
 ]# egrep '\broot\b' test.txt  # 查找root两边不允许出现字没有数字下划线
 root:x:0:0:root:/root:/bin/bash
 ]#egrep '\broot' # 查找root左边不允许出现字母数字下划线
@@ -306,6 +309,72 @@ root:x:0:0:root:/root:/bin/bash
    >
    > `$` 表示匹配字符串的结尾。
 
+## grep补充
+
+### 参数
+
+| 选项 | 含义                                          |
+| ---- | --------------------------------------------- |
+| -E   | == egrep 支持扩展正则匹配                     |
+| -A   | after -A5 匹配你要的内容并且显示接下来的五行  |
+| -B   | before -B5 匹配你要的内容并且显示接上面的五行 |
+| -C   | context -C5 匹配你要内容的上下五行            |
+| -c   | 统计出现了多少行 类似 wc -l                   |
+| -v   | 取反，排除(行)                                |
+| -n   | 显示行号                                      |
+| -i   | 忽略大小写                                    |
+| -w   | 精确匹配                                      |
+| -q   | 静默输出，屏蔽不显示内容                      |
+
+```sh
+# -E # 直接写egrep 方便
+[root@web3 ~]# grep 'ro+' /etc/passwd
+[root@web3 ~]# grep  -E 'ro+' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+# -A
+[root@web3 ~]# seq 10 | grep -A2 3 
+3
+4
+5
+# -B
+[root@web3 ~]# seq 10 | grep -B2 3
+1
+2
+3
+# -C
+[root@web3 ~]# seq 10 | grep -C2 3
+1
+2
+3
+4
+5
+# -c
+[root@web3 ~]# grep 'root' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+[root@web3 ~]# grep -c 'root' /etc/passwd
+2
+# -v
+[root@web3 ~]# grep '^root' /etc/passwd | wc -l
+1
+[root@web3 ~]# grep -v '^root' /etc/passwd | wc -l
+22
+# -n
+[root@web3 ~]# grep -n 'root' /etc/passwd
+1:root:x:0:0:root:/root:/bin/bash
+10:operator:x:11:0:operator:/root:/sbin/nologin
+# -i
+[root@web3 ~]# grep -i 'ROOT' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+# -w
+[root@web3 ~]# grep '22' /etc/services | wc -l
+443
+[root@web3 ~]# grep -w '22' /etc/services | wc -l
+5
+```
+
 ## sed流式编辑器
 
 **逐行处理**
@@ -315,24 +384,24 @@ root:x:0:0:root:/root:/bin/bash
 ```
 # 两种使用方式，指令必须有
 1、 前置指令 | sed 选项 条件 指令
-2、 sed 选项 条件 直连 文档
+2、 sed 选项 '条件 指令' 文档
 ```
 
 ### 条件
 
-行号：需要处理那一行
+> 行号：需要处理那一行
+>
+> /字符串/：需要处理字符串那一行
+>
+> 数字：指定特定行，如 `1` 表示第1行，`10` 表示第10行。
 
-/字符串/：需要处理字符串那一行
-
-数字：指定特定行，如 `1` 表示第1行，`10` 表示第10行。
-
-`$`：指定最后一行。
-
-`/pattern/`：匹配包含指定模式的行，如 `/foo/` 匹配包含 "foo" 的行。
-
-`addr1, addr2`：指定从 `addr1` 到 `addr2` 之间的行（包括 `addr1` 和 `addr2`），如 `5,10` 表示从第5行到第10行。
-
-`.`：指定当前行。
+> `$`：指定最后一行。
+>
+> `/pattern/`：匹配包含指定模式的行，如 `/foo/` 匹配包含 "foo" 的行。
+>
+> `addr1, addr2`：指定从 `addr1` 到 `addr2` 之间的行（包括 `addr1` 和 `addr2`），如 `5,10` 表示从第5行到第10行。
+>
+> `.`：指定当前行。
 
 ### 选项
 
@@ -340,7 +409,7 @@ root:x:0:0:root:/root:/bin/bash
 
 屏蔽默认输出
 
-```
+```sh
 ]#sed 'p' user   
 root:x:0:0:root:/root:/bin/bash
 root:x:0:0:root:/root:/bin/bash
@@ -365,7 +434,7 @@ lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
 
 **案例：**将/bin/bash 换成 /sbin/sh
 
-```
+```sh
 # 使用转移字符
 ]#sed 's/\/bin\/bash/\/sbin\/sh/' user
 # 更改提示符，提示符可以任意！# %
@@ -380,7 +449,7 @@ lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
 
 支持扩展正则，未加r默认使用常用正则模式
 
-```
+```sh
 ]#sed -n '/^root|^bin/p' # 输出为空
 ]#sed -nr '/^root|^bin/p' # 输出root开头或则bin开头内容
 root:x:0:0:root:/root:/bin/bash
@@ -389,7 +458,7 @@ bin:x:1:1:bin:/bin:/sbin/nologin
 
 **案例：**配置一个httpd网站服务，且端口更改为82
 
-```
+```sh
 #!/bin/bash
 setenforce 0                            #关闭selinux
 yum -y install httpd &> /dev/null        #安装网站
@@ -405,7 +474,7 @@ systemctl enable httpd
 
 内容输出
 
-```
+```sh
 ]#sed -n '1p'  user# 输出第一行
 ]#sed -n '2,4p' user# 输出2到4行
 ]# sed -n '1p;5p' user  # 输出第1行和第5行
@@ -423,7 +492,7 @@ systemctl enable httpd
 
 内容删除
 
-```
+```sh
 ]#sed '1d' user # 删除第一行内容，将显示除了第四行所有内容
 ]#sed '3,5d' user # 删除3,5行内容
 ]#sed '/root/d' user # 删除所有包含root的行
@@ -437,7 +506,7 @@ systemctl enable httpd
 
 替换（修改细节）
 
-```
+```sh
 ]# vim  shu.txt #新建素材
 2017 2011 2018
 2017 2017 2024
@@ -446,7 +515,7 @@ systemctl enable httpd
 ]#sed 's/2017/6666/2'shu.txt # 把所有行的第二个2017换成6666
 ]#sed '1s/2017/6666/'shu.txt # 把第一行的第1个2017换成6666
 ]#sed '3s/2017/6666/3'shu.txt # 把第三行的第3个2017换成6666
-]#sed 's/2017/6666/g'shu.txt # 把所有行的017换成6666
+]#sed 's/2017/6666/g'shu.txt # 把所有行的2017换成6666
 ]#sed '/2024/s/2017/6666/g'shu.txt # 找所有含有2024的行，将2017换成6666
 
 # 替换第几个字符的操作
@@ -457,7 +526,7 @@ systemctl enable httpd
 
 行上
 
-```
+```sh
 # 行上/下添加内容
 ]#sed '2i 666' user # 在第2行行上添加一行666
 ```
@@ -466,7 +535,7 @@ systemctl enable httpd
 
 行下
 
-```
+```sh
 ]#sed '1a  666' user # 在第1行行下添加一行666
 ```
 
@@ -474,7 +543,7 @@ systemctl enable httpd
 
 整行替换
 
-```
+```sh
 # 替换整行内容
 ]#sed 'c 666' # 将所有行替换为666
 ]#sed '$c 666' # 将最后一行替换为666
@@ -484,6 +553,7 @@ systemctl enable httpd
 25 yyh   （数字  空格  字母）
 355 xiaohang
 25 xiaocheng
+# 反向引用
 ]#sed -r 's/([0-9]+)(\s+)([a-z]+)/\3\2\1/' abc 
 yyh 52
 xiaohang 32
@@ -493,10 +563,6 @@ xiaocheng 95
 ```
 
 # 快捷键
-
-
-
-
 
 # 问题
 
@@ -513,7 +579,7 @@ xiaocheng 95
 ## 如何使用sed提取文本中的偶数行
 
 ```
-sed '2~2p' u
+sed '2~2p' xx
 ```
 
 

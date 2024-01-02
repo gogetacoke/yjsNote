@@ -17,6 +17,7 @@
     - [修改配置文件](#修改配置文件)
     - [验证测试](#验证测试)
   - [高可用负载均衡配置](#高可用负载均衡配置)
+    - [配置步骤](#配置步骤)
     - [前提](#前提)
     - [准备](#准备)
     - [修改配置LVS1](#修改配置lvs1)
@@ -41,6 +42,7 @@
 - [补充](#补充)
 - [今日总结](#今日总结)
 - [昨日复习](#昨日复习)
+
 
 
 # 学习目标
@@ -280,6 +282,49 @@ ss -tlnp | grep :80 &> /dev/null && exit 0 || exit 1
 ## 高可用负载均衡配置
 
 ![](../pic/cl/cl-d2-2.png)
+
+### 配置步骤
+
+> 1. 配置网络参数
+>
+> 2. 配置yum
+>
+> 3. 配置web服务
+>
+> 4. 在webservice的lo上配置VIP
+>
+>    + 安装network-scripts
+>
+>    + 修改网卡文件，添加一个lo:0 
+>
+>      ```sh
+>      vim /etc/sysconfig/network-scripts/ifcfg-lo:0 
+>      DEVICE=lo:0
+>      NAME=lo:0
+>      IPADDR=192.168.88.15 # 这是虚拟接口分配的 IP 地址。
+>      NETMASK=255.255.255.255
+>      NETWORK=192.168.88.15 # 网络地址
+>      BROADCAST=192.168.88.15 # 广播地址
+>      ONBOOT=yes
+>      ```
+>
+> 5. 修改webservice的内核参数
+>
+>    + 修改内核参数
+>
+>      ```sh
+>      vim /etc/sysctl.conf
+>      net.ipv4.conf.all.arp_ignore = 1
+>      net.ipv4.conf.lo.arp_ignore = 1
+>      net.ipv4.conf.all.arp_announce = 2
+>      net.ipv4.conf.lo.arp_announce = 2
+>      ```
+>
+> 6. 在lvs上安装ipvsadm和keepalived
+>
+> 7. 修改keepalived配置
+>
+> 8. 启动keepalived
 
 ### 前提
 

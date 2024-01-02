@@ -5,7 +5,6 @@
     - [选项](#选项)
       - [-F](#-f)
     - [指令](#指令)
-      - [print](#print)
     - [条件](#条件)
       - [/字符串/](#字符串)
     - [内置变量](#内置变量)
@@ -16,8 +15,10 @@
       - [逻辑测试](#逻辑测试)
       - [数学运算](#数学运算)
     - [awk数组](#awk数组)
-      - [awk for循环](#awk-for循环)
-      - [awk属组排序](#awk属组排序)
+      - [awk for循环-字符串](#awk-for循环-字符串)
+      - [awk for循环-数值](#awk-for循环-数值)
+      - [awkIF判断](#awkif判断)
+      - [awk数组排序](#awk数组排序)
     - [案例](#案例)
 - [快捷键](#快捷键)
 - [问题](#问题)
@@ -33,6 +34,7 @@
 - [补充](#补充)
 - [今日总结](#今日总结)
 - [昨日复习](#昨日复习)
+
 
 
 
@@ -69,17 +71,17 @@ lp:x:4:7:lp:/var/root/lpd:/sbin/nologin
 
 定义分隔符,默认以空格分割
 
-```
+```sh
 ]#awk '{print $1}' abc # 输出abc中的第一列
 hello
 welcom
 
 ]#awk -F: '/root/{print $1}' user # 输出包含root行中的第一列，按照:分割
+# 可以指定一个或多个分隔符
+]#df -h|awk -F'[ %]+' '{print $0}'
 ```
 
 ### 指令
-
-#### print
 
 输出内容
 
@@ -103,6 +105,7 @@ $1 第一列
 $2 第二列
 ....
 $1,$3 第1列和第3列
+$NF 最后一列
 $0 所有列
 NR 行号
 NF 列号
@@ -120,7 +123,7 @@ NF 列号
 
 ### awk处理时机
 
-```
+```sh
 awk [选项] '[条件]{指令}' 文件
 awk  [选项]  'BEGIN{指令} {指令} END{指令}'  文件
 
@@ -129,7 +132,7 @@ BEGIN{ } 行前处理，读取文件内容前执行，指令执行1次
 END{ } 行后处理，读取文件结束后执行，指令执行1次
 ```
 
-```
+```sh
 ]#awk 'BEGIN{print "abc"}{print}' user
 abc
 root:x:0:0:root:/root:/bin/bash
@@ -165,9 +168,9 @@ lp      4       /var/root/lpd
 
 ***当定义了条件且指令就是print时可以省略指令不写***
 
-> awk -F: '$6~/root/' user # 输出所有内容
+> awk -F: '$6~/root/' user # 查询第六列(~)包含root的列，并输出该列所有内容
 >
-> awk -F: '$6~/root/{print $6}' user # 只输出第6行
+> awk -F: '$6~/root/{print $6}' user # 只输出第6列包含root的内容
 
 #### 设置条件
 
@@ -240,7 +243,7 @@ daemon:x:2:2:daemon:/sbin:/sbin/nologin
 20 10
 ```
 
-#### awk for循环
+#### awk for循环-字符串
 
 ```
 for(变量 in 属组名){print 变量}
@@ -255,14 +258,36 @@ abc
 xyz
 ```
 
-```
+```sh
 ]#awk '{a[$1]++}END{for(i in a){print i,a[i]}}' abc
 der 1
 xyz 2
 abc 3
+# $1为第一列，将第一列作为数组的key，进行统计++
 ```
 
-#### awk属组排序
+#### awk for循环-数值
+
+```sh
+# 用于循环字段
+# 案例：1+100
+[root@web3 ~]# awk 'BEGIN{for(i=1;i<=100;i++)sum+=i;print sum}'
+5050
+```
+
+#### awkIF判断
+
+```sh
+# awk使用if可以做一个单分支判断
+[root@web3 ~]# df -h | awk -F'[ %]+' 'NR>1 {if($5>=10) print "告警！！",$1,$5,$NF}'| column -t
+告警！！  /dev/mapper/rl-root  11   /
+告警！！  /dev/sda1            21   /boot
+告警！！  /dev/sr0             100  /mydvd
+
+# 以上例子解释：-F指定分割符号，可以指定多个，'[ %]+'指定分隔符为空格和%号至少出现一次，从第二行开始判断第5列>=10就输出告警，且输出,$1,$5,$NF的内容，最后将内容进行格式化
+```
+
+#### awk数组排序
 
 ```
 针对文本排序输出可以采用sort命令，相关的常见选项为-r、-n、-k。其中
@@ -273,7 +298,7 @@ abc 3
 ```
 
 ```
-]#awk '{a[$1]++}END{for(i in a){print i,a[i]}}' abc | sort -nr k2
+]#awk '{a[$1]++}END{for(i in a){print i,a[i]}}' abc | sort -nrk2
 abc 3
 xyz 2
 der 1
@@ -285,7 +310,7 @@ der 1
 
    ```
    # 输出user文件中：用户的id是什么
-   ]#awk -F: '/root/{print $1"的用户ID是"$3}' user #  操作的是root行
+   ]#awk -F: '/root/{print $1"的用户ID是"$3}' user #操作的是root行
    root的用户ID是0
    
    # 查询磁盘容量大小

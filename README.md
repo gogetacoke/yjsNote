@@ -2,8 +2,7 @@
 
 
 <p style="background-color: yellow">不要因为没有掌声，而放弃梦想，我们需要的是坚持，而不是观众</p>
-
-- - [说明](#说明)
+- [说明](#说明)
 - [第一阶段](#第一阶段)
   - [ADMIN](#admin)
     - [day1](#day1)
@@ -59,6 +58,8 @@
     - [知识流程图](#知识流程图-1)
   - [SECURITY](#security)
     - [day01](#day01-7)
+    - [day02](#day02-7)
+    - [day03](#day03-7)
     - [知识流程图](#知识流程图-2)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
@@ -101,6 +102,7 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
+
 
 
 
@@ -620,11 +622,33 @@ Zabbix监控服务
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/security/day01)
 
+### day02
 
+Zabbix报警机制
+
+Zabbix进阶操作
+
+监控案例
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/security/day02)
+
+### day03
+
+Prometheus监控服务器
+
+Prometheus被监控端
+
+Grafana监控可视化
+
+自动发现和告警
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/security/day03)
 
 ### 知识流程图
 
-[点击进行跳转](https://flowus.cn/share/277280ce-2729-4964-ae9c-a4eddbc552e0)
+[Zaibbx](https://flowus.cn/share/277280ce-2729-4964-ae9c-a4eddbc552e0)
+
+[Prometheus](https://flowus.cn/share/a6319bff-7d0e-4d71-b8f3-22e4ab7aa954)
 
 # 相关文件
 
