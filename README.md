@@ -2,7 +2,6 @@
 
 
 <p style="background-color: yellow">不要因为没有掌声，而放弃梦想，我们需要的是坚持，而不是观众</p>
-- [说明](#说明)
 - [第一阶段](#第一阶段)
   - [ADMIN](#admin)
     - [day1](#day1)
@@ -60,6 +59,8 @@
     - [day01](#day01-7)
     - [day02](#day02-7)
     - [day03](#day03-7)
+    - [day04](#day04-7)
+    - [day05](#day05-5)
     - [知识流程图](#知识流程图-2)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
@@ -103,11 +104,6 @@
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
 
-
-
-
-
-# 说明
 
 **各文件夹内容摘要**
 
@@ -643,6 +639,28 @@ Grafana监控可视化
 自动发现和告警
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/security/day03)
+
+### day04
+
+Kali系统
+
+扫描抓包
+
+Nginx安全加固
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/security/day04)
+
+### day05
+
+iptables防火墙
+
+filter表控制
+
+扩展匹配
+
+nat表典型应用
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/security/day05)
 
 ### 知识流程图
 

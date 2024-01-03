@@ -64,9 +64,9 @@
 >
 ### groupadd
 
->
-> groupadd 组名
->
+>创建组
+> 
+>groupadd 组名
 ### /etc/passwd
 >
 > /etc/passwd：存放用户基本信息配置文件

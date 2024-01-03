@@ -41,6 +41,8 @@ rpm
 >
 > rpm -ivh 软件包名
 >
+> yum -y install xxx.rpm
+>
 > **卸载软件包**
 >
 > rpm -e 软件包名
