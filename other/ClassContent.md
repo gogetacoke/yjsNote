@@ -108,3 +108,14 @@ arp -n
 设置时区
 
 > timedatectl set-timezone Asia/Shanghai
+
+开机暂时跳过自动挂载
+
+```sh
+/dev/sdb1  /mnt/data  ext4  defaults,noauto  0  0
+# 使用noauto选项来避免系统在启动时尝试挂载该设备
+```
+
+who -b
+
+> 系统上次登陆服务器时间

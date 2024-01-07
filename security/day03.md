@@ -1,4 +1,4 @@
-- [学习目标](#学习目标)
+- [	学习目标](#学习目标)
 - [课堂笔记（命令）](#课堂笔记命令)
 - [课堂笔记（文本）](#课堂笔记文本)
   - [安装prometheus](#安装prometheus)
@@ -312,16 +312,6 @@ password=123456
 
 # 3. 创建service文件
 [root@web1 ~]# vim /usr/lib/systemd/system/mysqld_exporter.service
-[Unit]
-Description=mysqld_exporter
-After=network.target
-
-[Service]
-ExecStart=/usr/local/mysqld_exporter/mysqld_exporter \
---config.my-cnf=/usr/local/mysqld_exporter/.my.cnf
-
-[Install]
-WantedBy=multi-user.target
 
 [root@web1 ~]# systemctl daemon-reload
 [root@web1 ~]# systemctl enable mysqld_exporter.service --now

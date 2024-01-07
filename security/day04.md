@@ -347,6 +347,7 @@ Last-Modified: Tue, 02 Jan 2024 12:22:01 GMT
 Connection: keep-alive
 ETag: "6593ffe9-5"
 Accept-Ranges: bytes
+
 # 关闭版本信息
 [root@web1 ~]# vim /etc/nginx/nginx.conf
 ... ...
@@ -373,7 +374,7 @@ Accept-Ranges: bytes
 > 可以防止Dos攻击等等
 
 ```sh
-# 压力测试，每批次发送100个请求给web服务器，一共发200个
+# 压力测试，每次发送100个请求给web服务器，一共发200次
 [root@myhost ~]# yum install -y httpd-tools
 [root@myhost ~]# ab -c 100 -n 200 http://192.168.88.100/ 
 ... ...
@@ -386,8 +387,6 @@ Complete requests:      200   # 完成了200个请求
 Failed requests:        0     # 0个失败
 ... ...
 ```
-
-<span id='tag1' style='color:red'>ssss</span>
 
 ```sh
 [root@web1 ~]# vim /etc/nginx/nginx.conf
