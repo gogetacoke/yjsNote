@@ -256,7 +256,7 @@ error page
 >
 > 文件夹objs目录下已经生成新的nginx，将objs/nginx  覆盖/usr/local/nginx/sbin，这样就完成了升级
 
-```
+```sh
 ]#sbin/nginx -V  # 查询nginx信息  
 nginx version: nginx/1.22.1
 built by gcc 8.5.0 20210514 (Red Hat 8.5.0-10) (GCC) 
@@ -264,8 +264,9 @@ configure arguments: --with-stream  # 已安装的模块
 
 ]#sbin/nginx -s stop
 ]#cd /nginx1-22.0
-]#./configure --with-stream --with-http_stub_status_module  
-]#\cp objs/nginx /usr/local/nginx/sbin
+]#./configure --with-stream --with-http_stub_status_module # 添加新的模块
+]#make # 编译
+]#\cp objs/nginx /usr/local/nginx/sbin # 覆盖原文件
 ]#cd /usr/local/nginx
 ]#sbin/nginx -s reload 
 ```
@@ -274,9 +275,11 @@ configure arguments: --with-stream  # 已安装的模块
 
 ### 安装状态模块
 
-```
+```sh
 # 使用升级方式进行安装
+]#killall nginx
 ]#./configure --with-stream --with-http_stub_status_module  
+]#make
 ]#\cp objs/nginx /usr/local/nginx/sbin
 ]#cd /usr/local/nginx
 # 修改信息
@@ -285,7 +288,7 @@ configure arguments: --with-stream  # 已安装的模块
 
 ### 修改配置信息
 
-```
+```sh
 vim conf/nginx.conf
 http{
 ...
@@ -299,7 +302,7 @@ http{
 
 ### 测试访问
 
-```
+```sh
 sbin/nginx -s reload
 # 页面访问
 192.168.99.5/status

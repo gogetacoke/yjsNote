@@ -119,3 +119,12 @@ arp -n
 who -b
 
 > 系统上次登陆服务器时间
+
+yum -y install dos2unix
+
+> 用于在linux上查看编成源码，避免出现^M
+
+```sh
+dos2unix xxx.py
+```
+

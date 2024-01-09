@@ -62,7 +62,10 @@
     - [day04](#day04-7)
     - [day05](#day05-5)
     - [知识流程图](#知识流程图-2)
-    - [PROJECT](#project)
+- [第三阶段](#第三阶段)
+  - [DBA](#dba)
+    - [day01](#day01-8)
+- [PROJECT](#project)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -104,6 +107,7 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
+
 
 
 
@@ -670,7 +674,21 @@ nat表典型应用
 
 [Prometheus](https://flowus.cn/share/a6319bff-7d0e-4d71-b8f3-22e4ab7aa954)
 
-### PROJECT
+# 第三阶段
+
+## DBA
+
+### day01
+
+数据库概述
+
+部署MySQL服务
+
+基础查询
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day01)
+
+# PROJECT
 
 wordpress
 
