@@ -65,6 +65,8 @@
 - [第三阶段](#第三阶段)
   - [DBA](#dba)
     - [day01](#day01-8)
+    - [day02](#day02-8)
+    - [day03](#day03-8)
 - [PROJECT](#project)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
@@ -107,6 +109,7 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
+
 
 
 
@@ -687,6 +690,26 @@ nat表典型应用
 基础查询
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day01)
+
+### day02
+
+数据库概述
+
+部署MySQL服务
+
+基础查询
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day02)
+
+### day03
+
+内连接查询
+
+外连接查询
+
+嵌套查询
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day03)
 
 # PROJECT
 

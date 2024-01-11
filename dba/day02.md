@@ -14,11 +14,16 @@
     - [排序](#排序)
     - [过滤](#过滤)
     - [分页](#分页)
+  - [管理表记录](#管理表记录)
+    - [插入表记录](#插入表记录)
+    - [修改表记录](#修改表记录)
+    - [删除表记录](#删除表记录)
 - [快捷键](#快捷键)
 - [问题](#问题)
 - [补充](#补充)
 - [今日总结](#今日总结)
 - [昨日复习](#昨日复习)
+
 
 # 学习目标
 
@@ -225,7 +230,7 @@ mysql> select dept_id,dept_name,
 
 ## 查询结果处理
 
-> SELECT 表头名 FROM 库名.表名 [WHERE条件] 分组 | 排序 | 过滤 | 分页;
+> SELECT 表头名 FROM 库名.表名 [WHERE条件] 分组 \| 排序 \| 过滤 \| 分页;
 
 ### 分组
 
@@ -248,6 +253,8 @@ mysql>select dept_id,count(name) from employees group by dept_id;
 > desc 降序
 >
 > asc 升序
+>
+> [注]：不写排序方式则是默认asc升序
 
 ```sql
 查找uid不为空且uid在10到50之间，将uid进行降序排序
@@ -299,7 +306,64 @@ mysql>select * from user where shell is not null limit 3,3;
 mysql>select * from user order by desc limit 1;
 ```
 
+## 管理表记录
 
+> 对已经存储的数据做管理
+
+### 插入表记录
+
+> 给指定表头添加数据：
+>
+> insert into 库.表(表头名)  value(表头数据);
+>
+> 给每个表头添加数据：
+>
+> insert into 库.表  value(表头数据);
+
+```sql
+插入一行，给指定表头添加值，必须写指定的表头
+mysql>insert into user(name,uid) values("may",1088);
+插入多行，给指定表头添加值，必须写指定的表头
+mysql>insert into user(name,uid) values("may",1088),("bob",1089),("jack",1090);
+
+插入一行，给所有表头赋值，不用指定表头，但需要根据插入表中每个表头的TYPE进行添加
+insert into user values(41,"B","X",1009,1009,"contents","/home/41",null);
+插入多行，给所有表头赋值，
+insert into user values(41,"B","X",1009,1009,"contents","/home/41",null),(42,"C","X",1010,1010,"contents","/home/42",null),(43,"A","X",1011,1011,"contents","/home/43",null);
+```
+
+### 修改表记录
+
+> 针对满足条件的进行修改：
+>
+> update 库.表 set 表头名="" where 筛选条件;
+>
+> 修改所有：
+>
+> update 库.表 set 表头=""；
+
+```sql
+修改名字为root的行
+mysql>update user set password="A" where name="root";
+
+修改所有行的password
+mysql>update user set password="B";
+```
+
+### 删除表记录
+
+> delete from 库.表 where 条件;
+>
+> [注]：条件一定要写，不然将删除全部
+
+```sql
+删除前先进行查看
+mysql>select * from user where id>=40;
+删除匹配条件的行
+mysql>delete from user where id >= 40;
+```
+
+![](../pic/dba/d2-6.png)
 
 # 快捷键
 

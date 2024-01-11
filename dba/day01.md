@@ -273,7 +273,7 @@ bey
 > # 设置密码
 > ]#mysqladmin -hlocalhost -uroot -p password "新密码"
 > # 修改密码
-> ]#mysqladmin -hlocalhost -uroot -p就密码 passsword "新密码"
+> ]#mysqladmin -hlocalhost -uroot -p旧密码 passsword "新密码"
 > ```
 
 ### 初始设置密码
@@ -542,7 +542,7 @@ mysql> desc tarena.user;
 >
 > 格式二：select 表头名 from 库名.表名 where 筛选条件;
 >
-> [注]：已经use数据库可以省略库名
+> [注]：已经在use数据库可以省略库名
 
 ```sql
 # 显示所有列
@@ -647,7 +647,7 @@ mysql> select name from user where name like "__%__";
 >
 > \* 前边的表达式出现零次或多次
 >
-> | 或者
+> \| 或者
 >
 > . 任意一个字符
 
@@ -684,7 +684,8 @@ mysql> select name from user where name regexp "^r.*t$";
 
 > 定义别名使用   as  或  空格 
 >
-> 拼接   concat()
+> 拼接 concat()
+>
 > 去重 distinct
 >
 > ['注']：去重只能针对单列
@@ -739,6 +740,130 @@ mysql> select  distinct shell from user;
 | NULL           |
 +----------------+
 7 rows in set 
+```
+
+## 逻辑比较
+
+> 多个判断条件
+>
+> 逻辑与 and （&&） 多个判断条件必须同时成立
+>
+> 逻辑或 or （\|\|） 多个判断条件其中某个条件成立即可
+>
+> 逻辑非 not （!） 取反
+
+```sql
+查看解释器不是/bin/bash的
+mysql>select uid,naem from user where shell != "/bin/bash";
+
+使用not取反
+mysql>select uid,name from user where not shell = "/bin/bash"; 
+
+id值不在 10 到 20 之间 
+mysql>select uid,name from user where not id between 10 and 20;
+
+查找name=‘root’，uid=‘0’的行
+mysql>select uid,name from user where name="root" and uid="0";
+
+查找name=‘root’或者name=‘bin’或者uid=‘0’的行
+mysql>select uid,name from user where name="root" or name="bin" or uid="0";
+```
+
+### 优先级()
+
+> 逻辑匹配什么时候需要加（）
+>
+> 逻辑与and 优先级高于逻辑或 or
+>
+> 如果在筛选条件里既有and 又有 or 默认先判断and 再判断or
+
+```sql
+不加() 的查询
+mysql>select uid,name from user where name="root" or name="bin" and uid="1";
++------+------+
+| name | uid  |
++------+------+
+| root |    0 |
+| bin  |    1 |
++------+------+
+
+加()比较
+mysql>select uid,name from user where (name="root" or name="bin") and uid="1";
++------+------+
+| name | uid  |
++------+------+
+| bin  |    1 |
++------+------+
+```
+
+## 字符比较
+
+> 符号两边必须是字符 或字符类型的表头
+>
+> = 相等比较
+>
+> != 不相等比较
+
+```sql
+查看表里是否有名字叫apache的用户
+mysql> select id,name from user where name="apache";
+
+输出解释器不是/bin/bash的用户名 及使用的解释器
+mysql>select name from user where shell != "/bin/bash";
+```
+
+### 空与非空
+
+> 空 is null 表头下没有数据
+>
+> 非空 is not null 表头下有数据
+>
+> mysql服务 使用关键字 null 或 NULL 表示表头没有数据
+
+```sql
+添加新行 仅给行中的id 表头和name表头赋值
+mysql> insert into tarena.user(id,name) values(32,"");    //零个字符
+mysql> insert into tarena.user(id,name) values(33,"null");//普通字母
+mysql> insert into tarena.user(id,name) values(34,NULL);  //表示空
+mysql> insert into tarena.user(id,name) values(35,null);  //表示空
+
+查询数据表name是NULL的
+mysql> select id,name from user where name is null;
++----+------+
+| id | name |
++----+------+
+| 34 | NULL |
+| 35 | NULL |
++----+------+
+2 rows in set (0.00 sec)
+
+查询数据表中不是null的数据
+mysql> select id,name from user where name is not null and id >31;
++----+------+
+| id | name |
++----+------+
+| 32 |      |
+| 33 | null |
++----+------+
+2 rows in set (0.00 sec)
+
+查找数据表中“字符“是null的
+mysql> select id,name from user where name="null";
++----+------+
+| id | name |
++----+------+
+| 33 | null |
++----+------+
+1 row in set (0.00 sec)
+
+查找数据表中字符是零个字符的
+mysql> select id,name from user where name="";
++----+------+
+| id | name |
++----+------+
+| 32 |      |
++----+------+
+1 row in set (0.00 sec)
 ```
 
 # 快捷键
