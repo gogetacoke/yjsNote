@@ -67,6 +67,7 @@
     - [day01](#day01-8)
     - [day02](#day02-8)
     - [day03](#day03-8)
+    - [day04](#day04-8)
 - [PROJECT](#project)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
@@ -109,7 +110,6 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
-
 
 
 
@@ -710,6 +710,18 @@ nat表典型应用
 嵌套查询
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day03)
+
+### day04
+
+表管理
+
+数据类型
+
+数据批量处理
+
+表头基本约束
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day04)
 
 # PROJECT
 

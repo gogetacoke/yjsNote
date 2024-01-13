@@ -9,6 +9,11 @@
       - [左连接](#左连接)
       - [右连接](#右连接)
     - [全外连接](#全外连接)
+  - [嵌套查询](#嵌套查询)
+    - [where之后](#where之后)
+    - [having之后](#having之后)
+    - [from之后](#from之后)
+    - [select之后](#select之后)
 - [快捷键](#快捷键)
 - [问题](#问题)
 - [补充](#补充)
@@ -189,14 +194,14 @@ insert into departments(dept_name) values("小卖部"),("海关部"),("公关部
 #### 左连接
 
 > + 左表表头记录全显示
-> + 右表表头只显示与条件匹配的记录，右表比左表少的记录使用NULL匹配
+> + 右表只显示与条件匹配的记录，右表比左表少的记录使用NULL匹配
 
 **输出没有员工的部门名**
 
 ```sql
 select dept_name from departments 
 left join employees
-on departments.dept_id=departments.dept_id
+on departments.dept_id=employees.dept_id
 where name is null;
 
 向小卖部添加一个人;小卖部的部门id为9
@@ -206,14 +211,14 @@ values('bob',9);
 再次查询
 select dept_name from departments 
 left join employees
-on departments.dept_id=departments.dept_id
+on departments.dept_id=employees.dept_id
 where name is null;
 ```
 
 #### 右连接
 
 > + 右表表头记录全显示
-> + 左表表头只显示与条件匹配的记录，左表比右表少的记录使用null匹配
+> + 左表只显示与条件匹配的记录，左表比右表少的记录使用null匹配
 
 **测试数据**
 
@@ -278,7 +283,113 @@ order by basic asc
 limit 1);
 ```
 
+## 嵌套查询
 
+```sql
+select 查询命令里包含select查询命令查询的select查询命令要放在()里，包含的select查询命令可以出现的位置：
+where 命令之后
+having 命令之后
+from 命令之后
+select 命令之后
+```
+
+### where之后
+
+```sql
+"格式"
+select 表头名 from 库.表 where 表头名 判断符号 (select 查询命令);
+```
+
+**查询运维部所有员工信息**
+
+```sql
+select name,dept_id from employees 
+where dept_id = 
+(select dept_id from departments 
+where dept_name="运维部");
+```
+
+> 解题思路：
+>
+> 将括号里面的查询结果作为where的查询条件
+
+**查询人事部2018年12月所有员工工资**
+
+```sql
+select employee_id,basic,bonus from salary
+where year(date)=2018 
+and month(date)=12 
+and employee_id in (select employee_id from employees 
+                    where dept_id = (select dept_id from departments 
+                                     where dept_name="人事部"));
+```
+
+> 解题思路：
+>
+> 先查询员工表中部门id对应部门表中的部门id，然后根据工资表中的员工id在查询出来的部门id对应信息表中对应的员工id(也就是in后面的内容为所有人事部的员工信息)
+
+**查询财务部与人事部的所有员工信息**
+
+```sql
+select * from employees 
+where dept_id in (select dept_id from departments 
+                  where dept_name in ("人事部","财务部"));
+```
+
+**查询2018年12月所有比100号员工基本工资高的工资信息**
+
+```sql
+select * from salary 
+where year(date)=2018 
+and month(date)=12 
+and basic > (select basic from salary 
+             where employee_id=100 
+             and year(date)=2018 
+             and month(date)=12 );
+```
+
+### having之后
+
+**查询部门员工总人数比开发部总人数少 的 部门名称和人数**
+
+```sql
+select dept_id,count(name) as 部门人数 from employees 
+group by dept_id 
+having 部门人数<(select count(name) from employees 
+             where dept_id=(select dept_id from departments 
+                            where dept_name="开发部")) ;
+```
+
+### from之后
+
+> 作用：把查询结果当作新表使用
+
+```sql
+"格式"
+select 表头名 from (select 查询命令) where 筛选条件                
+```
+
+**查询3号部门 、部门名称 及其部门内 员工的编号、名字 和 email**
+
+```sql
+select dept_id,dept_name,employee_id,name,email from (select dept_name,e.* from departments as d 
+inner join employees as e 
+on d.dept_id=e.dept_id) as newtab 
+where dept_id=3;
+```
+
+### select之后
+
+> 作用：把查询结果当作表头使用
+
+**查询每个部门的人数： dept_id dept_name 部门人数**
+
+```sql
+select d.*,(select count(name) from employees as e 
+            where e.dept_id=d.dept_id) from departments as d;
+```
+
+> [注]：新表必须别名
 
 # 快捷键
 
