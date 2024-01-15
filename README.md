@@ -68,6 +68,7 @@
     - [day02](#day02-8)
     - [day03](#day03-8)
     - [day04](#day04-8)
+    - [day05](#day05-6)
 - [PROJECT](#project)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
@@ -722,6 +723,16 @@ nat表典型应用
 表头基本约束
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day04)
+
+### day05
+
+表头高级约束
+
+MySQL索引
+
+用户管理
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day05)
 
 # PROJECT
 
