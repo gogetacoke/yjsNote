@@ -69,6 +69,8 @@
     - [day03](#day03-8)
     - [day04](#day04-8)
     - [day05](#day05-6)
+    - [day06](#day06-2)
+- [课堂笔](#课堂笔)
 - [PROJECT](#project)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
@@ -111,6 +113,7 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
+
 
 
 
@@ -733,6 +736,16 @@ MySQL索引
 用户管理
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day05)
+
+### day06
+
+数据备份与恢复
+
+binlog日志
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day06)
+
+# 课堂笔
 
 # PROJECT
 
