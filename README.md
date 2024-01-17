@@ -70,6 +70,7 @@
     - [day04](#day04-8)
     - [day05](#day05-6)
     - [day06](#day06-2)
+    - [day07](#day07-1)
 - [课堂笔](#课堂笔)
 - [PROJECT](#project)
 - [相关文件](#相关文件)
@@ -113,6 +114,7 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
+
 
 
 
@@ -744,6 +746,14 @@ MySQL索引
 binlog日志
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day06)
+
+### day07
+
+MySQL主从同步
+
+数据读写分离
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day07)
 
 # 课堂笔
 

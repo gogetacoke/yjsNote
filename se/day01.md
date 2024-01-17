@@ -291,7 +291,7 @@ autofs服务提供“按需访问”
 /misc   /etc/auto.misc
 /myauto /opt/xixi.txt # 需要访问myauto内容，请访问配置文件xixi.txt
 ]#vim /opt/xixi.txt
-nsd -fstype=iso9660 :/dev/cdrom # 编写配置，用户只要在文件夹中输入nsd将完成挂载
+nsd -fstype=iso9660 :/dev/cdrom # 编写配置，用户只要使用ls或cat /myauto/nsd 将会触发挂载
 xxx -fstype=nfs 192.168.88.88:/abc  # 基于nfs触发挂载时编写，nsd为触发挂载的命令
 ]# systemctl restart autofs
 ```
