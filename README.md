@@ -71,7 +71,7 @@
     - [day05](#day05-6)
     - [day06](#day06-2)
     - [day07](#day07-1)
-- [课堂笔](#课堂笔)
+    - [day08](#day08)
 - [PROJECT](#project)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
@@ -114,6 +114,7 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
+
 
 
 
@@ -755,7 +756,13 @@ MySQL主从同步
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day07)
 
-# 课堂笔
+### day08
+
+数据分片概述
+
+搭建mysql分布式存储
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day08)
 
 # PROJECT
 

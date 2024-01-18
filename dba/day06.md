@@ -161,7 +161,7 @@ lock tables 库.标 write;
 [root@mysql50 ~]#mysql -uroot -pyyh
 mysql>lock tables tarena.user write;
 
-[root@mysql50 ~]#mysql -uwebuser -p123456
+[root@mysql51 ~]#mysql -uwebuser -p123456
 mysql>select * from tarena.user; 
 # 此时命令行将停止
 
@@ -185,8 +185,6 @@ source /etc/bashrc
 yum -y install perl-DBD-MySQL
 "软件的好处：备份过程中不锁库表，适合生产环境。支持完全备份与恢复、增量备份与恢复、差异备份与恢复"
 ```
-
-
 
 ## 增量备份
 
@@ -805,7 +803,7 @@ mysql> select * from gamedb.user;
 ```
 
 ```sh
-"mysqlbinlog 系统命令可用于导出binlog日志"
+"mysqlbinlog 系统命令可用于导出binlog日志,如果不重定向将输出到屏幕"
 [root@mysql50 ~]#mysqlbinlog yyh.000001 > /opt/log.txt
 ```
 
