@@ -467,7 +467,7 @@ Welcome to \{\{ansible_hostname}} on \{\{ansible_eth0.ipv4.address\}\}
   tasks:
     - name: create web index
       template:
-        src: index.html
+        src: index.htmli
         dest: /usr/share/nginx/html/index.html
 
 [root@pubserver ansible]# ansible-playbook templ.yml

@@ -76,6 +76,17 @@ Ansible模块应用
 >
 > 四台yum搭建好，可以240机器使用网络yum-ftp
 
+> ansible软件包：ansible-6.3.0-1.el8.noarch.rpm        cowsay-3.04-16.el8.noarch.rpm
+> ansible-core-2.13.3-1.el8.x86_64.rpm
+
+```sh
+# 将ansible所需的包拷贝到240上的/var/ftp/rpms
+# 更新仓库清单
+[root@pubserver ~]# createrepo /var/ftp/rpms/
+# 更新 yum缓存
+[root@pubserver ~]# yum 
+```
+
 ### 装包
 
 ```shell

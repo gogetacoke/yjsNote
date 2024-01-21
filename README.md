@@ -764,6 +764,16 @@ MySQL主从同步
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day08)
 
+### day09
+
+部署Redis服务
+
+部署LNP+Redis
+
+创建Redis集群
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day09)
+
 # PROJECT
 
 wordpress

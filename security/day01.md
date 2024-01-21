@@ -131,7 +131,7 @@ roles_path = roles
 ```shell
 [root@zabbix ~]# mysql # 进入数据库
 mysql> create database zabbix character set utf8mb4 collate utf8mb4_bin; # 创建数据库
-mysql> set global log_bin_trust_function_creators = 1; # # 在binlog日志开启的情况下，打开函数生成器
+mysql> set global log_bin_trust_function_creators = 1; # 在binlog日志开启的情况下，打开函数生成器
 mysql> create user zabbix@localhost identified by 'zabbix'; # 创建用户
 mysql> grant all privileges on zabbix.* to zabbix@localhost; # 给用户授权数据库及表
 mysql>quit
@@ -147,7 +147,7 @@ mysql>
 
 ```shell
 # 修改服务配置文件
-[root@zabbix ~]#vim /etc/zabbix/zabbix_server.conf  # 数据采集
+[root@zabbix ~]#vim /etc/zabbix/zabbix_server.conf  # 数据采集存储数据库
 129 DBPassword=zabbix
 # 修改客户端配置
 [root@zabbix ~]#vim /etc/zabbix/zabbix_agentd.conf # 数据存储

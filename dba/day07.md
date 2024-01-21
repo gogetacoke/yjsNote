@@ -250,7 +250,7 @@ server-id=55
 
 ### 数据一致
 
-> 确保与主服务器数据一致
+> 确保与主服务器数据一致，保证此时的数据库与主数据库的数据表一致，以防搭建成功后出现库表不一致导致数据无法写入而报错
 
 ```sh
 [root@mysql53 ~]# mysql -e 'show master status' # 查询主服务器的日志文件与偏移量
@@ -368,6 +368,10 @@ Slave_IO_Running: Yes
 Slave_SQL_Running: Yes
 ....
 ```
+
+### mycat工作过程
+
+![](../pic/dba/d7-6.png)
 
 ### 安装mycat
 
@@ -580,7 +584,7 @@ mysql>insert into tarena.user values(1,"yyh");
 |    2 | cxj  |
 +------+------+
 
-"在主(读)服务器上进行查询"
+"在主(写)服务器上进行查询"
 [root@mysql56 ~]# mysql -e "select * from tarena.user"
 +------+------+
 | id   | name |

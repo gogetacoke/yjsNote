@@ -199,8 +199,6 @@ curl: (7) Failed to connect to 192.168.88.80 port 80: Connection refused
 
 ## keepalived主备切换
 
-
-
 ### 实施原理
 
 > - 配置高可用的web集群时，Keepalived只为服务器提供了VIP
@@ -429,9 +427,9 @@ Welcome from web2
 
 > 原因：为了效率，相同的客户端在50秒内发送的请求都会分发给同一台服务器，避免重新建立新的tcp连接
 >
-> 解决：将kee	即可
+> 解决：将下面这行在配置文件中进行注释即可
 >
-> persistence_timeout 50 
+> \#persistence_timeout 50 
 
 ### 测试-规则
 

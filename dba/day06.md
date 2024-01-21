@@ -48,6 +48,13 @@
     - [手动创建新的日志](#手动创建新的日志)
     - [日志相关命令](#日志相关命令)
     - [日志恢复](#日志恢复)
+  - [binlog日志进阶](#binlog日志进阶)
+    - [行模式](#行模式)
+    - [混合模式](#混合模式)
+      - [添加数据测试](#添加数据测试)
+      - [查看添加详情](#查看添加详情)
+      - [根据偏移量恢复](#根据偏移量恢复)
+      - [根据时间进行恢复](#根据时间进行恢复)
 - [课堂笔记（文本）](#课堂笔记文本)
 - [快捷键](#快捷键)
 - [问题](#问题)
@@ -806,6 +813,267 @@ mysql> select * from gamedb.user;
 "mysqlbinlog 系统命令可用于导出binlog日志,如果不重定向将输出到屏幕"
 [root@mysql50 ~]#mysqlbinlog yyh.000001 > /opt/log.txt
 ```
+
+## binlog日志进阶
+
+> 恢复指定范围内的数据：时间、偏移量
+>
+> binlog存储的三种格式：行(ROW)、混合模式(MIXED)、报表模式(STATEMENT)
+
+### 行模式
+
+> + 数据库默认的模式
+> + 日志中看不到存储的是insert、delete、update、字样
+
+```sql
+"查看默认存储模式"
+mysql> show variables like "binlog_format";
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| binlog_format | ROW   |
++---------------+-------+
+1 row in set (0.03 sec)
+
+
+"查看binlog文件名"
+mysql> show master status;
++---------------+----------+--------------+------------------+-------------------+
+| File          | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
++---------------+----------+--------------+------------------+-------------------+
+| binlog.000002 |      156 |              |                  |                   |
++---------------+----------+--------------+------------------+-------------------+
+1 row in set (0.00 sec)
+
+
+"查看行模式下存储的内容：看不到存储的是insert、还是delete"
+mysql> show binlog events in "binlog.000002";
++---------------+-----+----------------+-----------+-------------+-----------------------------------+
+| Log_name      | Pos | Event_type     | Server_id | End_log_pos | Info                              |
++---------------+-----+----------------+-----------+-------------+-----------------------------------+
+| binlog.000002 |   4 | Format_desc    |         1 |         125 | Server ver: 8.0.26, Binlog ver: 4 |
+| binlog.000002 | 125 | Previous_gtids |         1 |         156 |                                   |
++---------------+-----+----------------+-----------+-------------+-----------------------------------+
+```
+
+### 混合模式
+
+> + 行与报表模式一起使用(推荐使用)
+> + 混合模式，根据存储的信息来自动切换行或报表模式
+> + 日志信息记录详细，便于对binlog日志恢复时指定时间段和偏移量
+> + 恢复指定范围的数据
+
+```sql
+"修改为混合模式"
+]#vim /etc/my.cnf.d/mysql-server.cnf
+[mysqld]
+binlog-format="mixed" 
+]#systemctl restart mysqld # 重启服务，生效配置
+"查看修改是否成功"
+mysql> show variables like "binlog_for%";
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| binlog_format | MIXED |
++---------------+-------+
+1 row in set (0.00 sec)
+```
+
+#### 添加数据测试
+
+```sql
+mysql> insert into tarena.user(name) values('a');
+mysql> insert into tarena.user(name) values('b');
+mysql> insert into tarena.user(name) values('c');
+mysql> insert into tarena.user(name) values('d');
+mysql> insert into tarena.user(name) values('e');
+mysql> insert into tarena.user(name) values('f');
+mysql> insert into tarena.user(name) values('g');
+mysql> select name from tarena.user where id >=34;
++------+
+| name |
++------+
+| a    |
+| b    |
+| c    |
+| d    |
+| e    |
+| f    |
+| g    |
++------+
+```
+
+#### 查看添加详情
+
+```sql
+"将刚添加的数据进行删除"
+mysql>delete from tarena.user where id >=34;
+"获取当前最新的binlog文件名"
+mysql>show master status;
+"查询binlog的详细日志"
+mysql> show binlog events in "binlog.000003";
++---------------+------+----------------+-----------+-------------+---------------------------------------------------+
+| Log_name      | Pos  | Event_type     | Server_id | End_log_pos | Info                                              |
++---------------+------+----------------+-----------+-------------+---------------------------------------------------+
+| binlog.000001 |  4 | Format_desc    |         1 |         125 | Server ver: 8.0.26, Binlog ver: 4                 |
+| binlog.000001 |  125 | Previous_gtids |         1 |         156 |                                                   |
+| binlog.000001 |  156 | Anonymous_Gtid |         1 |         235 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'              |
+| binlog.000001 |  235 | Query          |         1 |         315 | BEGIN                                             |
+| binlog.000001 |  315 | Intvar         |         1 |         347 | INSERT_ID=41                                      |
+| binlog.000001 |  347 | Query          |         1 |         463 | insert into tarena.user(name) values('a')         |
+| binlog.000001 |  463 | Xid            |         1 |         494 | COMMIT /* xid=28 */                               |
+| binlog.000001 |  494 | Anonymous_Gtid |         1 |         573 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'              |
+| binlog.000001 |  573 | Query          |         1 |         653 | BEGIN                                             |
+| binlog.000001 |  653 | Intvar         |         1 |         685 | INSERT_ID=42                                      |
+| binlog.000001 |  685 | Query          |         1 |         801 | insert into tarena.user(name) values('b')         |
+| binlog.000001 |  801 | Xid            |         1 |         832 | COMMIT /* xid=29 */                               |
+| binlog.000001 |  832 | Anonymous_Gtid |         1 |         911 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'              |
+| binlog.000001 |  911 | Query          |         1 |         991 | BEGIN                                             |
+| binlog.000001 |  991 | Intvar         |         1 |        1023 | INSERT_ID=43                                      |
+| binlog.000001 | 1023 | Query          |         1 |        1139 | insert into tarena.user(name) values('c')         |
+| binlog.000001 | 1139 | Xid            |         1 |        1170 | COMMIT /* xid=30 */                               |
+| binlog.000001 | 1170 | Anonymous_Gtid |         1 |        1249 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'              |
+| binlog.000001 | 1249 | Query          |         1 |        1329 | BEGIN                                             |
+| binlog.000001 | 1329 | Intvar         |         1 |        1361 | INSERT_ID=44                                      |
+| binlog.000001 | 1361 | Query          |         1 |        1477 | insert into tarena.user(name) values('d')         |
+| binlog.000001 | 1477 | Xid            |         1 |        1508 | COMMIT /* xid=31 */                               |
+| binlog.000001 | 1508 | Anonymous_Gtid |         1 |        1587 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'              |
+| binlog.000001 | 1587 | Query          |         1 |        1667 | BEGIN                                             |
+| binlog.000001 | 1667 | Intvar         |         1 |        1699 | INSERT_ID=45                                      |
+| binlog.000001 | 1699 | Query          |         1 |        1815 | insert into tarena.user(name) values('e')         |
+| binlog.000001 | 1815 | Xid            |         1 |        1846 | COMMIT /* xid=32 */                               |
+| binlog.000001 | 1846 | Anonymous_Gtid |         1 |        1925 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'              |
+| binlog.000001 | 1925 | Query          |         1 |        2005 | BEGIN                                             |
+| binlog.000001 | 2005 | Intvar         |         1 |        2037 | INSERT_ID=46                                      |
+| binlog.000001 | 2037 | Query          |         1 |        2153 | insert into tarena.user(name) values('f')         |
+| binlog.000001 | 2153 | Xid            |         1 |        2184 | COMMIT /* xid=33 */                               |
+| binlog.000001 | 2184 | Anonymous_Gtid |         1 |        2263 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'              |
+| binlog.000001 | 2263 | Query          |         1 |        2343 | BEGIN                                             |
+| binlog.000001 | 2343 | Intvar         |         1 |        2375 | INSERT_ID=47                                      |
+| binlog.000001 | 2375 | Query          |         1 |        2491 | insert into tarena.user(name) values('g')         |
+| binlog.000001 | 2491 | Xid            |         1 |        2522 | COMMIT /* xid=34 */                               |
+| binlog.000001 | 2522 | Anonymous_Gtid |         1 |        2601 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'              |
+| binlog.000001 | 2601 | Query          |         1 |        2681 | BEGIN                                             |
+| binlog.000001 | 2681 | Query          |         1 |        2805 | delete from tarena.user where id >= 34 and id<=40 |
+| binlog.000001 | 2805 | Xid            |         1 |        2836 | COMMIT /* xid=41 */                               |
+| binlog.000001 | 2836 | Anonymous_Gtid |         1 |        2915 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'              |
+| binlog.000001 | 2915 | Query          |         1 |        2995 | BEGIN                                             |
+| binlog.000001 | 2995 | Query          |         1 |        3107 | delete from tarena.user where id >=41             |
+| binlog.000001 | 3107 | Xid            |         1 |        3138 | COMMIT /* xid=43 */                               |
++---------------+------+----------------+-----------+-------------+---------------------------------------------------+
+45 rows in set (0.00 sec)
+
+```
+
+#### 根据偏移量恢复
+
+> \-\-start\-position 起始偏移量
+>
+> \-\-stop\-position 结束偏移量
+
+```sql
+"恢复刚删除的数据a-d的数据
+1.查询第一条插入数据起始偏移量
+2.查询需要恢复到被删除数据的结束偏移量
+[注]：commit为回车的偏移量，恢复到结束 偏移量时应该找到结束偏移量向下一个commit的偏移量
+"
+
+"未恢复前"
+mysql> select name from tarena.user where name in ('a','b','c','d');
+```
+
+**查询binlog日志详情**
+
+```sql
+mysql>show binlog events in "binlog.000003"
+```
+
+<img src="\pic\dba\d6-5.png" style="zoom:50%;" />
+
+```sql
+"恢复a-d的数据
+1.根据binlog日志详情,查询到
+insert ......values("a")为起始，起偏移量为347
+2.恢复到d，查询到
+insert ......values("d")
+commit /* xid=30 */ 的结束偏移量为1508
+3.在命令行通过管道给数据库进行操作
+[注]：结束偏移量应该为找到该操作后一项的commit的结束偏移量
+
+例如：恢复a那一条数据
+起始偏移量为：347
+结束偏移量为：494
+"
+
+"开始恢复"
+]#mysqlbinlog --start-position=347 --stop-position=1508 /var/lib/mysql/binlog.000003 | mysql -uroot -p123
+"查询恢复的数据，a-d恢复成功"
+]#mysql -uroot -p123 -e "select name from tarena.user where name in ('a','b','c','d','e')"
++------+
+| name |
++------+
+| b    |
+| c    |
+| d    |
+| a    |
++------+
+```
+
+#### 根据时间进行恢复
+
+> + 需在命令行打开binlog日志，才能查询到日期
+>
+> + 如何快速找到起始时间
+>
+>   找到须要恢复的数据，往上方找到第一个\#号，则为起始时间
+>
+> + 结束时间如何查询
+>
+>   找到最终恢复的数据往下找commit下第二个\#为结束时间
+
+```sql
+"
+恢复e-g的数据
+1.找到插入e这条数据命令的时间
+2.找到插入g这条数据命令的时间
+3.在命令行使用命令进行恢复
+"
+
+"命令行查看binlog日志"
+]#mysqlbinlog /var/lib/mysql/binlog.000003
+
+"起始时间行 240122  2:57:18"
+#240122  2:57:18 server id 1  end_log_pos 1815 CRC32 0x34a1b5eb      Query    thread_id=8     exec_time=0     error_code=0
+SET TIMESTAMP=1705863438/*!*/;
+insert into tarena.user(name) values('e')
+
+"结束时间  240122  3:00:40"
+insert into tarena.user(name) values('g')
+/*!*/;
+# at 2491
+#240122  2:57:25 server id 1  end_log_pos 2522 CRC32 0x69e7971a      Xid = 34
+COMMIT/*!*/;
+# at 2522
+#240122  3:00:40 server id 1  end_log_pos 2601 CRC32 0xaca2a6bb      Anonymous_GTID   last_committed=7        sequence_number=8       rbr_only=no   original_committed_timestamp=1705863640882094   immediate_commit_timestamp=1705863640882094   transaction_length=314
+```
+
+```sql
+]#mysqlbinlog --start-datetime="2024/01/22 2:57:18" --stop-datetime="2024/01/22 3:00:40" /var/lib/mysql/binlog.000003 | mysql -uroot -p123
+
+"查询恢复情况"
+[root@mysql50 ~]# mysql -uroot -p123 -e "select name from tarena.user where name in ('e','f','g')"
++------+
+| name |
++------+
+| e    |
+| f    |
+| g    |
++------+
+```
+
+
+
+
 
 # 课堂笔记（文本）
 
