@@ -72,6 +72,8 @@
     - [day06](#day06-2)
     - [day07](#day07-1)
     - [day08](#day08)
+    - [day09](#day09)
+    - [day10](#day10)
 - [PROJECT](#project)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
@@ -773,6 +775,18 @@ MySQL主从同步
 创建Redis集群
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day09)
+
+### day10
+
+主从复制
+
+哨兵服务
+
+持久化
+
+数据类型
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day10)
 
 # PROJECT
 
