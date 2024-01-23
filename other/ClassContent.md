@@ -2,11 +2,9 @@ e scp /etc/passwd  root@192.168.66.11:/x
 
 > scp /目录/迁移文件 目的ip:存放的路径（不指定则使用和被发送文件所在的位置）
 
-vm clone 虚拟机名称
-
-vm setip 虚拟机 192.168.66.66
-
 ssh 192.168.66.66
+
+> 远程连接
 
 ss -ntulp | grep 80
 
@@ -126,5 +124,14 @@ yum -y install dos2unix
 
 ```sh
 dos2unix xxx.py
+```
+
+linux支持中文
+
+```sh
+]#yum -y install langpacks-zh_CN.noarch
+]#vim /etc/locale.conf
+LANG="zh_CN.UTF-8"
+]#reboot
 ```
 

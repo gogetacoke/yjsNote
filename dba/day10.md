@@ -41,13 +41,41 @@
 			- [strlen](#strlen)
 			- [getrange](#getrange)
 		- [列表类型](#列表类型)
+			- [lpush](#lpush)
+			- [lrange](#lrange)
+			- [llen](#llen)
+			- [单个元素取出](#单个元素取出)
+			- [lset](#lset)
+			- [lpop、rpop](#lpoprpop)
+			- [rpush](#rpush)
+			- [linsert](#linsert)
 		- [散列类型](#散列类型)
+			- [hset、hget](#hsethget)
+			- [hgetall](#hgetall)
+			- [hdel](#hdel)
+			- [hkeys、hvals、hlen](#hkeyshvalshlen)
 		- [集合类型](#集合类型)
+			- [无序集合](#无序集合)
+				- [sadd](#sadd)
+				- [srem](#srem)
+				- [smembers](#smembers)
+				- [scard](#scard)
+				- [集合运算](#集合运算)
+				- [srandmember](#srandmember)
+				- [spop](#spop)
+			- [有序集合](#有序集合)
+				- [基础命令](#基础命令)
+				- [zscore](#zscore)
+				- [zrangebyscore](#zrangebyscore)
+				- [zincrby](#zincrby)
+				- [zcount](#zcount)
+				- [erem](#erem)
 - [快捷键](#快捷键)
 - [问题](#问题)
 - [补充](#补充)
 - [今日总结](#今日总结)
 - [昨日复习](#昨日复习)
+
 
 # 学习目标
 
@@ -812,11 +840,478 @@ OK
 
 ### 列表类型
 
+#### lpush
+
+> 向列表左边增加元素，返回值表示增加元素后列表的长度
+
+```perl
+# 创建变量
+192.168.88.70:6379> lpush  letter A B C 
+(integer) 3
+192.168.88.70:6379> type letter  # 查看类型
+list
+# 头部追加元素
+192.168.88.70:6379> lpush letter d e
+(integer) 5
+```
+
+#### lrange
+
+> 根据索引取出列表元素
+
+```perl
+"格式"
+lrang 变量名 startIndex  endIndex
+192.168.88.70:6379> lrange letter 0 -1
+1) "e"
+2) "d"
+3) "C"
+4) "B"
+5) "A"
+```
+
+#### llen
+
+> 统计列表中元数的个数
+
+```perl
+192.168.88.70:6379> llen letter
+(integer) 5
+```
+
+#### 单个元素取出
+
+```perl
+192.168.88.70:6379> lrange letter 0 -1
+1) "e"
+2) "d"
+3) "C"
+4) "B"
+5) "A"
+192.168.88.70:6379> lindex letter 0
+"e"
+192.168.88.70:6379> lindex letter 2
+"C"
+192.168.88.70:6379> lindex letter -1 # 最后1个
+"A"
+192.168.88.70:6379> lindex letter -2 # 倒数第2个
+"B"
+```
+
+#### lset
+
+> 修改单个元素
+
+```perl
+192.168.88.70:6379> lrange letter 0 -1  # 修改前查看
+1) "e"
+2) "d"
+3) "C"
+4) "B"
+5) "A"
+192.168.88.70:6379> lset letter 0 E  # 修改第1元素
+OK
+192.168.88.70:6379> lset letter -1 a # 修改最后1个元素
+OK
+192.168.88.70:6379> lrange letter 0 -1 # 修改后查看
+1) "E"
+2) "d"
+3) "C"
+4) "B"
+5) "a"
+```
+
+#### lpop、rpop
+
+> 弹出元素(删除元素)
+>
+> lpop：弹出头部
+>
+> rpop：弹出尾部
+
+```perl
+192.168.88.70:6379> lrange letter 0 -1  # 修改前查看
+1) "E"
+2) "d"
+3) "C"
+4) "B"
+5) "a"
+192.168.88.70:6379> lpop letter   # 弹出头部元素
+"E"
+192.168.88.70:6379> rpop letter  # 弹出尾部元素
+"a"
+192.168.88.70:6379> lrange letter 0 -1  # 修改后查看
+1) "d"
+2) "C"
+3) "B"
+```
+
+#### rpush
+
+> 尾部追加元素
+
+```perl
+192.168.88.70:6379> rpush letter e f # 尾部追加元素
+(integer) 5
+192.168.88.70:6379> lrange letter 0 -1 # 追加后查看
+1) "d"
+2) "C"
+3) "B"
+4) "e"
+5) "f"
+```
+
+#### linsert
+
+> 插入元素
+>
+> after A ：插入在A后
+>
+> before A：插入在A前
+
+```perl
+192.168.88.70:6379> lrange letter 0 -1 # 插入前查看
+1) "d"
+2) "C"
+3) "B"
+4) "e"
+5) "f"
+192.168.88.70:6379> linsert letter before C C2   # 值C前插入C2
+(integer) 6
+192.168.88.70:6379> lrange letter 0 -1 # 插入后查看
+1) "d"
+2) "C2"
+3) "C"
+4) "B"
+5) "e"
+6) "f"
+192.168.88.70:6379> linsert letter after C C3  # 值C后插入C3
+(integer) 7 
+192.168.88.70:6379> lrange letter 0 -1 # 插入后查看
+1) "d"
+2) "C2"
+3) "C"
+4) "C3"
+5) "B"
+6) "e"
+7) "f"
+```
+
 ### 散列类型
+
+#### hset、hget
+
+> hset创建变量时给变量的值取个别名，通过hget别名获取对应的值
+
+```perl
+192.168.88.70:6379> HSET user1 name bob  # 创建变量
+(integer) 1
+192.168.88.70:6379> type user1 # 查看类型
+hash
+192.168.88.70:6379> HSET user1 gender man # 赋新值
+(integer) 1
+192.168.88.70:6379> HGET user1 name  # 查看name列的值
+"bob"
+```
+
+hmset、hmget
+
+> 设置多个字段
+
+```perl
+192.168.88.70:6379> HMSET user1 email bob@tedu.cn phone 13412345678
+OK
+192.168.88.70:6379> HMGET user1 email phone
+1) "bob@tedu.cn"
+2) "11111111"
+```
+
+#### hgetall
+
+> 获取所有列和对应的值，列名在上，值在下
+
+```perl
+192.168.88.70:6379> HGETALL user1
+1) "name"
+2) "bob"
+3) "gender"
+4) "male"
+5) "email"
+6) "bob@tedu.cn"
+7) "phone"
+8) "11111111"
+```
+
+#### hdel
+
+> 删除列
+
+```perl
+192.168.88.70:6379> HDEL user1 age
+(integer) 1
+```
+
+#### hkeys、hvals、hlen
+
+> hkeys：只获取列名
+>
+> hvals：只获取值
+>
+> hlen：获取列的数量
+
+```perl
+192.168.88.70:6379> HKEYS user1
+1) "name"
+2) "gender"
+3) "email"
+4) "phone"
+5) "address"
+
+192.168.88.70:6379> HVALS user1
+1) "bob"
+2) "male"
+3) "bob@tedu.cn"
+4) "11111111"
+5) "beijing"
+
+192.168.88.70:6379> HLEN user1
+(integer) 5
+
+```
 
 ### 集合类型
 
+#### 无序集合
 
+> 无序集合中的每个元素都是不同的，且没有顺序
+
+##### sadd
+
+> 创建、追加值
+
+```perl
+192.168.88.70:6379> sadd mylike film muisc game  # 创建
+(integer) 3
+192.168.88.70:6379> type mylike # 查看数据类型
+set
+192.168.88.70:6379> sadd mylike sleep game it  # 追加，自动删除重复的值
+(integer) 2
+```
+
+##### srem
+
+> 根据集合中的成员
+
+```perl
+192.168.88.70:6379> srem mylike sleep game 删除成员
+(integer) 2
+```
+
+##### smembers
+
+> + 查看集合中的成员
+> + 判断元素是否存在，存在返回1，不存在返回0
+
+```perl
+192.168.88.70:6379> SMEMBERS mylike 查看成员
+1) "film"
+2) "it"
+3) "muisc"
+
+192.168.88.70:6379> SISMEMBER mylike game  输出0表示不存在
+(integer) 0
+192.168.88.70:6379> SISMEMBER mylike music 输出1表示存在
+(integer) 1
+```
+
+##### scard
+
+> 输出集合中元素个数
+
+```perl
+192.168.88.70:6379> SCARD mylike
+(integer) 3
+```
+
+##### 集合运算
+
+> 多个集合进行运算
+>
+> sunion ： 合集，重复的只显示一次
+>
+> sinter：交集
+>
+> sdiff：差集
+
+```perl
+192.168.88.70:6379> SMEMBERS mylike
+1) "film"
+2) "it"
+3) "muisc"
+192.168.88.70:6379> sadd helike film music game  sleep # 添加一个集和helike
+(integer) 4
+192.168.88.70:6379>
+
+# 合集 重复的只显示一次
+192.168.88.70:6379> SUNION mylike helike
+1) "game"
+2) "it"
+3) "muisc"
+4) "film"
+5) "sleep"
+6) "music"
+192.168.88.70:6379>
+
+# 交集
+192.168.88.70:6379> SINTER mylike helike
+1) "film"
+
+# 差集: 用第1列的变量和第2列的变量比
+192.168.88.70:6379> SDIFF mylike helike
+1) "it"
+2) "muisc"
+192.168.88.70:6379> SDIFF helike mylike
+1) "game"
+2) "sleep"
+3) "music"
+```
+
+##### srandmember
+
+> 随机取出集和元素个数
+>
+> srandmember 集和名 取出的元素个数
+>
+> 取出的元素个数：
+>
+> + 正整数：随机取出两个不同的元素
+> + 负整数：随机取出两个有可能相同元素
+
+```perl
+# 在集合helike中随机取出两个不同元素。
+192.168.88.70:6379> SRANDMEMBER helike 2
+1) "sleep"
+2) "music"
+192.168.88.70:6379> SRANDMEMBER helike 2
+1) "game"
+2) "music"
+
+# 在集合helike中随机取出两个有可能相同元素。
+192.168.88.70:6379> SRANDMEMBER helike -2
+1) "film"
+2) "music"
+192.168.88.70:6379> SRANDMEMBER helike -2
+1) "music"
+2) "music"
+```
+
+##### spop
+
+> 随机是弹出(删除)一个元素
+
+```perl
+192.168.88.70:6379> spop helike # 第1次弹出
+"music"
+192.168.88.70:6379> spop helike # 第2次弹出
+"game"
+192.168.88.70:6379> SMEMBERS helike # 查看
+1) "film"
+2) "sleep"
+```
+
+#### 有序集合
+
+##### 基础命令
+
+> ZADD命令的返回值是新加入到集合中的元素个数
+
+```perl
+192.168.88.70:6379> ZADD scores 88 tom 90 jerry 75 bob 92 alice #  创建变量
+(integer) 4
+192.168.88.70:6379> type scores # 查看类型
+zset
+192.168.88.70:6379> ZCARD scores # 统计成员个数
+(integer) 4
+192.168.88.70:6379> ZRANGE scores 0 -1  # 输出成员名称
+1) "bob"
+2) "tom"
+3) "jerry"
+4) "alice"
+192.168.88.70:6379> ZRANGE scores 0 -1 withscores  # 输出成员名称及对应的值
+1) "bob"
+2) "75"
+3) "tom"
+4) "88"
+5) "jerry"
+6) "90"
+7) "alice"
+8) "92"
+```
+
+##### zscore
+
+> 返回某个成员的值
+
+```perl
+192.168.88.70:6379> ZSCORE scores tom
+"88"
+```
+
+##### zrangebyscore
+
+> 指定分数范围的元素
+>
+> 参数：withscores 不添加则只输出key，加上输出key-values
+
+```perl
+192.168.88.70:6379> ZRANGEBYSCORE scores 80 90 WITHSCORES
+1) "jerry"
+2) "85"
+3) "tom"
+4) "88"
+```
+
+##### zincrby
+
+> 增加某元素到指定数字
+
+```perl
+192.168.88.70:6379> ZINCRBY scores 3 bob
+"78"
+192.168.88.70:6379> ZSCORE scores bob
+"78"
+```
+
+##### zcount
+
+> 获取指定范围内的元素个数
+
+```perl
+192.168.88.70:6379> ZCOUNT scores 80 90
+(integer) 2
+```
+
+##### erem
+
+> 删除指定元素
+
+```perl
+192.168.88.70:6379> ZREM scores bob
+(integer) 1
+```
+
+zrank、zrevrank
+
+> zrank：升序
+>
+> zrevrank：降序
+
+```perl
+192.168.88.70:6379> ZRANK scores tom   # 获取tom的排名
+(integer) 1   # 升序排列，从0开始计数
+192.168.88.70:6379> ZREVRANK scores alice   # 获取alice的排名
+(integer) 0   # 降序排列，从0开始计数
+```
 
 
 

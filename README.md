@@ -1,7 +1,8 @@
 <p style="background-color: pink">把行动交给现在，把结果交给时间</p>
 
-
+------
 <p style="background-color: yellow">不要因为没有掌声，而放弃梦想，我们需要的是坚持，而不是观众</p>
+------
 - [第一阶段](#第一阶段)
   - [ADMIN](#admin)
     - [day1](#day1)
@@ -75,6 +76,9 @@
     - [day09](#day09)
     - [day10](#day10)
 - [PROJECT](#project)
+  - [wordpress](#wordpress)
+  - [HIS](#his)
+    - [day01](#day01-9)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -116,6 +120,7 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
+
 
 
 
@@ -790,9 +795,25 @@ MySQL主从同步
 
 # PROJECT
 
-wordpress
+## wordpress
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/project/wordpress/day01)
+
+## HIS
+
+### day01
+
+HIS项目介绍
+
+项目环境准备
+
+版本控制
+
+Git基础
+
+Git进阶
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/project/HIS/day01)
 
 # 相关文件
 
