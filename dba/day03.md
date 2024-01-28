@@ -262,10 +262,10 @@ where dept_name is null;
 
 ```sql
 (select date,max(basic) from salary 
- where date=20180110 ) 
+ where year(date)=2018 ) 
  union 
  (select date,min(basic) from salary
-  where date=20180110);
+  where year(date)=2018);
 ```
 
 **查询工资表中最高与最低连同姓名**

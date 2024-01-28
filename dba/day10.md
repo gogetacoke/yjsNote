@@ -637,6 +637,8 @@ OK
 
 #### RDB缺点
 
+![](..\pic\dba\d10-5.png)
+
 ### AOF
 
 > + aof同mysql的binlog日志类似，存储执行的命令

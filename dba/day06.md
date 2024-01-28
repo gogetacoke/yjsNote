@@ -988,7 +988,7 @@ mysql> select name from tarena.user where name in ('a','b','c','d');
 mysql>show binlog events in "binlog.000003"
 ```
 
-<img src="\pic\dba\d6-5.png" style="zoom:50%;" />
+![](..\pic\dba\d6-5.png)
 
 ```sql
 "恢复a-d的数据
@@ -1070,10 +1070,6 @@ COMMIT/*!*/;
 | g    |
 +------+
 ```
-
-
-
-
 
 # 课堂笔记（文本）
 

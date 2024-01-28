@@ -136,7 +136,7 @@ mysql>select now();
 mysql>select year(now());
 
 获取employees表入职月份与出生月份相同的数据
-mysql>select name,birth_date,hire_date from employees where year(birth_date)=year(hire_date);
+mysql>select name,birth_date,hire_date from employees where month(birth_date)=month(hire_date);
 
 获取员工id为8的入职年份
 mysql>select name,year(hire_date) as 入职年份 from employess where employee_id=8;
@@ -191,7 +191,7 @@ mysql> select 2024-year(birth_date) from employees where employee_id=8;
 mysql>select name,uid,if(uid>1000,"创建用户","系统创建") as 用户类型 from user;
 
 判断家目录是否为空，为空则返回NO Home
-mysql>slect name,uid,ifnull(dirhome,"NoHome") as 家目录信息 from user;
+mysql>slect name,uid,ifnull(homedir,"NoHome") as 家目录信息 from user;
 ```
 
 ### case函数

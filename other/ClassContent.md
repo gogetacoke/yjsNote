@@ -135,3 +135,34 @@ LANG="zh_CN.UTF-8"
 ]#reboot
 ```
 
+maven打包时的注意项
+
+```perl
+maven打包时会去执行带有test文件夹的测试代码，如果代码不通过，将打包不通过，加上如下参数可以跳过test
+-Dmaven.test.skip=true
+```
+
+jps
+
+```perl
+# java-xxx-openjdk-devel 中提供的命令
+[root@Backend ~]# jps # 用于查询当前启动的相关java进程PID
+20098 jar
+20238 Jps
+```
+
+xargs
+
+```perl
+# 命令同find中的 exec类似，将前面的命名运行结果交给{}
+jps | grep jar | awk '{print $1}' | xargs kill  # 将|前的结果交给 xgrgs执行kill
+```
+
+2>&1
+
+> 1> 标准正确输出
+>
+> 2> 标准错误输出
+>
+> 2>&1  将标准错误输出转换成标准输出
+
