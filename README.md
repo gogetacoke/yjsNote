@@ -154,7 +154,7 @@
 >
 > as	Application Software(应用软件，记录日常软件的基本使用及配配置)
 >
-> spcs software package corresponding service（软件包对应服务）
+> pkg  软件包对应服务
 >
 > op	OPERATION(第二阶段OPERATION笔记)
 >
@@ -171,6 +171,10 @@
 > know-sup 知识补充
 >
 > security 第二阶段security笔记
+>
+> dba  第三阶段数据库笔记
+>
+> cloud 第四阶段笔记
 
 # 第一阶段
 

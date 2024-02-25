@@ -237,6 +237,10 @@ set ts=2      # 设置按tab键，缩进2个空格
 set et        # 将tab转换成相应个数的空格
 set cursorcolumn  # 查看是否对齐
 # 不要复制注释
+set ai        
+set ts=2     
+set et       
+set cursorcolumn  
 ```
 
 ### 测试联通性playbook
