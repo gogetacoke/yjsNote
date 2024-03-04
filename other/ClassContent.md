@@ -120,7 +120,7 @@ who -b
 
 yum -y install dos2unix
 
-> 用于在linux上查看编成源码，避免出现^M
+> 用于在linux上查看编程源码，避免出现^M
 
 ```sh
 dos2unix xxx.py
@@ -214,7 +214,7 @@ echo "Hello, World!" | sed 's/World/& is my friend/'
 
 $@
 
-> 代表所有参数的和会保留参数的意义
+> 代表所有参数的还会保留参数的意义
 
 shell参数中默认值
 
@@ -230,4 +230,20 @@ shell参数中默认值
 [root@docker-0002 ~]#echo ${aa-123}
 123
 ```
+
+ss命令
+
+```shell
+dnf -y install iproute
+```
+
+k8s查看Pod中的容器
+
+```shell
+kubectl get pods web1 -o go-template='{{range .spec.containers}}{{.name}}{{"\n"}}{{end}}'
+```
+
+thisisunsafe
+
+> google浏览器信任https
 

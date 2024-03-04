@@ -248,7 +248,7 @@ wc -l /etc/passwd
    >
    > 格式：vimdiff file1 file2
    >
-   > 命令模式下ctrl+w，然后左右键移动光标
+   > 命令模式下ctrl+w，然后左右键移11光标
    >
    > 末行模式wqa保存并退出
 
