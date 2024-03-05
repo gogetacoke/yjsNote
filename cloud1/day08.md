@@ -144,7 +144,7 @@ nginx要解析php需要配合php-fpm进行使用，php-fpm在另个容器中如�
 
 ```sh
 "
-0php-fpm是通过文件名进行解析
+php-fpm是通过文件名进行解析
 "
 # 创建php-fpm容器
 [root@docker-0001 ~]#docker run -itd --name php --network=container:web1 -v /var/webroot:/usr/local/nginx/html myos:php-fpm
