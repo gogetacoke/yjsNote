@@ -221,14 +221,13 @@ EOF
 # 生成配置文件
 [root@master ~]# containerd config default >/etc/containerd/config.toml
 [root@master ~]# vim /etc/containerd/config.toml
-61:     sandbox_image = "harbor:443/k8s/pause:3.9" # 配置镜像仓库
+61:     sandbox_image = "harbor:443/k8s/pause:3.9" # 配置基础镜像
 125:    SystemdCgroup = true # 指定配置systemd驱动
 154 行新插入:  # 配置私有镜像仓库地址
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
           endpoint = ["https://harbor:443"]
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."harbor:443"]
-          endpoint = ["https://harbor:443"]
-        [plugins."io.containerd.grpc.v1.cri".registry.configs."harbor:443".tls]
+          endpoint = ["https://harbor:443"]        [plugins."io.containerd.grpc.v1.cri".registry.configs."harbor:443".tls]
           insecure_skip_verify = true # 跳过安全验证
 [root@master ~]# systemctl enable --now kubelet containerd
 ```
@@ -240,7 +239,7 @@ EOF
 [root@master ~]# cat >/etc/modules-load.d/containerd.conf<<EOF
 overlay # 文件系统模块
 br_netfilter # 网桥防火墙模块
-xt_conntrack # 链接跟踪模块
+xt_conntrack # 链接跟踪failed to pull and unpack image "docker.io/library/myos:nginx": failed to resolve reference "docker.io/library/myos:nginx模块
 EOF
 # 启动systemd-modules-load服务加载/etc/modules-load.d/ 目录下的配置文件，并按照指定模块进行加载
 [root@master ~]# systemctl start systemd-modules-load.service 
@@ -321,6 +320,8 @@ master   NotReady   control-plane   19s   v1.26.0
 ```
 
 > \-\-dry\-run 模拟测试使用
+>
+> --dry-run=client  -o yaml
 
 ### 安装网络插件
 

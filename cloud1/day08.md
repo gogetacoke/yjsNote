@@ -90,6 +90,7 @@ hello world.
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 <style type="text/css">
 ....
+# 此时访问到nginx容器，nginx没有配置解析php-fpm
 [root@docker-0001 ~]# curl 192.168.1.31:81/info.php
 <?php phpinfo(); ?>
 ```
@@ -114,6 +115,7 @@ hello world.
 [root@docker-0001 ~]#docker rm -f $(docker ps -qa)
 [root@docker-0001 ~]#docker run -itd --name web1 -p 80:80 -v /var/webroot:/usr/local/nginx/html -v /var/webconf/nginx.conf:/usr/local/nginx/conf/nginx.conf myos:nginx
 [root@docker-0001 ~]#curl 192.168.1.31/info.php
+
 <?php phpinfo(); ?>
 "
 以上使用了卷映射配置文件
@@ -121,6 +123,8 @@ nginx要解析php需要配合php-fpm进行使用，php-fpm在另个容器中如�
 答案：通过容器网络通信实现共享网络
 "
 ```
+
+> [注]：在进行共享时，如果共享的是文件那么容器内进行对应共享的也必须是文件，不能文件对目录这样共享
 
 ### 容器网络通信
 
@@ -146,7 +150,7 @@ nginx要解析php需要配合php-fpm进行使用，php-fpm在另个容器中如�
 "
 php-fpm是通过文件名进行解析
 "
-# 创建php-fpm容器
+# 创建php-fpm容器；共享nginx所在的web1容器的网络，此时两个容器网络是互通的
 [root@docker-0001 ~]#docker run -itd --name php --network=container:web1 -v /var/webroot:/usr/local/nginx/html myos:php-fpm
 
 # 验证配置
@@ -220,6 +224,8 @@ services:
 #### 容器项目管理
 
 > 命令格式：docker compose -f 指定compose文件 指令
+>
+> compose不能进行tab解决：[点击下载脚本](https://gogetacoke.lanzoub.com/ikQpV1qslpuh)将该脚步放在/etc/bash_completion.d下。退出终端再进就可以了
 
 ```sh
 # 创建并启动项目   -d 表示启动后放入后台运行
@@ -284,18 +290,23 @@ nginx  | 2024/02/20 02:52:07 [error] 7#0: *2 open() "/usr/local/nginx/html/info.
 
 ### compose语法
 
-| **指令**       | **说明**                                 |
-| :------------- | ---------------------------------------- |
-| networks       | 配置容器连接的网络                       |
-| container_name | 指定容器名称                             |
-| depends_on     | 解决容器的依赖、启动先后的问题           |
-| command        | 覆盖容器启动后默认执行的命令             |
-| environment    | 设置环境变量                             |
-| image          | 指定为镜像名称或镜像 ID                  |
-| network_mode   | 设置网络模式                             |
-| restart        | 容器保护策略[always、no、on-failure]     |
-| ports          | 暴露端口信息，数组                       |
-| volumes        | 数据卷,支持 [volume、bind、tmpfs、npipe] |
+| 配置部分                | 说明                                                         | 示例                                       |
+| ----------------------- | ------------------------------------------------------------ | ------------------------------------------ |
+| `version`               | 指定使用的Docker Compose文件版本                             | `version: '3.9'`                           |
+| `services`              | 定义服务，每个服务代表一个容器                               | `services:`                                |
+| `service_name`          | 在`services`下定义的服务名称，用户自定义                     | `web:`                                     |
+| `image`                 | 指定服务使用的镜像名称或ID                                   | `image: nginx:latest`                      |
+| `build`                 | 当需要使用本地Dockerfile构建镜像时指定路径                   | `build: ./app`                             |
+| `command`               | 覆盖容器启动时默认执行的命令                                 | `command: ["nginx", "-g", "daemon off;"]`  |
+| `ports`                 | 映射宿主机与容器间的端口                                     | `ports: - "80:80"`                         |
+| `expose`                | 指定服务暴露的端口，但不映射到宿主机                         | `expose: - "80"`                           |
+| `volumes`               | 数据卷挂载，可以是宿主机路径、数据卷名或者匿名卷[volume、bind、tmpfs、npipe] | `volumes: - ./data:/var/www/html`          |
+| `environment`           | 设置环境变量                                                 | `environment: - DB_HOST=db - DB_USER=root` |
+| `depends_on`            | 表明服务间的依赖关系，确保在启动当前服务前先启动其他服务     | `depends_on: - db`                         |
+| `networks`              | 将服务加入到自定义网络中                                     | `networks: - frontend`                     |
+| `networks.network_name` | 自定义网络的定义                                             | `networks:` <br>`frontend:` <br>`backend:` |
+| `restart`               | 设置服务重启策略 [always、no、on-failure]                    | `restart: always`                          |
+| `container_name`        | 自定义容器名称（非推荐，除非有特殊需求）                     | `container_name: web_container`            |
 
 ### 容器服务编排
 
@@ -667,8 +678,9 @@ registryctl         "/home/harbor/start.…"   registryctl   running (healthy)
 [root@docker-0001 ~]# echo -e "192.168.1.30\tharbor" >> /etc/hosts
 # 添加harbor仓库地址
 [root@docker-0001 ~]# vim /etc/docker/daemon.json 
-mirrors": ["https://harbor:443","https://08fd26e38c00f5b00f5cc009d69ca3a0.mirror.swr.myhuaweicloud.com"],
-    "insecure-registries":["harbor:443"]
+{
+    "registry-mirrors": ["https://harbor:443", "http://registry:5000"],
+    "insecure-registries":["harbor:443", "registry:5000"]
 }
 # 重启服务验证
 [root@docker-0001 ~]#systemctl restart docker

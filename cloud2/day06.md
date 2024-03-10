@@ -185,7 +185,7 @@ nfs server
 
 > PV/PVC 是什么？
 >
-> + PV 的全称是 Persistent Volume，是持久卷 -PVC 的全称是 PersistentVolumeClaim，是持久卷声明 •
+> + PV 的全称是 Persistent Volume，是持久卷 -PVC 的全称是 PersistentVolumeClaim，是持久卷声明 
 >
 >  PV/PVC 有什么用途？ 
 >

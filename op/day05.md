@@ -445,11 +445,11 @@ show databases; # 查询是否导入
 
 ### 构建war包
 
-```
-cd CMS
+```shell
+]#cd CMS
 /usr/local/maven/bin/maven clean package
 
-ls target
+]#ls target
 antrun             maven-archiver    shishuocms-2.0.1.war
 classes            maven-status
 generated-sources  shishuocms-2.0.1

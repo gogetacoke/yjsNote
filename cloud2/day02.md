@@ -38,8 +38,6 @@ Try 'ls --help' for more information.
       --time-style=TIME_STYLE  time/date format with -l; see TIME_STYLE below
 ```
 
-
-
 # 课堂笔记（文本）
 
 ## 集群管理命令

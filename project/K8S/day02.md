@@ -147,6 +147,159 @@ CMD ["/bin/bash"]
 >
 >    [访问网址下载](https://gitee.com/cc-0001/tea)
 
+## nacos部署
+
+### 概述
+
+> + nacos是一个用于动态服务发现、配置管理和服务治理的开源平台。提供了服务注册和发现、配置管理、DNS服务、动态DNS和服务治理等功能，用于帮助开发者构建和管理微服务和云原生应用 
+> + 微服务架构中，服务的数量庞大且动态变化，每个服务都需要向注册中心注册自己的地址和端口信息，以便其他服务可以发现和调用它 
+> + Nacos作为注册中心，负责接收服务的注册信息，并提供服务发现接口，使服务消费者能够动态地获取服务提供者的地址和端口
+
+### 部署nacos
+
+```shell
+# 通过jumpserver连接nacos
+[root@jumpserver ~]# ssh -p2222 operation@192.168.1.252
+operation@192.168.1.252's password: 
+Opt> p          #输入p
+  ID  | 主机名                                   | IP            | 平台     | 组织     | 备注    
+------+------------------------------------------+---------------+----------+----------+---------
+  1   | harbor                                   | 192.168.1.30 | Linux    | Default  |         
+  2   | nacos                                    | 192.168.1.13  | Linux    | Default  |         
+  3   | rocketmq                                 | 192.168.1.14  | Linux    | Default  |         
+  4   | test                                     | 192.168.1.101 | Linux    | Default  |         
+页码：1，每页行数：21，总页数：1，总数量：4
+提示：输入资产ID直接登录，二级搜索使用 // + 字段，如：//192 上一页：b 下一页：n
+搜索：
+[Host]> 2       #进入nacos主机
+[op@nacos ~]$ sudo -s
+
+#另开一个jumpserver终端，解压tar包
+[root@jumpserver ~]# tar -xf package.tar.gz  -C /root
+
+#安装nacos，上传nacos到jumpserver主机的root目录下，拷贝到nacoa主机
+[root@nacos op]# rsync -av 192.168.1.252:/root/package/nacos-server-2.0.2.tar.gz /root/
+[root@nacos op]# tar -xpf /root/nacos-server-2.0.2.tar.gz -C /usr/local/
+
+#安装JDK8环境
+[root@nacos op]# yum -y install java-1.8.0-openjdk-devel
+
+#配置nacos
+[root@nacos ~]# cd /usr/local/nacos/
+[root@nacos nacos]# vim conf/application.properties
+ 33 spring.datasource.platform=mysql # 数据库
+ 36 db.num=1 # 配置的数据库数量
+ 39 db.url.0=jdbc:mysql://192.168.1.12:3306/nacos?characterEncoding=utf8&connectTim    eout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&se    rverTimezone=UTC # 详细的数据源信息
+ 40 db.user.0=nacos # 数据库连接的账号
+ 41 db.password.0=Taren123 # 数据库密码
+```
+
+### 导入数据
+
+> 在华为云RDS上创建一个数据库：nacos，添加用户nacos，权限：全部，主机：%，
+>
+> 创建导入任务导入nacos-mysql的sql到nacos库中
+
+### 启动
+
+```shell
+# 修改nacos启动脚本
+[root@nacos nacos]#vim bin/startup.sh
+55 export MODE="standalone" # 以单机模式进行运行
+# 启动nacos服务
+[root@nacos nacos]#./bin/startup.sh
+....
+nacos is starting，you can check the /usr/local/nacos/logs/start.out
+# 检查是否启动成功
+[root@nacos nacos]#tail -2 logs/start.out
+2024-03-05 14:32:45,239 INFO Nacos started successfully in stand alone mode. use external storage
+# 查询进程及端口信息
+[root@nacos nacos]#jps
+12484 nacos-server.jar
+12826 Jps
+[root@nacos nacos]#ss -lnt|grep 8848
+LISTEN 0      100                *:8848            *:*    
+# 设置开机自启动
+[root@nacos nacos]#echo "/usr/local/nacos/bin/startup.sh" >> /etc/rc.d/rc.local
+[root@nacos nacos]#chmod +x /etc/rc.d/rc.local
+```
+
+### 配置负载均衡
+
+> 使用华为云ELB监听192.168.1.13机器的8848端口，将其开方出来
+>
+> 浏览器访问：http://ELBIP:8848/nacos
+>
+> 账密：nacos  nacos
+
+## MQ服务部署
+
+### 概述
+
+> + RocketMQ是一个高性能的分布式消息队列系统，被广泛运用于异步通信、解耦和削峰填谷等
+> + RocketMQ采用了发布－订阅模式，消息的发送者将消息发送到消息 broker，接收者则从 broker 订阅消息。这种模式使得发送者和接收者完全解耦，可以独立演化和扩展。
+>   RocketMQ提供了可靠的消息传递、顺序消息处理、事务消息等特性，确保消息的可靠性和顺序性。
+>
+> MQ核心组件
+>
+> + Producer：生产者，负责发送消息到Broker
+> + Consumer：消费者，从Broker获取信息并进行消费
+> + Broker：接收、存储和分发消息的中心节点（消息队列服务器）
+> + Nameserver：维护broker集群和topic信息的路由中心，支持Topic、Broker 的动态注册与发现
+
+### 服务安装配置
+
+```shell
+# 进入rocketmq主机；拷贝安装包到该机器
+[root@rocketmq op]# rsync -av 192.168.1.252:/root/package/rocketmq-all-4.9.4-bin-release.zip /root/
+[root@rocketmq op]# unzip /root/rocketmq-all-4.9.4-bin-release.zip 
+[root@rocketmq op]# mkdir /usr/local/rocketmq
+[root@rocketmq op]# mv rocketmq-all-4.9.4-bin-release/ /usr/local/rocketmq
+[root@rocketmq op]# ls /usr/local/rocketmq
+benchmark  bin  conf  lib  LICENSE  NOTICE  README.md
+# 安装java环境
+[root@rocketmq op]#dnf -y install java-1.8.0-openjdk-devel
+# 配置rocketMQ服务,配置文件末尾追加
+[root@rocketmq op]#vim /usr/local/rocketmq/conf/broker.conf 
+namesrvAddr=0.0.0.0:9876    #指定RocketMQ Broker要连接的NameServer的地址和端口，0.0.0.0表示监听所有网络接口
+brokerIP1=192.168.1.14      #指定Broker所在主机的IP地址，写自己本机eth0的ip
+brokerIP2=127.0.0.1         #写自己本机127.0.0.1
+
+# 修改JVM虚拟机参数；修改对应Xms后面的数值；根据机器配置修改，以免mq启动不起来
+[root@rocketmq rocketmq]#cd /usr/local/rocketmq
+[root@rocketmq rocketmq]# vim +71 bin/runserver.sh
+71       JAVA_OPT="${JAVA_OPT} -server -Xms512m -Xmx512m -Xmn256m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m"
+
+[root@rocketmq rocketmq]# vim +85 bin/runbroker.sh 
+ 85 JAVA_OPT="${JAVA_OPT} -server -Xms512m -Xmx512m"
+
+# 启动MQ服务
+[root@rocketmq rocketmq]# nohup /usr/local/rocketmq/bin/mqnamesrv -n 0.0.0.0:9876 &> /usr/local/rocketmq/bin/namesrv.log &
+[root@rocketmq rocketmq]# nohup /usr/local/rocketmq/bin/mqbroker -n 192.168.1.14:9876 autoCreateTopicEnable=true -c /usr/local/rocketmq/conf/broker.conf &> /usr/local/rocketmq/bin/mqbroker.log 
+
+# 查询启动结果
+[root@roocketmq op]# jps
+10550 BrokerStartup
+10507 NamesrvStartup
+10797 Jps
+[root@roocketmq op]# ss -lnt|grep 9876
+LISTEN 0      1024               *:9876             *:*
+
+#设置RocketMQ服务开机自启动
+[root@rocketmq rocketmq]# vim /etc/rc.d/rc.local    #文件末尾追加
+nohup /usr/local/rocketmq/bin/mqnamesrv -n 0.0.0.0:9876 &> /usr/local/rocketmq/bin/namesrv.log &
+nohup /usr/local/rocketmq/bin/mqbroker -n 192.168.1.14:9876 autoCreateTopicEnable=true -c /usr/local/rocketmq/conf/broker.conf &> /usr/local/rocketmq/bin/mqbroker.log &
+[root@rocketmq rocketmq]# chmod +x /etc/rc.d/rc.local
+```
+
+
+
+
+
+
+
+
+
 
 
 # 快捷键

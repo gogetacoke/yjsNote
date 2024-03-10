@@ -247,3 +247,9 @@ thisisunsafe
 
 > google浏览器信任https
 
+vim格式复制校准
+
+```sh
+# vim 末行模式
+:set paste
+```

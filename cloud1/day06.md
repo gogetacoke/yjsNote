@@ -87,11 +87,6 @@
 [root@docker-0001 ~]# echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf 
 # 刷新生效配置
 [root@docker-0001 ~]# sysctl -p
-vm.swappiness = 0
-net.core.somaxconn = 1024
-net.ipv4.tcp_max_tw_buckets = 5000
-net.ipv4.tcp_max_syn_backlog = 1024
-net.ipv4.ip_forward = 1
 # 安装docker
 [root@docker-0001 ~]# dnf install -y docker-ce
 [root@docker-0001 ~]# systemctl enable --now docker
@@ -109,6 +104,7 @@ Client: Docker Engine - Community
 > [注]：使用网络镜像需要联网才能进行使用，以下是华为云上创建的主机，使用的是华为云的镜像加速器
 
 ```shell
+[root@docker-0001 ~]#mkdir -p /etc/docker
 [root@docker-0001 ~]# vim /etc/docker/daemon.json
 {
     "registry-mirrors": ["https://08fd26e38c00f5b00f5cc009d69ca3a0.mirror.swr.myhuaweicloud.com/"],
@@ -147,7 +143,7 @@ Client: Docker Engine - Community
 
 ```shell
 # latest:最新版本，也可指定版本xx:1.1.1；不指定则就是latest最新版本
-[root@docker-0001 ~]# docker pull busybox:latest
+[root@docker-0001 ~]# docker pull busybox:latest 比对 
 latest: Pulling from library/busybox
 8b3d7e226fab: Pull complete 
 Digest: sha256:410a07f17151ffffb513f942a01748dfdb921de915ea6427d61d60b0357c1dcd
@@ -228,9 +224,10 @@ eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 b498d5a3a032bbe58556e7040e56af57dd53ff32c09cc7d15c8e974563c0b5a6
 # 方法二：快捷键ctrl+p 或 ctrl+q
 
-# 创建容器时指定容器名称
+# 创建容器时指定容器名称;--name
 [root@docker-0001 ~]#docker run -itd --name web1 myos:httpd
-# 容器结束后自动删除容器
+
+# 容器结束后自动删除容器;--rm
 [root@docker-0001 ~]#dokcer run -it --rm myos:httpd
 [root@ab3469eba8ad /]#exit
 [root@docker-0001 ~]#docker ps
@@ -471,7 +468,7 @@ CONTAINER ID   IMAGE        COMMAND                  CREATED          STATUS    
 Error response from daemon: conflict: unable to remove repository reference "busybox:latest" (must force) - container 5a2c12214321 is using its referenced image a9d583973f65
 [root@docker-0001 ~]# docker images | grep busybox
 busybox      latest    a9d583973f65   2 years ago     1.23MB
-[root@docker-0001 ~]# docker rmi -f  busybox:latest # 删除的只是标签与名陈
+[root@docker-0001 ~]# docker rmi -f  busybox:latest # 删除的只是标签与名称
 Untagged: busybox:latest
 Untagged: busybox@sha256:410a07f17151ffffb513f942a01748dfdb921de915ea6427d61d60b0357c1dcd
 [root@docker-0001 ~]# docker images | grep a9d583973f65
@@ -521,9 +518,10 @@ hello        world     a9d583973f65   2 years ago     1.23MB
 [root@docker-0002 ~]# docker ps
 CONTAINER ID   IMAGE            COMMAND       CREATED         STATUS         PORTS     NAMES
 4a083f8d7594   rockylinux:8.5   "/bin/bash"   5 seconds ago   Up 4 seconds             linux
+
 # 将本机yum仓库拷贝到容器中
-[root@docker-0001 ~]#docker exec -it linux rm -rf /etc/repos.d
-[root@docker-0001 ~]#docker cp /etc/yum.repos.d linux:/etc/repos.d
+[root@docker-0001 ~]#docker exec -it linux rm -rf /etc/yum.repos.d
+[root@docker-0001 ~]#docker cp /etc/yum.repos.d linux:/etc/yum.repos.d
 # 验证容器yum
 [root@docker-0001 ~]#docker exec -it linux dnf makecache
 # 安装相关软件
@@ -554,11 +552,12 @@ rockylinux   8.5       210996f98b85   2 years ago     205MB
 [root@c3664cb220bb /]#dnf -y install httpd
 [root@c3664cb220bb /]#echo "Hello World" >> /var/www/html/index.html
 [root@c3664cb220bb /]#export LANG=C
+# 查询由systemctl命令启动的服务文件;真实主机可通过：systemctl cat 服务名称(观察 ExecStart)
+[root@c3664cb220bb /]#cat /usr/lib/systemd/system/httpd.service
 [root@c3664cb220bb /]# /usr/sbin/httpd $OPTIONS -DFOREGROUND
 AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
 
-# 在docker0001机器远程测试
-[root@docker-0001 ~]#ssh 192.168.1.32
+# 新开一个终端进行测试;注意不要关闭当前终端
 [root@docker-0002 ~]#curl 172.17.0.2
 Hello World
 ```
@@ -570,7 +569,7 @@ Hello World
 [root@c3664cb220bb /]# dnf install -y php
 [root@c3664cb220bb /]# vim /etc/httpd/conf.modules.d/00-mpm.conf
 11: LoadModule mpm_prefork_module ... ... # 去掉注释 
-17: # LoadModule mpm_event_module ... ... # 注释配置 
+23: # LoadModule mpm_event_module ... ... # 注释配置 
 [root@c3664cb220bb /]# /usr/sbin/httpd -DFOREGROUND
 # 服务不要关闭，在其他终端完成测试
 ```
