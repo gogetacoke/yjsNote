@@ -797,6 +797,198 @@ MySQL主从同步
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/dba/day10)
 
+# 第四阶段
+
+## CLOUD1
+
+### day01
+
+搭建虚拟化平台
+
+创建云主机
+
+了解云计算
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud1/day01)
+
+### day02
+
+华为云服务
+
+华为云管理
+
+华为云案例
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud1/day02)
+
+### day03
+
+华为云网站部署实战
+
+华为云负载均衡ELB
+
+Elasticsearch安装部署
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud1/day03)
+
+### day04
+
+logstash配置管理
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud1/day04)
+
+### day05
+
+获取Web日志
+
+数据分析实战
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud1/day05)
+
+### day06
+
+容器技术的概念
+
+使用docker管理镜像和容器
+
+简单镜像制作
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud1/day06)
+
+### day07
+
+Dockerfile详解
+
+容器镜像制作
+
+私有仓库
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud1/day07)
+
+### day08
+
+容器服务发布
+
+微服务编排
+
+harbor仓库
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud1/day08)
+
+## CLOUD2
+
+### day01
+
+理解kubernetes的架构
+
+搭建kubernetes集群
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud2/day01)
+
+### day02
+
+熟悉Kubernetes管理平台
+
+掌握kubectl管理命令
+
+熟悉Pod创建过程及相位状态
+
+熟悉资源对象文件
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud2/day02)
+
+### day03
+
+管理资源对象文件
+
+Pod配置自定义命令
+
+多容器Pod	
+
+资源指标监控
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud2/day03)
+
+### day04
+
+POD调度策略
+
+Pod标签管理
+
+Pod资源配额与监控
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud2/day04)
+
+### day05
+
+污点与容忍策略
+
+Pod抢占与优先级
+
+Pod安全性
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud2/day05)
+
+### day06
+
+持久卷
+
+临时卷
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud2/day06)
+
+### day07
+
+k8s服务管理
+
+Ingress安装与策略配置
+
+Dashboard安装
+
+RBAC权限管理
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud2/day07)
+
+### day08
+
+deployment
+
+daemonSet
+
+Job CronJob
+
+StatefulSet
+
+HorizontalPodAutoscaler
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/cloud2/day08)
+
+# 第五阶段
+
+## PYTHON1
+
+### day01
+
+Python概述
+
+环境准备
+
+Python起步
+
+数据类型概述
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/py/day01)
+
+### day02
+
+判断语句
+
+while循环
+
+for循环
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/py/day02)
+
 # PROJECT
 
 ## wordpress
@@ -818,6 +1010,46 @@ Git基础
 Git进阶
 
 [点击进行跳转](https://gogetacoke.github.io/yjsNote/project/HIS/day01)
+
+## K8S
+
+### day01
+
+Jumpserver搭建
+
+Jumpserver配置与使用
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/project/K8S/day01)
+
+### day02
+
+Harbor使用
+
+华为云购买数据库
+
+nacos注册中心使用
+
+RocketMQ服务搭建
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/project/K8S/day02)
+
+### day03
+
+完成Maven安装部署
+
+使用jenkins对接gitee
+
+自动打包jar包
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/project/K8S/day03)
+
+### day04
+
+CCE集群搭建以及使用
+
+项目发布
+
+[点击进行跳转](https://gogetacoke.github.io/yjsNote/project/K8S/day04)
 
 # 相关文件
 

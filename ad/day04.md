@@ -62,7 +62,7 @@ yum
 > ```linux
 > [xixi] # 仓库名称标识
 > name=hah xixi # 仓库描述信息
-> baseurl=file:///mnt/AppStream # 仓库位置，这三本地仓库
+> baseurl=file:///mnt/AppStream # 仓库位置，这是本地仓库
 > enabled=1 # 是否启用本地仓库 0不启用 1启用
 > gpgcheck=0 # 是否检测软件红帽信息 0不启用 1启用
 > # gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial #启用检测红帽信息才有这一条
