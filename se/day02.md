@@ -49,7 +49,7 @@ DNS服务基础
 
 ### 安装createrepo
 
-```
+```sh
 ]# createrepo
 bash: createrepo: 未找到命令...
 安装软件包“createrepo_c”以提供命令“createrepo”？ [N/y] y
@@ -59,8 +59,8 @@ yum -y install createrepo
 
 ### 生成仓库数据文件
 
-```
-]#createrepo_c /tools/other  #在当前目录下生成仓库数据文件
+```sh
+]#createrepo_c /tools/other  #在当前目录下生成仓库清单文件
 Directory walk started
 Directory walk done - 5 packages
 Temporary output repo path: /tools/other/.repodata/
@@ -80,7 +80,7 @@ drwxr-xr-x. 2 root root   4096 11月 16 09:41 repodata
 
 ### 编写仓库配置文件
 
-```
+```sh
 ]#vim /etc/yum.repos.d/mydvd.repo
 [myrepm]
 baseurl=file:///tools/other
@@ -101,7 +101,7 @@ Repo-expire        : 172,800 秒 （最近 2023年11月16日 星期四 09时51�
 
 ### Yum仓库更新
 
-```
+```sh
 ]#mv /tools/other/sl-5.02-1.el7.x86_64.rpm /root #移动仓库中的一个rpm包
 
 ]#createrepo_c --update /tools/other # 更新仓库软件包
@@ -128,7 +128,7 @@ Repo-expire        : 172,800 秒 （最近 2023年11月16日 星期四 09时51�
 
 ### 刷新Yum仓库缓存
 
-```
+```sh
 ]#yum makecache # 刷新yum缓存
 仓库 'app' 在配置中缺少名称，将使用 id。
 仓库 'base' 在配置中缺少名称，将使用 id。
@@ -160,7 +160,7 @@ Repo-expire        : 172,800 秒 （最近 2023年11月16日 星期四 10时25�
 
 **A机器**
 
-```
+```sh
 ]#yum -y install vsftpd
 ]#vim /etc/vsftpd/vsftpd.conf # 修改无密码访问
 anonymous_enable=YES # 将NO改为YES
@@ -170,7 +170,7 @@ anonymous_enable=YES # 将NO改为YES
 
 ### 测试访问
 
-```
+```sh
 ]#cp /tools/other /var/ftp/rpms # 将包移动到ftp共享文件夹下
 ]#curl ftp://192.168.88.240/rpms/
 rwxr-xr-x    1 0        0           67452 Nov 16 02:50 boxes-1.1.1-4.el7.x86_64.rpm
@@ -185,7 +185,7 @@ drwxr-xr-x    2 0        0            4096 Nov 16 02:50 repodata
 
 **B机器**
 
-```
+```sh
 ]#vim /etc/yum.repos.d/mydvd.repo # 编写网络仓库配置文件
 [myrpms]
 baseurl=ftp://192.168.88.240/rpms/
@@ -198,7 +198,7 @@ gpgcheck=0
 
 **A机器**
 
-```
+```sh
 ]#mkdir /var/ftp/dvd
 ]#mount /dev/cdrom /var/ftp/dvd # 挂载到ftp下
 ]#vim /etc/fstab # 编写开机自动挂载
@@ -232,7 +232,7 @@ dr-xr-xr-x    2 0        0            2048 May 15  2022 isolinux
 
 **B机器**
 
-```
+```sh
 ]#yum repoinfo # 测试仓库
 ```
 
@@ -246,13 +246,13 @@ DNS服务器分类：根域名服务器、一级DNS服务器、二级DNS服务�
 
 ### 安装软件包
 
-```
+```sh
 ]# yum  -y  install   bind    bind-chroot # bind 主程序、bind-chroot 提供牢笼政策
 ```
 
 ### 修改配置文件
 
-```
+```sh
 ]#cp -p /etc/named.conf /root # 备份数据    cp -p ：保留数据原有者
 ]#vim /etc/named.conf
 options{
@@ -266,7 +266,7 @@ zone “tedu.cn” IN{ 	# 定义负责解析tedu.cn域名
 
 ### 建立地址库文件
 
-```
+```sh
 ]#cp -p /var/named/named.localhost /var/named/tedu.cn.zone
 ]#vim /var/named/named.localhost
 NS			server  #声明DNS服务器为server
@@ -280,7 +280,7 @@ ftp			A		2.2.2.2
 
 **本机测试**
 
-```
+```sh
 ]#nslookup www.tedu.cn
 Server:         192.168.88.240
 Address:        192.168.88.240#53
@@ -291,7 +291,7 @@ Address: 1.1.1.1
 
 **B机器**
 
-```
+```sh
 ]#echo nameserver 192.168.88.240 > /etc/resolv.conf # 指定DNS服务器地址
 ]#nslookup www.tedu.cn # 命令测试域名解析
 Server:         127.0.0.1
@@ -309,7 +309,7 @@ Address: 1.1.1.1
 
 ## DNS泛域名解析
 
-```
+```sh
 ]#vim /var/named/tedu.cn.zone
 NS			server  #声明DNS服务器为server
 server		A		192.168.88.240
@@ -321,7 +321,7 @@ ftp			A		2.2.2.2
 
 **B机器**
 
-```
+```sh
 ]#nslookup  123.tedu.cn
 # nslookup 123.tedu.cn
 Server:         192.168.88.240
@@ -333,7 +333,7 @@ Address: 7.7.7.7
 
 ## DNS解析记录别名
 
-```
+```sh
 ]#vim /var/named/tedu.cn.zone
 NS			server  #声明DNS服务器为server
 server		A		192.168.88.240
@@ -346,7 +346,7 @@ vs			CNAME	ftp
 
 **B机器**
 
-```
+```sh
 ]#nslookup  vs.tedu.cn
 # nslookup vs.tedu.cn
 Server:         192.168.88.240

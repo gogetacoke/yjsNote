@@ -39,7 +39,7 @@
 
 ### 查看系统存在网卡链接
 
-```
+```sh
 ]# nmcli connection show 
 NAME        UUID                                  TYPE      DEVICE 
 有线连接 1  bf84ae0d-470d-453c-bc69-ffb2a0f83767  ethernet  eth0   
@@ -51,7 +51,7 @@ enp1s0      f5190272-0544-4e60-b9b1-d5017672e45a  ethernet  --
 
 格式：nmcli connection delete 网卡名/UUID
 
-```
+```sh
 ]# nmcli connection delete virbr0
 ```
 
@@ -59,10 +59,9 @@ enp1s0      f5190272-0544-4e60-b9b1-d5017672e45a  ethernet  --
 
 ### 网卡重命名
 
-```
+```sh
 ]# nmcli connection  add  type  ethernet      ifname  eth0    con-name   eth0
-解析： nmcli connection add   type   以太网设备
-网卡设备名为 eth0    nmcli命令的命名为 eth0
+解析： nmcli connection add   type   以太网设备 网卡设备名为 eth0    nmcli命令的命名为 eth0
 
 连接 “eth0”（a05cdd87-0fa4-4062-b867-7702f7538183）已成功添加
 ]# nmcli   connection   show # 查询添加是否成功
@@ -70,21 +69,19 @@ enp1s0      f5190272-0544-4e60-b9b1-d5017672e45a  ethernet  --
 
 ### 激活网卡
 
-```
+```sh
 ]#nmcli connection up eth0
 ]#ifconfig # 查询
+# 停止
+]#nmcli connetction down eth0
 ```
 
 ### 修改网卡信息
 
 作用：修改IP、子网掩码、网关地址
 
-```
-]#nmcli connection  modify eth0 
-ipv4.method manaul 
-ipv4.addresses 192.168.66.88.77/24
-ipv4.gateway 192.168.88.200
-autoconnect yes
+```sh
+]#nmcli connection  modify eth0 ipv4.method manaul ipv4.addresses 192.168.66.88.77/24 ipv4.gateway 192.168.88.200 autoconnect yes
 命令参数解读：
 nmcli connection 修改 外号 
 ipv4.方法 手工配置
@@ -108,7 +105,7 @@ ipv4.网关 192.168.88.200
 
 [注]：不使用身份直接输入IP地址登录，将会以本机登录的身份尝试远程管理对方
 
-```
+```sh
 ]# rpm -qa | grep openssh # 检测机器是否安装ssh服务
 openssh-askpass-8.0p1-13.el8.x86_64
 openssh-8.0p1-13.el8.x86_64
@@ -131,7 +128,7 @@ openssh-server-8.0p1-13.el8.x86_64
 
 例：将passwd复制到88.2机器上opt目录改名为1.txt
 
-```
+```sh
 ]# scp /etc/passwd root@192.168.88.3:/opt/1.txt
 oot@192.168.88.3's password: 
 passwd                                        100% 2557     2.1MB/s   00:00   
@@ -147,7 +144,7 @@ passwd                                        100% 2557     2.1MB/s   00:00
 
 -c：指定ping包个数
 
-```
+```sh
 ]# ping -c2  192.168.88.2
 PING 192.168.88.2 (192.168.88.2) 56(84) bytes of data.
 64 bytes from 192.168.88.2: icmp_seq=1 ttl=64 time=1.44 ms
@@ -158,8 +155,6 @@ PING 192.168.88.2 (192.168.88.2) 56(84) bytes of data.
 rtt min/avg/max/mdev = 0.272/0.854/1.437/0.583 ms
 ```
 
-
-
 # 课堂笔记（文本）
 
 ## 修改网卡内核命名规则
@@ -168,7 +163,7 @@ rtt min/avg/max/mdev = 0.272/0.854/1.437/0.583 ms
 
 **net.ifnames=0** **biosdevname=0** 
 
-```
+```sh
 ]# vim /etc/default/grub 
 GRUB_CMDLINE_LINUX="crashkernel=auto resume=/dev/mapper/rl-swap rd.lvm.lv=rl/root rd.lvm.lv=rl/swap rhgb quiet net.ifnames=0 biosdevname=0 "
 ]# grub2-mkconfig  -o  /boot/grub2/grub.cfg  #生效网卡规则
@@ -189,7 +184,7 @@ eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 
 A机器：
 
-```
+```sh
 ]# ssh-keygen #生成公私钥，一路敲击回车即可
 The key's randomart image is:
 +---[RSA 3072]----+
@@ -203,21 +198,21 @@ The key's randomart image is:
 |       .  .+     |
 |          .o.    |
 +----[SHA256]-----+
-]# ls -l /home/.ssh/ # 查询公私钥
+]# ls -l /root/.ssh/ # 查询公私钥
 id_rsa  id_rsa.pub  known_hosts
 ]# ssh-copy-id root@192.168.88.2
 ```
 
 B机器：
 
-```
+```sh
 [root@pv3 ~]# ls /root/.ssh/
 id_rsa.pub
 ```
 
 测试：
 
-```
+```sh
 ]# ssh root@192.168.88.2
 Activate the web console with: systemctl enable --now cockpit.socket
 
@@ -230,9 +225,9 @@ Last login: Mon Nov 13 17:40:16 2023 from 192.168.88.240
 
 ### 临时添加
 
-格式：ip  a a 需要设置的ip/24 dev 网卡名
+> 格式：ip  a a 需要设置的ip/24 dev 网卡名
 
-```
+```sh
 ]# ip a a 192.168.88.9/24 dev eth0
 ]# ip a s
 eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
@@ -247,7 +242,7 @@ eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group d
 
 格式：ip a d 需要删除的ip/23 dev 网卡名
 
-```
+```sh
 ]# ip a d 192.168.88.9/24 dev eth0
 ]# ip a s
  eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
@@ -264,7 +259,7 @@ eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group d
 
 users、who（常用）、w
 
-```
+```sh
 ]# users
 root
 
@@ -287,7 +282,7 @@ last
 
 登录成功
 
-```
+```sh
 ]# last
 root     pts/1        192.168.88.2     Tue Nov 14 10:27   still logged in密码
 root     pts/2        192.168.88.2     Tue Nov 14 10:26   still logged in
@@ -297,7 +292,7 @@ lastb
 
 登录失败
 
-```
+```sh
 ]# lastb
 root     ssh:notty    192.168.88.3     Tue Nov 14 10:28 - 10:28  (00:00)
 root     ssh:notty    192.168.88.3     Tue Nov 14 10:28 - 10:28  (00:00)

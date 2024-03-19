@@ -72,8 +72,8 @@ vdc         252:32   0   20G  0 disk
 
 例：以下将80G硬盘分成3个分区分别为10G1个扩展分区2个10G的逻辑分区
 
-```linux
-fdisk /dev/vdb  # 进入分区模式
+```sh
+]#fdisk /dev/vdb  # 进入分区模式
 命令(输入 m 获取帮助)：p
 Disk /dev/vdb：80 GiB，85899345920 字节，167772160 个扇区
 单元：扇区 / 1 * 512 = 512 字节
@@ -141,11 +141,9 @@ I/O 大小(最小/最佳)：512 字节 / 512 字节
 /dev/vdb6       104863744 146806783  41943040  20G 83 Linux
 ```
 
-
-
 ### MBR创建
 
-```linux
+```sh
 [root@localhost ~]# fdisk    /dev/vdb   
 n 创建新的分区----->分区类型 回车----->分区编号 回车---->起始扇区 回车----->在last结束时 +2G
 p 查看分区表
@@ -153,16 +151,14 @@ n 创建新的分区----->分区类型 回车----->分区编号 回车---->起�
 w 保存并退出  
 ```
 
-代码解释：默认为mbr分区
-
-
+> 代码解释：默认为mbr分区
 
 ### GPT创建
 
-前提：虚拟机已添加了块磁盘
+>  前提：虚拟机已添加了1块磁盘
 
-```linux
-fdisk /dev/vdd
+```sh
+]#fdisk /dev/vdd
 欢迎使用 fdisk (util-linux 2.32.1)。
 更改将停留在内存中，直到您决定将更改写入磁盘。
 使用写入命令前请三思。
@@ -178,79 +174,79 @@ fdisk /dev/vdd
 命令(输入 m 获取帮助)：n 
 ```
 
-代码解释：g代表创建gpt分区模式，
+>  代码解释：g代表创建gpt分区模式，
 
 ## mkfs
 
-作用：格式化文件系统
+> 作用：格式化文件系统
+>
+> 格式：mkfs.格式化文件系统类型   /硬盘
+>
+> mkfs 支持格式 ext4和xfs文件系统
 
-格式：mkfs.格式化文件系统类型   /硬盘
-
-mkfs 支持格式 ext4和xfs文件系统
-
-```linux
-# ext4
-mkfs.ext4 /dev/vdb1
-mke2fs 1.45.6 (20-Mar-2020)
+```sh
+#ext4
+]#mkfs.ext4 /dev/vdb1
+]#mke2fs 1.45.6 (20-Mar-2020)
 正在分配组表： 完成                            
 正在写入inode表： 完成                            
 创建日志（16384 个块）完成
 写入超级块和文件系统账户统计信息： 已完成
 # xfs
-mkfs.xfs /dev/vdc1
+]#mkfs.xfs /dev/vdc1
 ```
 
-代码解释：
-
-将vdb1分区格式成ext4文件系统
+> 代码解释：
+>
+> 将vdb1分区格式成ext4文件系统
 
 ## blkid
 
-查询分区类型
+> 查询分区类型
 
-```linux
-mkfs.ext4 /dev/vdb1 # 格式化文件系统ext4
+```sh
+]#mkfs.ext4 /dev/vdb1 # 格式化文件系统ext4
 blkid /dev/vdb1 # 查看文件系统类型
 /dev/vdb1: UUID="02ba7640-f423-474c-b48f-826c994dceeb" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="76c0241f-01"
 ```
 
-代码解释：主要查看TYPE的内容
+> 代码解释：主要查看TYPE的内容
 
 ## mount
 
 ### 临时挂载-mbr/gpt
 
-挂载上述创建的磁盘
+> 挂载上述创建的磁盘
 
-```linux
-mkdir /mypart1
-mount /dev/vdb1 /mypart1
-df -h # 显示正在挂载的设备使用情况
+```sh
+]#mkdir /mypart1
+]#mount /dev/vdb1 /mypart1
+]#df -h # 显示正在挂载的设备使用情况
 ```
 
 ### 开机自动挂载-mbr/gpt
 
-编写格式：
+> 编写格式：
+>
+> 设备路径 挂载点 文件系统类型 参数（默认defaults） 备份标记（0关闭,1开启）  检测顺序
 
-设备路径 挂载点 文件系统类型 参数（默认defaults） 备份标记（0关闭,1开启）  检测顺序
-
-```linux
-vim /etc/fstab
+```sh
+]#vim /etc/fstab
 # 进入命令模式按住大写G，再按o进入插入模式，输入以下内容
-/dev/vdb1 /mypart1 ext4 defaults 0 0
+]#/dev/vdb1 /mypart1 ext4 defaults 0 0
 # wq保存并退出
-mount -a # 检测书写是否正确，无输出表示没问题
-df -h|grep mypart1 # 查看挂载信息
+]#mount -a # 检测书写是否正确，无输出表示没问题
+]#df -h|grep mypart1 # 查看挂载信息
 ```
 
-[注]：前提需要先进行临时挂载，再来进行编写自动挂载，不然会有报错
+> [注]：前提需要先进行临时挂载，再来进行编写自动挂载，不然会有报错
 
-## df -h
+## df \-h
 
-作用：显示挂载社保的使用情况
+> 作用：显示挂载社保的使用情况
 
-```linux
-df -h
+```shell
+]#df -h
 devtmpfs             625M     0  625M    0% /dev
 tmpfs                655M     0  655M    0% /dev/shm
 tmpfs                655M  9.3M  645M    2% /run
@@ -261,14 +257,14 @@ tmpfs                131M   24K  131M    1% /run/user/0
 /dev/vdb1            2.0G  6.0M  1.8G    1% /mypart1
 ```
 
-代码解释：主要查看磁盘大小以及挂载信息
+> 代码解释：主要查看磁盘大小以及挂载信息
 
 ## parted
 
-查看磁盘信息
+> 查看磁盘信息
 
-```linux
-parted /dev/vdc print
+```sh
+]#parted /dev/vdc print
 
 Model: Virtio Block Device (virtblk)
 Disk /dev/vdc: 21.5GB
@@ -284,37 +280,38 @@ Number  Start   End     Size    Type      File system     标志
  5      6445MB  8591MB  2146MB  logical   xfs
 ```
 
-代码解释：主分区（primary）、扩展分区（extended）、逻辑分区（logical）
+> 代码解释：主分区（primary）、扩展分区（extended）、逻辑分区（logical）
 
 ## swapon
 
-作用：设置或查看交换空间
-
-交换空间：虚拟内存
-
-swapon 启用
-
-swapoff 停用
-
-[-a]：检测交换区（前提设置了开机自动启用交换空间）
+> 作用：设置或查看交换空间
+>
+> 交换空间：虚拟内存
+>
+> swapon 启用
+>
+> swapoff 停用
+>
+> [-a]：检测交换区（前提设置了开机自动启用交换空间）
 
 ### 临时设置
 
-```linux
-mkswap /dev/vdc1 # 格式化交换文件系统
+```sh
+]#mkswap /dev/vdc1 # 格式化交换文件系统
 正在设置交换空间版本 1，大小 = 2 GiB (2147479552  个字节)
 无标签，UUID=eae60c01-5a57-4c1e-a5c2-737b3eebc667
 
-blkid /dev/vdc1 # 查看文件系统类型
+]#blkid /dev/vdc1 # 查看文件系统类型
 /dev/vdc1: UUID="eae60c01-5a57-4c1e-a5c2-737b3eebc667" TYPE="swap" PARTUUID="437cae44-01"
 
-swapon # 查看交换空间组成的成员信息
+]#swapon # 查看交换空间组成的成员信息
 NAME      TYPE      SIZE   USED PRIO
 /dev/dm-1 partition   2G 162.5M   -2
 
-swapon /dev/vdc1 # 启用交换分区
-swapon # 查看成员信息
-fre -h # 查看交换空间大小
+]#swapon /dev/vdc1 # 启用交换分区
+]#swapon # 查看成员信息
+]#swapon -s
+]#free -h # 查看交换空间大小
 
 swapoff /dev/vdc1 # 停用交换分区
 ```

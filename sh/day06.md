@@ -59,7 +59,7 @@ tr表示translate（翻译）
 
 ### 监控脚本(简单)
 
-```
+```sh
 #!/bin/bash
 while :
 do
@@ -89,7 +89,7 @@ done
 >
 > 5，设置时间同步，ntp服务器地址是192.168.88.240
 
-```
+```sh
 #!/bin/bash
 #脚本执行完后，用ssh远程登录测试
 #可以先手工备份/etc/fstab和/etc/profile
@@ -125,12 +125,12 @@ systemctl restart chronyd
 
 ### 通过文档批量创建帐号并配置密码
 
-```
+```sh
 tr -cd '_a-zA-Z0-9' < /dev/urandom | head -c 10    
 #-c是取反 -d是删除，对_a-zA-Z0-9取反删除，剩下就只是_a-zA-Z0-9这个范围内的字符串，head -c 10 可以得到10位字符
 ```
 
-```
+```sh
 #!/bin/bash
 x=$(awk '/^[a-zA-Z0-9]/&&!/已创建/{print NR}' user.txt)
 if [ -z "$x" ];then
@@ -154,7 +154,7 @@ column -t user.txt
 
 ### 可视化安装软件脚本
 
-```
+```sh
 #vim menu                #创建菜单函数文件
 x=1                    #高亮行号，默认为1即可
 y=0                    #第几行
@@ -171,7 +171,7 @@ menu (){                #循环显示菜单的函数
 }
 ```
 
-```
+```sh
 ftp安装函数
 ftp_install(){
     if rpm -q vsftpd &> /dev/null ;then        #ftp如果已经安装则条件算成功
@@ -183,7 +183,7 @@ ftp_install(){
 }
 ```
 
-```
+```sh
 #vim ser_manager            #创建服务管理函数文件
 ser_manager(){
     if ! rpm -q vsftpd &>/dev/null ;then    #ftp如果未安装则条件算成功,！是取反
@@ -203,7 +203,7 @@ ser_manager(){
 }
 ```
 
-```
+```sh
 #!/bin/bash
 . menu            #读入菜单函数
 . ftp_install        #读入安装函数
@@ -233,7 +233,7 @@ done
 
 ### 编写每天备份文件脚本
 
-```
+```sh
 # 根据需求打包文件夹以外的内容，打包除.tmp结尾的所有内容
 ]#touch a b
 ]#touch c.tmp
@@ -242,7 +242,7 @@ a b b.tmp
 ]#tar -zcf test.tar.gz --exclude=*.tmp .
 ```
 
-```
+```sh
 #!/bin/bash
 sou_path=/var/www/html
 tar_path=/opt/backup_date
@@ -307,7 +307,7 @@ c d
 
 ## 脚本内部调用外部文件
 
-```
+```sh
 . 文件名
 #!/bin/bash
 . menu

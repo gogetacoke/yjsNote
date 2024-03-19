@@ -59,13 +59,13 @@ inotify实时同步
 
 ### 装包
 
-```
+```sh
 yum -y install rsync
 ```
 
 ### 本地同步
 
-```
+```sh
 ]#mkdir /mydir /todir
 ]#echo 123 > /mydir/1.txt
 ]#echo 321 > mydir/2.txt
@@ -99,7 +99,7 @@ total size is 12  speedup is 0.04
 
 **虚拟机A**
 
-```
+```sh
 ~]# rsync -avX  --delete /mydir/   root@192.168.88.2:/nsd10
  ……**..**connecting **(**yes**/**no)? yes
 root@192.168.88.2's password:         #输入密码
@@ -107,7 +107,7 @@ root@192.168.88.2's password:         #输入密码
 
 **虚拟机B**
 
-```
+```sh
 ]#ls /nsd10
 ```
 
@@ -117,7 +117,7 @@ root@192.168.88.2's password:         #输入密码
 
 **A机器配置**
 
-```
+```sh
 ]#ssh-keygen # 一路回车
 ]#ls /root/.ssh # 查看生成公私钥
 id_rsa(私钥)   id_rsa.pub(公钥)    known_hosts(记录曾经远程管理过的机器)
@@ -138,7 +138,7 @@ inotifywait [选项] 目标文件夹
 
 例：监控源目录，发生变化便进行通知
 
-```
+```sh
 ]#/opt/myrpms/bin/inotifywait -rq /mydir：
 /mydir/ CREATE 5.txt
 ]#ls /mydir菜单
@@ -147,7 +147,7 @@ inotifywait [选项] 目标文件夹
 
 ### 使用Shell编写一个简单实时脚本
 
-```
+```sh
 [root@server /]# vim    /root/hello.sh  
 echo  hello  world
 hostname
@@ -185,7 +185,7 @@ RPM软件包：gcc、make
 
 ### 解压源码至指定位置
 
-```
+```sh
 ]#tar -xf /usr/local/inotify-tools-3.13 /usr/local/
 ```
 
@@ -193,7 +193,7 @@ RPM软件包：gcc、make
 
 作用：检测是否安装gcc、指定安装位置、生成Makefile文件
 
-```
+```sh
 ]#cd /usr/local/inotify-tools-3.13/
 ]#./configure --prefix=/opt/myrpms # 指定位置安装，此操作不产生相应的目录
 ```
@@ -202,14 +202,14 @@ RPM软件包：gcc、make
 
 作用：变成可执行的程序，放入内存中
 
-```
+```sh
 ]#cd /usr/local/inotify-tools-3.13/
 ]#make
 ```
 
 ### make install安装
 
-```
+```sh
 ]#cd /usr/local/inotify-tools-3.13/
 ]#make install
 ]#ls /opt
@@ -221,7 +221,7 @@ bin  include  lib  share
 
 ### 卸载
 
-```
+```sh
 ]#rm -rf /opt/mrpms
 ```
 
@@ -229,14 +229,14 @@ bin  include  lib  share
 
 ### 安装数据库
 
-```
+```sh
 ]#yum -y install mariadb-server
 ]#systemctl restart mariadb
 ```
 
 ### 基本使用
 
-```
+```sh
 ]#mysql #进入数据系统
 MariaDB [(none)]> show databases; #列出当前数据库
 >create datases test; # 创建数据库
@@ -260,7 +260,7 @@ MariaDB [(none)]> show databases; #列出当前数据库
 
 格式：库 < sql文件
 
-```
+```sh
 ]#mysql test < /root/user.sql  # 将user.sql数据恢复到test库中
 ]#mysql
 >use test;
@@ -276,7 +276,7 @@ MariaDB [(none)]> show databases; #列出当前数据库
 
 ### 查询
 
-```
+```sh
 >select * from base; #查询base表中的所有内容
 +------+---------+------------+
 | id   | name    | password   |
@@ -320,7 +320,7 @@ Empty set (0.000 sec)
 
 ### 增加
 
-```
+```sh
 >insert base values('4','xixi','123');
 >select * from base;
 +------+---------+------------+
@@ -355,7 +355,7 @@ Empty set (0.000 sec)
 
 ### 删除
 
-```
+```sh
 > delete from base where id='9';
 > select * from base;
 +------+---------+------------+
@@ -372,7 +372,7 @@ Empty set (0.000 sec)
 
 ### 修改数据库密码
 
-```
+```sh
 ]#mysqladmin -u root password='132'; #初始修改密码
 ]#mysql -u root -p # 登录
 

@@ -69,7 +69,7 @@ sed文本块处理
 
 grep查找的必须是文本文件
 
-```
+```sh
 ]#head -5 /etc/passwd > user # 准备素材
 ```
 
@@ -77,7 +77,7 @@ grep查找的必须是文本文件
 
 匹配前字符开头
 
-```
+```sh
 ]#grep '^root' user # 匹配user中以root开头的行
 ```
 
@@ -85,7 +85,7 @@ grep查找的必须是文本文件
 
 匹配前字符结尾
 
-```
+```sh
 ]#grep 't$' user #匹配以$结尾的行
 ```
 
@@ -95,7 +95,7 @@ grep查找的必须是文本文件
 
 匹配集合中任意单个字符，包含就算
 
-```
+```sh
 ]#grep "[rot]" user # 匹配单个字符
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -117,13 +117,13 @@ lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
 
 **集合去反**
 
-```
+```sh
 ]#grep "[^0-9]" user # 匹配所有数字以外的内容
 ```
 
 **案例：匹配用户输入的密码是否是数字**
 
-```
+```sh
 #!/bin/bash
 read -p "please enter pwd: " p
 echo $p | greo -q "[^0-9]" 
@@ -134,13 +134,14 @@ else
 fi
 ```
 
-代码解释：由于grep查找的只能是文本文件，所以不能直接写grep "`[`^0-9`]`",所以使用echo喊出来进行查询即可，若不用echo，那就将内容写入文件里面，再查询;
-
-grep -q  静默查询，不输出
+>  代码解释：由于grep查找的只能是文本文件，所以不能直接写grep "`[`^0-9`]`",所以使用echo喊出来进行查询即可，若不用echo，那就将内容写入文件里面，再查询;
+>
+> grep -q  静默查询，不输出
+>
 
 ### `.*`
 
-```
+```sh
 # . 匹配任意单个字符
 ]#grep "." user # 不写匹配字符，则输出所有内容，因为字符都是有单个字符组成
 ]#greo "r..t" user # 找rt之间有2个字符的行
@@ -154,7 +155,7 @@ grep -q  静默查询，不输出
 
 匹配前一个字符n到m次
 
-```
+```sh
 ]# grep 'ro\{1,\}' user  # 匹配o字符1到n次
 root:x:0:0:root:/root:/bin/bash 
 
@@ -166,7 +167,7 @@ root:x:0:0:root:/root:/bin/bash
 
 组合为整体，保留
 
-```
+```sh
 ]# grep '\(root\)' user 
 root:x:0:0:root:/root:/bin/bash
 
@@ -179,7 +180,7 @@ daemon:x:2:2:daemon:/sbin:/sbin/nologin
 
 匹配字母、数字、下划线，\W 非字母、数字、下划线
 
-```
+```sh
 ]#grep 'ro\w' user # 匹配ro后为字母数字下划线的行
 root:x:0:0:root:/root:/bin/bash
 ```
@@ -188,7 +189,7 @@ root:x:0:0:root:/root:/bin/bash
 
 匹配空格，tab键;\S，非空格，tab
 
-```
+```sh
 ]#grep '\s' user | wc -l# 找出所有包含空格的行
 2
 ```
@@ -197,7 +198,7 @@ root:x:0:0:root:/root:/bin/bash
 
 匹配数字，[0-9];但兼容性较差;\D非数字行
 
-```
+```sh
 ]#grep -P '\d' user  # 找出所有包含数字的行
 ```
 
@@ -285,7 +286,7 @@ root:x:0:0:root:/root:/bin/bash
 
 1. 匹配IP地址
 
-   ```
+   ```sh
    第一种方式：^(25[0-5]\.|2[0-4][0-9]\.|1?[0-9]?[0-9]\.){3}(25[0-5]|2[0-4][0-9]|1?[0-9]?[0*9])$
    
    第二种方式：^(25[0-5]\.|2[0-4]\d\.|1?\d?\d\.){3}(25[0-5]|2[0-4]\d|1?\d)$

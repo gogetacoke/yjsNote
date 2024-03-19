@@ -68,11 +68,13 @@ yum
 > # gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial #启用检测红帽信息才有这一条
 > ```
 >
-> 多个仓库则在后追加上诉相同内容，其仓库位置改为心仓库地址
+> 多个仓库则在后追加上诉相同内容，其仓库位置改为新仓库地址
 >
 > yum repoinfo 识别本地仓库是否搭建成功
 >
 > yum repolist 列出仓库数量
+>
+> yum makecache 刷新仓库缓存
 >
 > **安装软件**
 >
@@ -142,7 +144,7 @@ history
 >
 > ！cat  指定最近一条以cat开头的历史命令
 
-du -sh
+du -sh 文件名或文件所在路径
 
 > 统计目录文件大小
 

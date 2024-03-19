@@ -50,7 +50,7 @@ RAID磁盘阵列
 
 1. 查看系统物理卷
 
-   ```linux
+   ```sh
    ]#pvs
      PV         VG       Fmt  Attr PSize   PFree
      /dev/vda2  rl       lvm2 a--  <19.00g    0 
@@ -60,7 +60,7 @@ RAID磁盘阵列
 
    格式：prcreate /dev/磁盘分区
 
-   ```linux
+   ```sh
    ]#pvcreat /dev/vdb[1-2]
    ```
 
@@ -68,7 +68,7 @@ RAID磁盘阵列
 
    格式：pvremove /dev/磁盘
 
-   ```linux
+   ```sh
    ]#pvremove /dev/vdb{1,2,3,5,6}
    ```
 
@@ -78,7 +78,7 @@ RAID磁盘阵列
 
 1. 查看系统存在卷组
 
-   ```linux
+   ```sh
    ]#vgs
      VG       #PV #LV #SN Attr   VSize   VFree 
      rl         1   2   0 wz--n- <19.00g     0 
@@ -88,7 +88,7 @@ RAID磁盘阵列
 
    格式：vgcreate  卷组名字 /dev/磁盘分区
 
-   ```linux
+   ```sh
    ]#vgcreat systemvg /dev/vdb[1-2]
    ```
 
@@ -98,7 +98,7 @@ RAID磁盘阵列
 
    需求：逻辑卷需要扩展，但卷组空间不满足逻辑卷
 
-   ```linux
+   ```sh
    ]#vgextend systemvg /dev/vdb{3,5,6}
    ```
 
@@ -106,26 +106,24 @@ RAID磁盘阵列
 
    格式：vgchange -s 需设定的单位 卷组名
 
-   ```linux
+   ```sh
    ]#vgchange -s 1M systemvg  # 卷组已存在
    ]#vgdisplay systemvg # 查询当前卷组信息
    ```
 
    代码解释：将systemvg卷组大小更改为1;系统默认单位4M
 
-   
-
    创建卷组时指定PE大小
 
-   ```linux
-   ]#vgcreate -s 1M systemvg /dev/vdb[1-2]
+   ```sh
+]#vgcreate -s 1M systemvg /dev/vdb[1-2]
    ```
-
+   
 5. 删除卷组
 
    格式：vgremove 卷组名
 
-   ```lnux
+   ```sh
 ]#vgremove systemvg
     Volume group "systemvg" successfully removed
    ```
@@ -134,38 +132,40 @@ RAID磁盘阵列
 
 1. 查询当前戏台存在的逻辑卷
 
-   ```lniux
+   ```sh
    ]#lvs
    ```
 
 2. 创建逻辑卷
 
-   格式：lvcreate -L 大小 -n 名字 卷组名
+   格式：lvcreate -L 大小 -n 逻辑卷名 卷组名
 
-   ```linux
+   ```sh
    ]#lvcreate -L 16G -n vo systemvg
    Logical volume "vo" created.
    ```
 
-   创建时指定PE大小
+   > 创建时指定PE大小
+   >
+   > \-l 指定PE大小
 
-   ```linux
-   ]#lvcreate -l 98 -n lbvase systemvg
+   ```sh
+   ]#lvcreate -l 98 -n lbvase systemvg # 创建由98个PE组成的逻辑卷lbvase
    ```
 
 3. 逻辑卷名更改
 
    格式：lvrename 逻辑卷名 重命名后
 
-   ```linux
+   ```sh
    ]#lvrename vo vo1
    ```
 
 4. 删除逻辑卷
 
-   前提：被删除的逻辑卷已提前卸载（umout）
+   > 前提：被删除的逻辑卷已提前卸载（umout）
 
-   ```linux
+   ```sh
    ]#lvremove /dev/systemvg/vo
    Do you really want to remove active logical volume systemvg/vo? [y/n]: y
      Logical volume "vo" successfully removed
@@ -175,21 +175,21 @@ RAID磁盘阵列
 
 ## 刷新逻辑卷
 
-前提：逻辑卷扩展后的操作
+> 适用于扩容逻辑卷后的操作
 
 ### xfs
 
-格式：xfs_grows  卷组所在地
+> 格式：xfs_grows  卷组所在地
 
-```lnux
+```sh
 ]#xfs_grow /dev/systemvg/vo
 ```
 
 ### ext4
 
-格式：resize2fs 卷组所在地
+> 格式：resize2fs 卷组所在地
 
-```linux
+```sh
 ]#resize2fs /dev/systemvg/vo
 ```
 
@@ -197,7 +197,7 @@ RAID磁盘阵列
 
 [-p]：列出对应进程的pid编号
 
-```linux
+```sh
 ]# pstree # 显示正在运行的所有进程
 ]# pstree -p
 systemd─┬─ModemManager───2*[{ModemManager}]
@@ -210,7 +210,7 @@ bash(10027)───less(10309)
 
 [-a]：显示完整的命令行
 
-```linux
+```sh
 ]# pstree -a 
   │       └─2*[{xdg-permission-}]
   ├─systemd-journal
@@ -235,7 +235,7 @@ bash
 
 [-l]：输出进程名
 
-```linux
+```sh
 ]#pgrep -l sys  
 1 systemd
 721 systemd-journal
@@ -246,16 +246,17 @@ bash
 2080 systemd
 ```
 
-[-u]：检索指定用户的进程
+[-u]：检索指定用户的进程号
 
-```linux
+```sh
 ]# pgrep -u yyh # 类似命令pstree -p yyh
 10027
+]#pgrep -u yyh -l # 查找对应进程号以及进程名
 ```
 
 [-x]：精确匹配完整的进程名
 
-```linux
+```sh
 ]# pgrep  -x   crond   #精确匹配完整的进程名
 1057
 ]#pgrep -lx crond
@@ -272,7 +273,7 @@ bash
 
 aux：显示当前终端所有进程（a）、当前用户在所有终端下的进程（x）、以用户格式输出（u）
 
-```linux
+```sh
 ]# ps aux # 显示当前所有进程
 
 ]# ps aux | wc -l #
@@ -280,7 +281,7 @@ aux：显示当前终端所有进程（a）、当前用户在所有终端下的�
 
 -elf：显示系统内所有进程（-e）、以长格式输出（-l）信息、包括最完整的进程信息（-f）
 
-```linux
+```sh
 ]# ps -elf # 列出所有进程加父进程
 ```
 
@@ -290,7 +291,7 @@ aux：显示当前终端所有进程（a）、当前用户在所有终端下的�
 
 [-d]：刷新秒
 
-```linux
+```sh
 top -d 1
 ```
 
@@ -302,7 +303,7 @@ top -d 1
 
 ## sleep
 
-``` sleep
+``` sh
 ]#sleep 2000  #命令行挂起2000s，ctrl+c退出
 ```
 
@@ -314,13 +315,13 @@ top -d 1
 
 例：创建bob用户，添加cat、mkdir权
 
-```linux
-visudo # 此方法可以检查语法错误（推荐）
+```sh
+]#visudo # 此方法可以检查语法错误（推荐）
 bob        ALL=（root）       /usr/bin/cat,/usr/bin/mkdir 
 普通用户 所有的主机=（变成的身份） 可以执行的命令
-useradd bob # 创建用户bob
-echo 123  | passwd --stdin bob
-su - bob
+]#useradd bob # 创建用户bob
+]#echo 123  | passwd --stdin bob
+]#su - bob
 [bob@nb ~]sudo -l # 查看此用户提权的命令
 [sudo] bob 的密码：   #输入bob用户的密码
 ....
@@ -334,7 +335,7 @@ cat: /etc/gshadow: 权限不够
 
 例：取消提权密码验证（根据上方案例）
 
-```                                            
+```                                            sh
 visudo # 编写取消提权密码验证
 bob    ALL=（root）  NOPASSWD:/usr/bin/cat,/usr/bin/mkdir 
 su - bob
@@ -357,7 +358,7 @@ sudo cat /etc/shadow
 
 ## 物理卷创建
 
-```linux
+```sh
 ]#pvcreate /dev/vdb[1-2]
   Physical volume "/dev/vdb1" successfully created. 物理卷成功 
   Physical volume "/dev/vdb2" successfully created.
@@ -371,7 +372,7 @@ sudo cat /etc/shadow
 
 详解： 使用vgcreat可以自动创建卷组，不用手动再次创建
 
-```linux
+```sh
 ]#vgcreat system /dev/vdb[1-2]
   Physical volume "/dev/vdb1" successfully created. 物理卷成功 
   Physical volume "/dev/vdb2" successfully created.
@@ -384,7 +385,7 @@ sudo cat /etc/shadow
 
 1. 不使用PE
 
-   ```linux
+   ```sh
    ]#lvcreat -L 16G -n vo systemvg
     Wiping xfs signature on /dev/systemvg/vo.
      Logical volume "vo" created.
@@ -392,7 +393,7 @@ sudo cat /etc/shadow
 
 2. 使用PE
 
-   ```linux
+   ```sh
    lvcreate -l 98 -n vo1 systemvg
    ```
 
@@ -402,7 +403,7 @@ sudo cat /etc/shadow
 
 格式化文件系统-挂载逻辑卷（开机自动挂载）
 
-```linux
+```sh
 ]# ls   /dev/systemvg/vo 
 /dev/systemvg/vo
 ]# ls -l    /dev/systemvg/vo
@@ -422,7 +423,7 @@ lrwxrwxrwx. 1 root root 7 11月 10 11:07 /dev/systemvg/vo -> ../dm-2
 
 ### 卷组有足够空间
 
-```linux
+```sh
 ]# df   -h   |   grep   vo # 查询
 ]# vgs
 ]# lvextend    -L   18G    /dev/systemvg/vo
@@ -442,7 +443,7 @@ lrwxrwxrwx. 1 root root 7 11月 10 11:07 /dev/systemvg/vo -> ../dm-2
 
 ### 卷组没有足够空间
 
-```linux
+```sh
 ]#vgextend systemvg /dev/vdb{3,5,6}  # 4为扩展分区
   Physical volume "/dev/vdb3" successfully created.
   Physical volume "/dev/vdb5" successfully created.
@@ -475,27 +476,27 @@ lrwxrwxrwx. 1 root root 7 11月 10 11:07 /dev/systemvg/vo -> ../dm-2
 
 •Ctrl + z 组合键：挂起当前进程（暂停并转入后台）
 
-```linux
+```sh
 ]# sleep 2000 # 挂起2000s
 ^Z                 #按Ctrl+z  暂停放入后台
 ```
 
 •jobs 命令：查看后台任务列表
 
-```linux
+```sh
 ]#jobs
 [1]+  已停止               sleep 2000
 ```
 
 •&符号：正在运行的状态放入后台
 
-```linux
+```sh
 ]#sleep 2000 &  # 将命令行挂起2000s放入后台运行
 ```
 
 •fg 命令：将后台任务恢复到前台运行
 
-```linux
+```sh
 ]#fg 1     #让后台编号为1 的进程恢复到前台
 sleep 2000
 ^C               #按Ctrl+c   结束
@@ -503,7 +504,7 @@ sleep 2000
 
 •bg 命令：激活后台被挂起的任务在后台运行
 
-```linux
+```sh
 ]# bg 1     #让后台编号为1 的进程继续运行
 [1]+ sleep 2000 &
 ```
@@ -514,7 +515,7 @@ ctrl+c组合键，中断当前命令程序
 
 kill [-9] pid、kill [-9] %后台任务编号
 
-```linux
+```sh
 ]# sleep 8000 &
 [1] 11874
 ]# kill -9 %1
@@ -524,7 +525,7 @@ kill [-9] pid、kill [-9] %后台任务编号
 
 killall [-9] 进程名
 
-```linux
+```sh
 ]# killall -9 sleep
 [1]-  已杀死               sleep 8000
 [2]+  已杀死               sleep 8000

@@ -53,7 +53,7 @@ awk的使用
 
 **准备素材**
 
-```
+```sh
 ]#vim abc
 hello the world
 welcom to chengdu
@@ -85,7 +85,7 @@ welcom
 
 输出内容
 
-```
+```sh
 ]#awk '{print}' user # 输出user中所有内容
 ```
 
@@ -93,7 +93,7 @@ welcom
 
 #### /字符串/
 
-```
+```sh
 ]#awk /to/{print} abc #输出所有包括to的行
 ```
 
@@ -111,7 +111,7 @@ NR 行号
 NF 列号
 ```
 
-```
+```sh
 ]#awk {print $1} abc # 输出第1列所有内容
 ]#awk {print $1,$3} abc #输出第1列和第三列
 ]#awk {print $0} abc # 输出所有列
@@ -153,7 +153,7 @@ over
 
 案例：格式化输出passwd中的User UID Home
 
-```
+```sh
 ]#awk -F: 'BEGIN{print"User\tUid\tHome"}{print $1"\t"$3"\t"$6}END{print "总共"NR"行"}' user
 User    Uid     Home
 root    0       /root

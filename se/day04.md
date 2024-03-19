@@ -40,7 +40,7 @@ podman命令行
 
 ### 安装软件包
 
-```
+```sh
 ]#yum -y install podman
 ]#yum -y module install container-tools # 安装podman所需的一系列软件
 ```
@@ -51,7 +51,7 @@ podman命令行
 
 前提：已准备好镜像
 
-```
+```sh
 ]#podman images # 查询系统是否存在镜像
 ]#podamn load -i /root/imag.tar.xz # 导入镜像
 ```
@@ -60,7 +60,7 @@ podman命令行
 
 格式：podman rmi 镜像名+标签/镜像id
 
-```
+```sh
 ]#podman images
 REPOSITORY            TAG         IMAGE ID      CREATED        SIZE
 localhost/httpd       latest      608968fe7738  9 months ago   222 MB
@@ -83,18 +83,18 @@ Deleted: 608968fe7738f5d640bc6c38d28a6d3955f3d1e2c9e28dbd39958847d24253f9
 
 –选项 -d，后台运行
 
-–选项 --name 容器名字
+–选项 --name 起个容器名字
 
-```
+```sh
 ]#podman run --name abc01 -it /localhost/rockylinux:8.6 /bin/bash # 创建一个abc01容器
-[root@321a3a81a2ee /]# ls # 进入容器
+[root@321a3a81a2ee /]# ls # 已经进入容器
 bin  etc   lib    lost+found  mnt  proc  run   srv  tmp  var
 dev  home  lib64  media       opt  root  sbi润n  sys  usr
 
 [root@321a3a81a2ee /]# exit # 退出容器
 exit
 
-[root@pc2 ~]# podman ps -a #查看存在的容器
+[root@pc2 ~]# podman ps -a #查看正在运行的容器
 CONTAINER ID  IMAGE                     COMMAND     CREATED             STATUS                      PORTS       NAMES
 321a3a81a2ee  localhost/rockylinux:8.6  /bin/bash   About a minute ago  Exited (127) 5 seconds ago              abc01
 ```
@@ -103,24 +103,24 @@ CONTAINER ID  IMAGE                     COMMAND     CREATED             STATUS  
 
 ### 删除容器
 
-```
+```sh
 ]#podman rm abc01 # 删除abc01容器
 321a3a81a2ee241522e449953df0c504fed61544f3f01cddee7cfe8de185cd4f
 
-]#podman ps -a
+]#podman ps -a # 查看全部容器，未启动容器也能查询
 CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
 ```
 
 ### 启停容器
 
-```
+```sh
 ]#podman start abc01
 ]#podman stop abc01 
 ```
 
 ### 容器放入后台
 
-```
+```sh
 ]#podman run --name abc01 -itd localhost/rocklinux:8.6 # 创建容器abc01放入后台
 dcf2855af244f2ea1800de2d9b96ded7ee343766c08e80ab7433388575c9fe65
 
@@ -131,7 +131,7 @@ dcf2855af244  localhost/rockylinux:8.6  /bin/bash   5 seconds ago  Up 5 seconds 
 
 ### 容器进入
 
-```
+```sh
 ]#podman exec -it abc01 /bin/bash # 进入容器
 [root@dcf2855af244 /]# ls
 bin  etc   lib    lost+found  mnt  proc  run   srv  tmp  var
@@ -143,7 +143,7 @@ exit
 
 ### 容器删除
 
-```
+```sh
 [root@pc2 ~]# podman rm -f abc01 # 强制删除容器
 dcf2855af244f2ea1800de2d9b96ded7ee343766c08e80ab7433388575c9fe65
 ```
@@ -152,7 +152,7 @@ dcf2855af244f2ea1800de2d9b96ded7ee343766c08e80ab7433388575c9fe65
 
 前提：本机已搭建FTP服务，已经配置网络YUM
 
-```
+```sh
 ]#podman run --name abc -itd localhost/rockylinux:8.6 # 后台创建一个abc容器
 ]#podman exec -it abc /bin/bash # 进入容器
 root@fc44c28f1205 /]# rm -rf /etc/yum.repos.d/* # 配置yum仓库
@@ -170,7 +170,7 @@ root@fc44c28f1205 /]# rm -rf /etc/yum.repos.d/* # 配置yum仓库
 
 前提：将以上制作的容器，封装成镜像
 
-```
+```sh
 ]#podman stop abc # 关闭正在运行的容器
 ]#podman commit abc myos:1.0 # 以abc为模板制作一个镜像名为myos标签为1.0
 Getting image source signatures
@@ -196,7 +196,7 @@ root@1e7a32e3b0fc /]#ifconfig # 验证容器是否有模板里面的功能
 
 •同一宿主机端口只能绑定一个容器服务
 
-```
+```sh
 ]#podman run --name myweb -p 80:80 -itd localhost/httpd:latest
 ]#curl 192.168.88.2
 Welcome to Apache
@@ -220,7 +220,7 @@ Welcome to Apache
 
 podman run -itd -v 宿主机对象:容器内对象 镜像名称:标签
 
-```
+```sh
 ]#mkdir /webroot
 ]#podman run --name web1 -p 80:80 -v /webroot:/var/www/html/ -itd localhost/httpd:latest #创建虚拟机并指定端口和目录
 ]#echo haha > /webroot/index.html

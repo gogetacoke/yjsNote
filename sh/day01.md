@@ -69,7 +69,7 @@ Shell变量
 
 ### 系统所有解释器
 
-```
+```sh
 ]#cat /etc/shells
 ```
 
@@ -77,14 +77,14 @@ Shell变量
 
 前提：编写一个简单sh脚本
 
-```
+```sh
 ]#vim test.sh
 echo 123
 ```
 
 ### 添加x权限
 
-```
+```sh
 ]./test.sh
 -bash: ./test01.sh: 权限不够
 ]#chmod +x test.sh
@@ -96,7 +96,7 @@ echo 123
 
 无需x权限，但会开启解释器子进程
 
-```
+```sh
 ]#chmod -x test.sh  # 去掉x权限
 ]#bash test.sh
 # 使用-x可进行排错检查，那一项执行报错
@@ -111,7 +111,7 @@ echo 123
 
 不开启解释器：使用当前系统正在使用的解释器
 
-```
+```sh
 ]#source test.sh
 123
 ]#. ./test.sh
@@ -126,7 +126,7 @@ echo 123
 
 ### 简单demo
 
-```
+```sh
 ]#vim test1.sh
 #!/bin/bash    # 指定解释器
 # this is demo   # 注释
@@ -162,7 +162,7 @@ gpgchechk=0
 
 ### 调用变量
 
-```
+```sh
 ]#vim test03.sh
 a=1
 echo $a
@@ -176,7 +176,7 @@ echo $a
 
 防止变量与常量混淆，加入一个{}
 
-```
+```sh
 ]#a=1
 ]#ab12=3
 ]#a_2=jj
@@ -188,7 +188,7 @@ echo $a
 
 ### 取消变量
 
-```
+```sh
 1. unset 变量名
 2. 变量名=
 例：
@@ -213,7 +213,7 @@ echo $a
 > $PS2
 > $PATH # 存储了命令的路径
 
-```
+```sh
 ]#echo $USER
 root
 ]#USER=XXX #临时修改用户名
@@ -227,7 +227,7 @@ root
 
 类似函数中的位置参数;
 
-```
+```sh
 $n # 当前脚本的第n个参数
 ]#vim /test04.sh
 echo $1
@@ -241,7 +241,7 @@ abc
 
 ### 预定义变量
 
-```
+```sh
 ]#vim test05.sh
 $0 #bash运行输出脚本名，source运行输出解释器名
 $* # 输出所有的参数
@@ -270,7 +270,7 @@ test05.sh
 
 可以界定一个完整的字符串
 
-```
+```sh
 ]#x=a b
 bash: b: 未找到命令...
 ]#x="a b"
@@ -287,7 +287,7 @@ a b
 
 界定一个完整的字符串，并且可以实现屏蔽特殊符号的功能
 
-```
+```sh
 ]# test=12
 ]# echo "$test"
 12
@@ -299,7 +299,7 @@ $test
 
 使用**反撇号**或**$()**,可以将命令执行标准输出作为字符串存储，称为命令替换
 
-```
+```sh
 ]# a=`date`
 ]# echo $a
 2023年 11月 29日 星期三 17:18:31 CST
@@ -314,7 +314,7 @@ $test
 
 read -p 给定用户提示信息 a存储用户输入字符的变量
 
-```
+```sh
 # 基本使用
 ]# echo $str
 what's your name?
@@ -328,7 +328,7 @@ what's your name?yyh
 yyh
 ```
 
-```
+```sh
 ]#vim test06.sh
 #!/bin/bash
 read -p please.enter.username: n
@@ -351,7 +351,7 @@ user{tom} created successful password is {123456}
 
 开启后，控制台输入的东西，将不会会显，敲击回车后，输入stty echo 敲击回车将会恢复
 
-```
+```sh
 ]#stty -echo # 关闭回显
 ]#    #输入pwd
 /
@@ -381,7 +381,7 @@ user{tom} created successful password is {123}
 
 默认情况下，自定义的变量为局部变量，只在当前Shell环境中有效，而在子Shell环境中无法直接使用。
 
-```
+```sh
 ]# yy="abc"
 ]# echo $yy                        #查看yy变量的值，有值
 abc
@@ -401,7 +401,7 @@ abc
 
 1. expr     乘法操作应采用 `\*`转义，避免被作为Shell通配符；参与运算的整数值与运算操作符之间需要以空格分开，引用变量时必须加$符号
 
-   ```
+   ```sh
    ]# X=1234                              #定义变量X
    ]# expr  $X  +  78                      #加法
    1312
@@ -417,7 +417,7 @@ abc
 
 2. $[] 或 $(())     乘法操作*无需转义，运算符两侧可以无空格；引用变量可省略 $ 符号；计算结果替换表达式本身，可结合echo命令输出。
 
-   ```
+   ```sh
    # X=1234   
    ]# echo $[X+78]
    1312
@@ -433,7 +433,7 @@ abc
 
 3. let    expr或$[]、$(())方式只进行运算，并不会改变变量的值；而let命令可以直接对变量值做运算再保存新的值。
 
-   ```
+   ```sh
    常规写法         主流写法
    let a=a+1       let a++         #变量a加1
    let a=a-1       let a--          #变量a减1
@@ -450,7 +450,7 @@ abc
 
 先执行bc命令进入交互环境，然后再输入需要计算的表达式。
 
-```
+```sh
 ]# bc
 bc 1.07.1
 Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.
@@ -465,7 +465,7 @@ quit # 退出
 
 将需要运算的表达式通过管道操作交给bc运算。注意，小数位的长度可采用scale=N限制。
 
-```
+```sh
 ]# echo "1+3" | bc
 4
 ]# echo "scale=3;10/3"| bc

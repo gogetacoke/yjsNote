@@ -44,14 +44,14 @@
 
 ### 装包
 
-```
+```sh
 ]#yum -y install hhtpd
 ]#yum -y install php php-xml php-json
 ```
 
 ### 编写页面
 
-```
+```sh
 ]vim /var/www/html/test.php #编写一个输出php配置信息的动态网页
 <?php
 	phpinfo();
@@ -64,7 +64,7 @@
 
 ### 部署数据库
 
-```
+```sh
 ]#yum -y install mariadb-server
 ]#systemctl restart mariadb # 启动数据库服务
 ]#mysql # 进入mysql
@@ -82,7 +82,7 @@
 
 ### 授权用户
 
-```
+```sh
 ]>grant all on nsd.* to lisi@localhost identified by '123'; # 授权用户lisi所有权限访问nsd数据库
 Query OK, 0 rows affected (0.001 sec)
 ]>exit
@@ -104,7 +104,7 @@ grant all on nsd.* to lisi@localhost identified by ‘123’;
 
 ### 部署协同工作软件
 
-```
+```sh
 ]#yun -y install php-mysqlnd # 便于php操作数据库
 ```
 
@@ -112,13 +112,13 @@ grant all on nsd.* to lisi@localhost identified by ‘123’;
 
 ### 查看系统版本
 
-```
+```sh
 $lsb_release -a 
 ```
 
 ### 编写仓库
 
-```
+```sh
 $mount /dev/cdrom /mnt # 挂载
 $cp /etc/apt/sources.list /opt #备份
 $sudo vi /etc/apt/sources.list /opt # 编写仓库内容
@@ -127,13 +127,13 @@ deb file:///mnt jammy main
 
 ### 更新仓库配置
 
-```
+```sh
 $sudo apt-get update
 ```
 
 ### 软件安装卸载
 
-```
+```sh
 $sudo apt list #查询安装包列表
 $sudo apt-get install make # 安装make
 $sudo apt-get remove make # 卸载
@@ -141,7 +141,7 @@ $sudo apt-get remove make # 卸载
 
 ### 软件基本操作
 
-```
+```sh
 $sudo dpkg -l make #查询软件是否安装
 $sudo apt-get install make 
 $sudo dpkg -l make 
@@ -152,7 +152,7 @@ $sudo dpkg -L make # 列出软件的安装清单
 
 ### 装包
 
-```
+```sh
 ]#yum -y install chrony
 ```
 
@@ -160,7 +160,7 @@ $sudo dpkg -L make # 列出软件的安装清单
 
 以下是针对本机搭建时间服务器
 
-```
+```sh
 ]#vim /etc/chrony.conf
 末行模式：set nu #开启行号
 3 #pool 2.pool.ntp.org iburst #注释
@@ -170,7 +170,7 @@ $sudo dpkg -L make # 列出软件的安装清单
 
 ### 重启服务
 
-```
+```sh
 ]#systemctl restart chronyd
 ```
 
@@ -180,7 +180,7 @@ B机器操作：
 
 B机器也需安装chronyd软件包
 
-```
+```sh
 ]#vim /etc/chrony.conf
 # pool 2.pool.ntp.org iburst # 将内容改为 server 192.168.88.240  iburst # ip为时间服务器
 
@@ -193,7 +193,7 @@ B机器也需安装chronyd软件包
 
 ### 装包配置
 
-```
+```sh
 ]#yum -y install postfix mailx # 邮件服务、编写格式
 ]#useradd xyy # 创建两个用户
 ]#useradd myy
@@ -201,7 +201,7 @@ B机器也需安装chronyd软件包
 
 ### 发送邮件
 
-```
+```sh
 ]#echo ’this is test mail‘ | mail -s "content" -r xyy myy # 使用非交互式发送邮件
 -s：标题
 echo：输入发送的内容

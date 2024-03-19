@@ -41,7 +41,7 @@ NFS服务基础
 
 ## Httpd排错
 
-```
+```sh
 ]#systemctl restart httpd
 Job for httpd.service failed because the control process exited with error code. See "systemctl status httpd.service" and "journalctl -xe" for details.
 ]#journalctl -xe  # 查询错误日志
@@ -55,7 +55,7 @@ Job for httpd.service failed because the control process exited with error code.
 
 安装完httpd服务默认存放路径：/var/www/html
 
-```
+```sh
 ]#vim /etc/httpd/conf/httpd.conf
 修改第122行，并指定目录：快捷方式:/documentroot
 DocumentRoot "/var/www/myweb"
@@ -90,7 +90,7 @@ Require all granted #允许所有人访问
 
 例：将/myweb设置为访问目录，允许所有人访问
 
-```
+```sh
 ]#mkdir /myweb  
 ]#echo xixi > /myweb/index.html
 ]# vim /etc/httpd/conf/htttpd.conf
@@ -114,7 +114,7 @@ DocumentRoot指定的是网络路径的起始点
 
 http://192.168.88.240  ==  /webroot
 
-```
+```sh
 ]# mkdir   /webroot/abc
 ]# echo wo shi abc > /webroot/abc/index.html
 ]# curl    192.168.88.240/abc/
@@ -126,7 +126,7 @@ http://192.168.88.240  ==  /webroot
 
 –/etc/httpd/conf.d/*.conf #调用配置文件
 
-```
+```sh
 ]# vim   /etc/httpd/conf.d/haha.conf
 DocumentRoot    /var/www/cbd
 ]# mkdir   /var/www/cbd
@@ -146,7 +146,7 @@ wo shi CBD
 
 建议自定义端口时大于1024,端口极限65535
 
-```
+```sh
 ]#echo Listen 8000 >> /etc/httpd/conf.d/haha.conf
 ]#systemctl restart httpd
 ]#curl 192.168.88.240
@@ -167,7 +167,7 @@ wo shi CBD
 
 ### 为虚拟站点添加配置
 
-```
+```sh
 ]#vim /etc/httpd/conf.d/xixi.conf # 使用调用配置文件的方式编写配置
 编写内容：
 <VirtualHost *:80>
@@ -186,7 +186,7 @@ wo shi CBD
 
 ### 测试
 
-```
+```sh
 ]#mkdir /var/www/qq  /var/www/lol
 ]#echo i m qq > /var/www/qq/index.html
 ]#echo i m lol > /var/www/lol/index.html
@@ -204,7 +204,7 @@ i m lol
 
 ## 基于端口的Web主机
 
-```
+```sh
 [root@server ~]# vim  /etc/httpd/conf.d/xixi.conf
 <VirtualHost   *:80>
    ServerName  www.qq.com
@@ -234,7 +234,7 @@ i m qq
 
 **虚拟机A：服务端**
 
-```
+```sh
 ]#mkdir /abc # 创建需要共享的文件
 ]#echo 123 > /abc/1.txt
 ]#ls -l /abc
@@ -248,7 +248,7 @@ i m qq
 
 前提：两台机器网络互通
 
-```
+```sh
 ]#mkdir /mnt/mynfs
 ]#showmount -e 192.168.88.240 #查看对方nfs的分享
 ]#mount 192.168.88.240:/abc /mnt/mynfs # 挂载
@@ -271,7 +271,7 @@ autofs服务提供“按需访问”
 
 闲置一段时间后，会自动卸载
 
-```
+```sh
 [root@pc2 ~]# yum  -y  install  autofs
 [root@pc2 ~]# systemctl restart autofs
 [root@pc2 ~]# ls  /misc
@@ -280,7 +280,7 @@ autofs服务提供“按需访问”
 
 ### 自定义修改触发挂载
 
-```
+```sh
 ]#vim /etc/auto.master
 
 # Sample auto.master file
@@ -290,6 +290,7 @@ autofs服务提供“按需访问”
 #
 /misc   /etc/auto.misc
 /myauto /opt/xixi.txt # 需要访问myauto内容，请访问配置文件xixi.txt
+
 ]#vim /opt/xixi.txt
 nsd -fstype=iso9660 :/dev/cdrom # 编写配置，用户只要使用ls或cat /myauto/nsd 将会触发挂载
 xxx -fstype=nfs 192.168.88.88:/abc  # 基于nfs触发挂载时编写，nsd为触发挂载的命令
@@ -298,7 +299,7 @@ xxx -fstype=nfs 192.168.88.88:/abc  # 基于nfs触发挂载时编写，nsd为触
 
 **案例：**用户进入/nfss目录输入nf，自动触发挂载88.2上的NFS文件夹里内容
 
-```
+```sh
 #修改master文件
 /nfss /mnt/nfs.txt
 # 编写自定义挂载内容配置文件

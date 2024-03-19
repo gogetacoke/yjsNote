@@ -98,7 +98,7 @@ d---r-xr-x. 2 root root 6 11月  8 17:58 zz
 
 ## chown
 
-详情查看文本笔**修改归属关系**
+详情查看**修改归属关系**
 
 ```linux
 chown lisi:tmooc /nsd14
@@ -150,7 +150,7 @@ mkdir -m 777 /nsd1
 
   cat、less、head、tail、grep
 
-+ 写入：允许修改诶日 -write **w**
++ 写入：允许修改内容 -write **w**
 
   vim、>、>>
 
@@ -225,9 +225,9 @@ ls: 无法访问'/opt/c': 没有那个文件或目录
 
 分组： User权限 Group权限 Other权限
 
-字符： r w x    r - x         r - x
+字符： r w x   			 r - x        	 r - x
 
-数字： 4 2 1   4 0 1       4 0 1
+数字： 4 2 1   			4 0 1       	4 0 1
 
 求和： 7 5 5
 
@@ -297,27 +297,27 @@ drwxr-xr-x. 3 yyh stu 16 11月  8 19:29 /opt/aa/bb/
 
 举例：
 
-```linux
-useradd test3
-groupadd test
-mkdir /testd
-chown test3:test /testd # 设置testd目录的所有者与所属组为
-ls -ld /testd
+```shell
+]#useradd test3
+]#groupadd test
+]#mkdir /testd
+]#chown test3:test /testd # 设置testd目录的所有者与所属组为
+]#ls -ld /testd
 drwxr-xr-x. 3 test3 test 16 11月  8 19:29 /testd
-chmod o= /testd #将testd目录的其余用户访问设置为空（没有rwx）
-useradd test4
-su - test4 # 切换test4用户
-cd /testd
+]#chmod o= /testd #将testd目录的其余用户访问设置为空（没有rwx）
+]#useradd test4
+]#su - test4 # 切换test4用户
+]#cd /testd
 bash: cd: /testd: 权限不够
-exit # 退出到上级用户
-gpasswd -a test4 test # 将用户test4加入到test组中
-su  - test4
-cd testd
-exit
-gpasswd -a test3 test # 将当前所有者加入到test组中
-chmod 450 /test # 设置权限读 读，执行 无权限
-su - test3 #切换test3用户
-cd /testd
+]#exit # 退出到上级用户
+]#gpasswd -a test4 test # 将用户test4加入到test组中
+]#su  - test4
+]#cd testd
+]#exit
+]#gpasswd -a test3 test # 将当前所有者加入到test组中
+]#chmod 450 /test # 设置权限读 读，执行 无权限
+]#su - test3 #切换test3用户
+]#cd /testd
 bash: cd: /testd: 权限不够
 ```
 
@@ -440,7 +440,7 @@ drwxrwxrwt. 2 yyh yu1 19 11月  8 11:49 /nsd1
 + 显示为s或S，取决于属组是否有可执行（x）权限
 
 + 对目录有效
-+ 在一个具有SGID权限的目录下，新建的文档会自动集成副目录的属组身份
++ 在一个具有SGID权限的目录下，新建的文档会自动集成父目录的属组身份
 
 举例：
 

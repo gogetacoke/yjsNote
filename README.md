@@ -2,7 +2,8 @@
 
 ------
 <p style="background-color: yellow">不要因为没有掌声，而放弃梦想，我们需要的是坚持，而不是观众</p>
-------
+
+
 - [第一阶段](#第一阶段)
   - [ADMIN](#admin)
     - [day1](#day1)
@@ -75,10 +76,38 @@
     - [day08](#day08)
     - [day09](#day09)
     - [day10](#day10)
+- [第四阶段](#第四阶段)
+  - [CLOUD1](#cloud1)
+    - [day01](#day01-9)
+    - [day02](#day02-9)
+    - [day03](#day03-9)
+    - [day04](#day04-9)
+    - [day05](#day05-7)
+    - [day06](#day06-3)
+    - [day07](#day07-2)
+    - [day08](#day08-1)
+  - [CLOUD2](#cloud2)
+    - [day01](#day01-10)
+    - [day02](#day02-10)
+    - [day03](#day03-10)
+    - [day04](#day04-10)
+    - [day05](#day05-8)
+    - [day06](#day06-4)
+    - [day07](#day07-3)
+    - [day08](#day08-2)
+- [第五阶段](#第五阶段)
+  - [PYTHON1](#python1)
+    - [day01](#day01-11)
+    - [day02](#day02-11)
 - [PROJECT](#project)
   - [wordpress](#wordpress)
   - [HIS](#his)
-    - [day01](#day01-9)
+    - [day01](#day01-12)
+  - [K8S](#k8s)
+    - [day01](#day01-13)
+    - [day02](#day02-12)
+    - [day03](#day03-11)
+    - [day04](#day04-11)
 - [相关文件](#相关文件)
   - [cg-配置](#cg-配置)
     - [命令相关配置](#命令相关配置)
@@ -120,11 +149,6 @@
   - [面试题](#面试题)
   - [know-sup知识补充](#know-sup知识补充)
     - [network](#network-1)
-
-
-
-
-
 
 
 
